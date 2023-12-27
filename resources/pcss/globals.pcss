@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] { display: none; }
+
+@layer base {
+  h1 {
+    &::after {
+      content: '#';
+      @apply text-blue-600;
+    }
+  }
+}
