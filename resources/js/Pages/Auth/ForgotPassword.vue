@@ -29,7 +29,7 @@ async function submit() {
 </script>
 
 <template>
-  <Head title="Забыли свой пароль?" />
+  <Head title="Восстановление пароля" />
 
   <AuthenticationCard>
     <template #logo>

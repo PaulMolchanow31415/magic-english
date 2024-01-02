@@ -25,7 +25,7 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Охраняемая зона" />
+  <Head title="Подтверждение пароля" />
 
   <AuthenticationCard>
     <template #logo>
