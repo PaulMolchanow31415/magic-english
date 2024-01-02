@@ -1,10 +1,11 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
+import StubLayout from '@/Layouts/StubLayout.vue'
 
-defineProps({
-  terms: String,
-})
+defineOptions({ layout: StubLayout })
+
+defineProps({ terms: String })
 </script>
 
 <template>
@@ -18,7 +19,7 @@ defineProps({
         </div>
 
         <div
-          class="w-full sm:max-w-2xl mt-6 p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg prose dark:prose-invert"
+          class="w-full sm:max-w-2xl mt-6 p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg prose dark:prose-invert mb-10"
           v-html="terms"
         />
       </div>

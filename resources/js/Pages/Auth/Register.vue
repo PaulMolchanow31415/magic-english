@@ -7,7 +7,7 @@ import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import { useChallengeV3 } from 'vue-recaptcha'
 import StubLayout from '@/Layouts/StubLayout.vue'
-import { FwbInput } from 'flowbite-vue'
+import { FwbA, FwbInput } from 'flowbite-vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 defineOptions({ layout: StubLayout })
@@ -17,7 +17,7 @@ const form = useForm({
   email: '',
   password: '',
   password_confirmation: '',
-  terms: false,
+  terms: true,
   recaptcha_token: null,
 })
 
@@ -117,21 +117,15 @@ async function submit() {
           <div class="flex items-center">
             <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
 
-            <div class="ms-2">
-              Я принимаю
-              <a
-                target="_blank"
-                :href="route('terms.show')"
-                class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >условия обслуживания</a
-              >
-              и
-              <a
-                target="_blank"
-                :href="route('policy.show')"
-                class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >политику конфиденциальности</a
-              >
+            <div class="ms-2 text-sm">
+              <span class="dark:text-white">Я принимаю&nbsp;</span>
+              <FwbA target="_blank" :href="route('terms.show')" class="terms">
+                условия обслуживания
+              </FwbA>
+              <span class="dark:text-white">&nbsp;и&nbsp;</span>
+              <FwbA target="_blank" :href="route('policy.show')" class="terms">
+                политику конфиденциальности
+              </FwbA>
             </div>
           </div>
           <InputError class="mt-2" :message="form.errors.terms" />
@@ -151,3 +145,9 @@ async function submit() {
     </form>
   </AuthenticationCard>
 </template>
+
+<style scoped lang="postcss">
+.terms {
+  @apply underline text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800;
+}
+</style>
