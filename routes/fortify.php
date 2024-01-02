@@ -1,25 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
-use Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController;
-use Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController;
-use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
-use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
-use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\RoutePath;
+use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\PasswordController;
-use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
-use Laravel\Fortify\Http\Controllers\ProfileInformationController;
+use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
-use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController;
-use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
+use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Laravel\Fortify\Http\Controllers\ProfileInformationController;
 use Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController;
-use Laravel\Fortify\Http\Controllers\VerifyEmailController;
-use Laravel\Fortify\RoutePath;
+use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
+use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
+use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
     $enableViews = config('fortify.views', true);
@@ -43,7 +43,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             array_filter([
                 'guest:'.config('fortify.guard'),
                 $limiter ? 'throttle:'.$limiter : null,
-                'recaptcha.required',
+                'recaptcha',
             ]),
         );
 
@@ -75,7 +75,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             RoutePath::for('password.email', '/forgot-password'),
             [PasswordResetLinkController::class, 'store'],
         )
-            ->middleware(['guest:'.config('fortify.guard'), 'recaptcha.required'])
+            ->middleware(['guest:'.config('fortify.guard'), 'recaptcha'])
             ->name('password.email');
 
         Route::post(
@@ -101,7 +101,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             RoutePath::for('register', '/register'),
             [RegisteredUserController::class, 'store'],
         )
-            ->middleware(['guest:'.config('fortify.guard'), 'recaptcha.required']);
+            ->middleware(['guest:'.config('fortify.guard'), 'recaptcha']);
     }
 
     // Email Verification...
@@ -149,7 +149,12 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             RoutePath::for('user-profile-information.update', '/user/profile-information'),
             [ProfileInformationController::class, 'update'],
         )
-            ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+            ->middleware(
+                array_filter([
+                    config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'),
+                    $limiter ? 'throttle:'.$limiter : null,
+                ]),
+            )
             ->name('user-profile-information.update');
     }
 
@@ -159,7 +164,12 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             RoutePath::for('user-password.update', '/user/password'),
             [PasswordController::class, 'update'],
         )
-            ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+            ->middleware(
+                array_filter([
+                    config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'),
+                    $limiter ? 'throttle:'.$limiter : null,
+                ]),
+            )
             ->name('user-password.update');
     }
 

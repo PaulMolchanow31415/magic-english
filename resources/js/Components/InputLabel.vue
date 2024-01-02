@@ -1,12 +1,12 @@
 <script setup>
-defineProps({
-    value: String,
-});
+defineProps({ value: String })
 </script>
 
 <template>
-    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300">
-        <span v-if="value">{{ value }}</span>
-        <span v-else><slot /></span>
-    </label>
+  <label>
+    <span v-if="value" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+      {{ value }}
+    </span>
+    <slot />
+  </label>
 </template>

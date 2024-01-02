@@ -1,5 +1,6 @@
 import './bootstrap'
 import '../pcss/globals.pcss'
+import './Libs/font-awesome'
 
 import { createApp, h, warn } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -8,6 +9,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
 import { VueRecaptchaPlugin } from 'vue-recaptcha/head'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import RecaptchaLayout from '@/Layouts/RecaptchaLayout.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
@@ -46,6 +48,7 @@ await createInertiaApp({
       .use(plugin)
       .use(ZiggyVue)
       .use(VueRecaptchaPlugin, { v3SiteKey: captchaKey })
+      .component('Icon', FontAwesomeIcon)
       .mount(el),
   progress: {
     color: '#1c64f2',

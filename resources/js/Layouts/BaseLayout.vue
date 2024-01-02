@@ -43,14 +43,14 @@ const toggleDark = useToggle(isDark)
                 <button class="mx-2 dark:text-white" @click="toggleDark()" type="button">
                   Switch Theme
                 </button>
-                <fwb-dropdown text="Click me" placement="bottom">
-                  <fwb-list-group>
-                    <fwb-list-group-item><h1>hello</h1></fwb-list-group-item>
-                    <fwb-list-group-item>Item #2</fwb-list-group-item>
-                    <fwb-list-group-item>Item #3</fwb-list-group-item>
-                  </fwb-list-group>
-                </fwb-dropdown>
               </div>
+              <fwb-dropdown text="Click me" placement="bottom">
+                <fwb-list-group>
+                  <fwb-list-group-item><h1>hello</h1></fwb-list-group-item>
+                  <fwb-list-group-item>Item #2</fwb-list-group-item>
+                  <fwb-list-group-item>Item #3</fwb-list-group-item>
+                </fwb-list-group>
+              </fwb-dropdown>
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

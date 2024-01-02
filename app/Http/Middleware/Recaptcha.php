@@ -15,7 +15,7 @@ class Recaptcha {
             'secret'   => config('recaptcha.secret'),
             'response' => $request['recaptcha_token'],
             'remoteip' => $request->ip(),
-        ])->json();
+        ]);
 
         /* USER
           "success" => true
@@ -25,10 +25,15 @@ class Recaptcha {
           "action" => "login"
          */
 
-        if (!$response["success"] or $response["score"] < 0.5) {
-            return $next('Ошибка! Похоже на то, что вы робот:)');
+        if ($response->successful()
+            and $response->json("success")
+                and $response->json("score") > 0.5
+        ) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect()->back()->withErrors([
+            'recaptcha_token' => 'Ошибка! Похоже на то, что вы робот:)',
+        ]);
     }
 }

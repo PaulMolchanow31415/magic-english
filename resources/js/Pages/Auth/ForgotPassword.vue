@@ -2,12 +2,11 @@
 import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
-import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { useChallengeV3 } from 'vue-recaptcha'
+import { FwbInput } from 'flowbite-vue'
 
 defineOptions({ layout: StubLayout })
 
@@ -20,7 +19,7 @@ const form = useForm({
   recaptcha_token: null,
 })
 
-const { execute } = useChallengeV3('forgot-password')
+const { execute } = useChallengeV3('forgotPassword')
 
 async function submit() {
   form.recaptcha_token = await execute()
@@ -30,17 +29,18 @@ async function submit() {
 </script>
 
 <template>
-  <Head title="Forgot Password" />
+  <Head title="Забыли свой пароль?" />
 
   <AuthenticationCard>
     <template #logo>
       <AuthenticationCardLogo />
     </template>
 
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-      Forgot your password? No problem. Just let us know your email address and we will email you a
-      password reset link that will allow you to choose a new one.
-    </div>
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+      <span class="dark:text-white block mb-1 prose-xl">Забыли свой пароль?</span>
+      Без проблем. Просто сообщите нам свой адрес электронной почты, и мы вышлем вам по электронной
+      почте ссылку для сброса пароля, которая позволит вам выбрать новый.
+    </p>
 
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
       {{ status }}
@@ -48,22 +48,25 @@ async function submit() {
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="email" value="Email" />
-        <TextInput
-          id="email"
-          v-model="form.email"
-          type="email"
-          class="mt-1 block w-full"
-          required
-          autofocus
-          autocomplete="username"
-        />
-        <InputError class="mt-2" :message="form.errors.email" />
+        <InputLabel value="Email">
+          <FwbInput
+            v-model="form.email"
+            type="email"
+            required
+            autofocus
+            autocomplete="username"
+            :validation-status="form.errors.email ? 'error' : ''"
+          >
+            <template #validationMessage>
+              {{ form.errors.email }}
+            </template>
+          </FwbInput>
+        </InputLabel>
       </div>
 
       <div class="flex items-center justify-end mt-4">
         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Email Password Reset Link
+          Получить ссылку на сброс пароля
         </PrimaryButton>
       </div>
     </form>

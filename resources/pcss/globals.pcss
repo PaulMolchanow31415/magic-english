@@ -5,10 +5,15 @@
 [x-cloak] { display: none; }
 
 @layer base {
-  h1 {
-    &::after {
-      content: '#';
-      @apply text-blue-600;
-    }
+
+}
+
+@layer components {
+  .info-line {
+    @apply flex items-center gap-2;
   }
+}
+
+@layer utilities {
+
 }
