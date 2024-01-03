@@ -1,9 +1,12 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, defineOptions } from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
+import StubLayout from '@/Layouts/StubLayout.vue'
+
+defineOptions({ layout: StubLayout })
 
 const props = defineProps({
   status: String,
@@ -19,17 +22,20 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-  <Head title="Проверка по электронной почте" />
+  <Head title="Проверка электронной почты" />
 
   <AuthenticationCard>
     <template #logo>
       <AuthenticationCardLogo />
     </template>
+    <template #heading>Подтверждение Email</template>
 
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="mb-8 text-sm text-gray-600 dark:text-gray-400">
       Прежде чем продолжить, не могли бы вы подтвердить свой адрес электронной почты, перейдя по
-      ссылке, которую мы только что отправили вам по электронной почте? Если вы не получили
-      электронное письмо, мы с радостью отправим вам другое.
+      ссылке, которую мы только что отправили вам по электронной почте?
+      <span class="block mt-1.5">
+        Если вы не получили электронное письмо, мы с радостью отправим вам другое.
+      </span>
     </div>
 
     <div
@@ -41,12 +47,12 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
     </div>
 
     <form @submit.prevent="submit">
-      <div class="mt-4 flex items-center justify-between">
+      <div>
         <PrimaryButton :processing="form.processing">
-          Повторно отправьте электронное письмо с подтверждением
+          Повторно отправить электронное письмо
         </PrimaryButton>
 
-        <div>
+        <div class="mt-4 flex gap-2">
           <Link
             :href="route('profile.show')"
             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
