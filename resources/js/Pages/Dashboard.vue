@@ -9,7 +9,13 @@ const translatedText = `
 <p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
   <b>Jetstream</b>     provides a beautiful, robust starting point for your next Laravel
   application. Laravel is designed to help you build your application using a development
-  environment that is simple,  <i > powerful  </i>, and enjoyable. We believe you should love
+  environment that is simple,  <i > Русское слово  </i>, and enjoyable. We believe you should love
+  expressing your creativity through programming, so we have spent time carefully crafting
+  the Laravel ecosystem to be a breath of fresh air. We hope you love it.
+</p><p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
+  <b>Jetstream</b>     provides a beautiful, robust starting point for your next Laravel
+  application. Laravel is designed to help you build your application using a development
+  environment that is simple,  <i > Русское слово  </i>, and enjoyable. We believe you should love
   expressing your creativity through programming, so we have spent time carefully crafting
   the Laravel ecosystem to be a breath of fresh air. We hope you love it.
 </p>
@@ -51,11 +57,11 @@ const translatedText = `
               </h2>
             </div>
 
-            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+            <div class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
               Laravel has wonderful documentation covering every aspect of the framework. Whether
               you're new to the framework or have previous experience, we recommend reading all of
               the documentation from beginning to end.
-            </p>
+            </div>
 
             <p class="mt-4 text-sm">
               <a

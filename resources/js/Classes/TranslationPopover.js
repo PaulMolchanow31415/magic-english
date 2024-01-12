@@ -8,12 +8,16 @@ export default class TranslationPopover {
 
   constructor(wrapper) {
     this.$el = document.createElement('div')
-    this.$el.classList.add('hidden', 'fixed')
+    this.$el.classList.add('hidden', 'absolute')
     this.$el.style.transform = 'translate(-50%, calc(-100% - 1rem))'
     wrapper.appendChild(this.$el)
   }
 
   show({ x, y }, { srcWord, translated }) {
+    if (translated.length === 0 || !srcWord) {
+      return
+    }
+
     this.srcWord = srcWord
     this.translated = translated
 
@@ -23,7 +27,7 @@ export default class TranslationPopover {
     this.$el.innerHTML = `
       <div id="${uuid}"
            role="tooltip"
-           class="inline-block w-64 text-sm text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+           class="inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
       >
           <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
               <div class="flex justify-between items-center">
@@ -76,8 +80,9 @@ export default class TranslationPopover {
   }
 
   hide(event) {
-    console.log(event)
-    // event.stopPropagation()
+    try {
+      event.stopPropagation()
+    } catch (e) {}
     this.$el.classList.add('hidden')
     this.isShow = false
   }

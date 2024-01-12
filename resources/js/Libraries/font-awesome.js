@@ -23,6 +23,8 @@ import {
   faRightFromBracket,
   fas,
   faSpellCheck,
+  faSquareCaretLeft,
+  faSquareCaretRight,
   faSun,
   faTrashCan,
   faUsers,
@@ -57,6 +59,8 @@ library.add(
   faUsers,
   faPersonCircleQuestion,
   faList,
+  faSquareCaretLeft,
+  faSquareCaretRight,
 )
 
 // <font-awesome-icon :icon="['fas', 'graduation-cap']" />

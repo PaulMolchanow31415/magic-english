@@ -16,6 +16,7 @@ import RecaptchaLayout from '@/Layouts/RecaptchaLayout.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { QuillEditor } from '@vueup/vue-quill'
+
 import translatable from '@/Directives/translatable.js'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 

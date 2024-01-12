@@ -2,6 +2,23 @@
 import { onMounted } from 'vue'
 import { initTooltips } from 'flowbite'
 
+defineProps({
+  placement: {
+    type: String,
+    default: 'top',
+    validator(v) {
+      return v === 'bottom' || v === 'top' || v === 'left' || v === 'right'
+    },
+  },
+  /*theme: {
+    type: String,
+    default: 'dark',
+    validator(v) {
+      return v === 'dark' || v === 'light'
+    },
+  },*/
+})
+
 onMounted(() => {
   initTooltips()
 })
@@ -11,7 +28,7 @@ const uuid = crypto.randomUUID()
 
 <template>
   <div>
-    <div :data-tooltip-target="uuid">
+    <div :data-tooltip-target="uuid" :data-tooltip-placement="placement">
       <slot name="trigger" />
     </div>
 

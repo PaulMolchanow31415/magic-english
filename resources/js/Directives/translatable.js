@@ -71,9 +71,7 @@ async function handleClick(event) {
 
   word = text.slice(startIndex, endIndex).replaceAll(/[^a-zA-Z\s]+/g, '')
 
-  console.log('translatable', word)
-
-  if (!word || word.length === 0) {
+  if (!word || word.length === 0 || word.match(/^[А-я]+$/)) {
     return
   }
 
@@ -81,8 +79,8 @@ async function handleClick(event) {
 
   popover.show(
     {
-      x: event.clientX,
-      y: event.clientY,
+      x: event.pageX,
+      y: event.pageY,
     },
     {
       srcWord: word,

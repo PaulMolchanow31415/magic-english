@@ -1,6 +1,7 @@
-import { computed, warn } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { computed, ref, warn } from 'vue'
+import { router, usePage } from '@inertiajs/vue3'
 import { set } from '@vueuse/core'
+import { watchThrottled } from '@vueuse/core'
 
 export function useQuickEnableRef(ref, timeout = 5000) {
   if (typeof ref !== 'object' || ref.value) {
@@ -19,4 +20,24 @@ export function useBreadcrumbs() {
   }
 
   return computed(() => insertBetween(usePage().props.breadcrumbs || [], '/'))
+}
+
+export function useSearch(searchValue, routeName) {
+  const searched = ref(searchValue || '')
+
+  watchThrottled(
+    searched,
+    (value) =>
+      router.get(
+        route(routeName),
+        { search: `${value}` },
+        {
+          preserveState: true,
+          preserveScroll: true,
+          replace: true,
+        },
+      ),
+    { throttle: 500 },
+  )
+  return searched
 }

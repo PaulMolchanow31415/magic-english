@@ -2,6 +2,8 @@
 import { FwbPagination } from 'flowbite-vue'
 import { ref, watch } from 'vue'
 import { router } from '@inertiajs/vue3'
+import { onKeyStroke } from '@vueuse/core'
+import Tooltip from '@/Shared/Tooltip.vue'
 
 const props = defineProps({
   data: {
@@ -17,6 +19,18 @@ watch(currentPage, (updated) => {
     preserveState: true,
   })
 })
+
+onKeyStroke('ArrowLeft', () => {
+  if (currentPage.value > 1) {
+    --currentPage.value
+  }
+})
+
+onKeyStroke('ArrowRight', () => {
+  if (currentPage.value < props.data.last_page) {
+    ++currentPage.value
+  }
+})
 </script>
 
 <template>
@@ -25,14 +39,24 @@ watch(currentPage, (updated) => {
       <div
         class="flex flex-col items-center justify-between p-4 pe-6 space-y-3 md:flex-row md:space-y-0 md:space-x-4"
       >
-        <FwbPagination
-          v-model="currentPage"
-          :total-pages="data.last_page"
-          previous-label="Назад"
-          next-label="Вперед"
-          show-icons
-          large
-        />
+        <Tooltip>
+          <template #trigger>
+            <FwbPagination
+              v-model="currentPage"
+              :total-pages="data.last_page"
+              previous-label="Назад"
+              next-label="Вперед"
+              show-icons
+              large
+            />
+          </template>
+          <template #content>
+            <div class="leading-loose flex gap-2.5">
+              <Icon :icon="['fas', 'square-caret-left']" />
+              <Icon :icon="['fas', 'square-caret-right']" />
+            </div>
+          </template>
+        </Tooltip>
         <span class="text-gray-600 dark:text-gray-400">
           Общее количество:&nbsp;{{ data.total }}
         </span>

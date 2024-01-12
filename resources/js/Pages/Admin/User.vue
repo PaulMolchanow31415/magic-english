@@ -16,8 +16,8 @@ import { ref } from 'vue'
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { useQuickEnableRef } from '@/Composables/index.js'
-import { set, watchThrottled } from '@vueuse/core'
+import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
+import { set } from '@vueuse/core'
 import DeleteConfirmationModal from '@/Shared/Admin/DeleteConfirmationModal.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const page = usePage()
-const searchedUser = ref(props.filters.search || '')
+const searchedUser = useSearch(props.filters.search, 'admin.user.index')
 const isShowEditModal = ref(false)
 const userForRemoval = ref(null)
 const form = useForm({ id: null, role: '', is_banned: false })
@@ -60,21 +60,6 @@ function confirmEdit() {
     onFinish: () => set(isShowEditModal, false),
   })
 }
-
-watchThrottled(
-  searchedUser,
-  (value) =>
-    router.get(
-      route('admin.user.index'),
-      { search: `${value}` },
-      {
-        preserveState: true,
-        preserveScroll: true,
-        replace: true,
-      },
-    ),
-  { throttle: 500 },
-)
 </script>
 
 <template>

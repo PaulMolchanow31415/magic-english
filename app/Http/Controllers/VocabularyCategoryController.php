@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Response;
+use App\Models\Complexity;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use App\Models\VocabularyCategory;
@@ -22,7 +23,7 @@ class VocabularyCategoryController extends Controller {
     public function store(Request $request): RedirectResponse {
         $request->validate([
             'id'   => 'int|nullable',
-            'name' => 'string|unique|min:3|max:255',
+            'name' => 'string|unique:vocabulary_categories|min:3|max:255',
         ]);
 
         VocabularyCategory::updateOrCreate(
@@ -37,8 +38,8 @@ class VocabularyCategoryController extends Controller {
         //
     }
 
-    public function destroy(VocabularyCategory $category): RedirectResponse {
-        $category->delete();
+    public function destroy(int $id): RedirectResponse {
+        VocabularyCategory::findOrFail($id)->delete();
 
         return to_route('admin.vocabulary-category.index');
     }
