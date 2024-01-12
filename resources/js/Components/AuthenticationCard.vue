@@ -9,7 +9,7 @@
     <div
       class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden sm:rounded-lg"
     >
-      <h2 v-if="$slots.heading" class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
+      <h2 v-if="$slots.heading" class="form-heading">
         <slot name="heading" />
       </h2>
 

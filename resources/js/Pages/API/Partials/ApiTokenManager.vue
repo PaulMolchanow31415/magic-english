@@ -1,19 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import ActionMessage from '@/Components/ActionMessage.vue'
 import ActionSection from '@/Components/ActionSection.vue'
-import Checkbox from '@/Components/Checkbox.vue'
+import Checkbox from '@/Shared/Checkbox.vue'
 import ConfirmationModal from '@/Components/ConfirmationModal.vue'
-import DangerButton from '@/Components/DangerButton.vue'
-import DialogModal from '@/Components/DialogModal.vue'
+import DangerButton from '@/Shared/DangerButton.vue'
+import DialogModal from '@/Shared/DialogModal.vue'
 import FormSection from '@/Components/FormSection.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
-import SectionBorder from '@/Components/HorizontalLine.vue'
-import TextInput from '@/Components/TextInput.vue'
+import InputError from '@/Shared/InputError.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import SectionBorder from '@/Shared/HorizontalLine.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 const props = defineProps({
   tokens: Array,
@@ -112,9 +111,9 @@ const deleteApiToken = () => {
       </template>
 
       <template #actions>
-        <ActionMessage :on="createApiTokenForm.recentlySuccessful" class="me-3">
+        <!--        <ActionMessage :on="createApiTokenForm.recentlySuccessful" class="me-3">
           Created.
-        </ActionMessage>
+        </ActionMessage>-->
 
         <PrimaryButton
           :class="{ 'opacity-25': createApiTokenForm.processing }"

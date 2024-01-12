@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import { Link, router, useForm } from '@inertiajs/vue3'
 import FormSection from '@/Components/FormSection.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
+import InputError from '@/Shared/InputError.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import { FwbInput } from 'flowbite-vue'
 
 const props = defineProps({
@@ -15,6 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['success'])
 
 const form = useForm({
+  _method: 'PUT',
   name: props.user.name,
   email: props.user.email,
   photo: null,
@@ -29,7 +30,7 @@ const updateProfileInformation = () => {
     form.photo = photoInput.value.files[0]
   }
 
-  form.put(route('user-profile-information.update'), {
+  form.post(route('user-profile-information.update'), {
     errorBag: 'updateProfileInformation',
     preserveScroll: true,
     onSuccess: () => {
@@ -91,6 +92,7 @@ const clearPhotoFileInput = () => {
           ref="photoInput"
           type="file"
           class="hidden"
+          accept="image/png, image/jpg, image/jpeg"
           @change="updatePhotoPreview"
         />
 

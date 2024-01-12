@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import ActionSection from '@/Components/ActionSection.vue'
-import DialogModal from '@/Components/DialogModal.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
-import InputError from '@/Components/InputError.vue'
-import TextInput from '@/Components/TextInput.vue'
+import DialogModal from '@/Shared/DialogModal.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import InputError from '@/Shared/InputError.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 defineProps({ sessions: Array })
 

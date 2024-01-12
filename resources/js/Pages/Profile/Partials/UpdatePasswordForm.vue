@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import FormSection from '@/Components/FormSection.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { FwbInput } from 'flowbite-vue'
 
 const passwordInput = ref(null)

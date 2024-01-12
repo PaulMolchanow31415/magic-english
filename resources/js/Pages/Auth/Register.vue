@@ -2,13 +2,13 @@
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
-import Checkbox from '@/Components/Checkbox.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
+import Checkbox from '@/Shared/Checkbox.vue'
+import InputError from '@/Shared/InputError.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
 import { useChallengeV3 } from 'vue-recaptcha'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbA, FwbInput } from 'flowbite-vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
 
 defineOptions({ layout: StubLayout })
 
@@ -145,9 +145,3 @@ async function submit() {
     </form>
   </AuthenticationCard>
 </template>
-
-<style scoped lang="postcss">
-.terms {
-  @apply underline text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800;
-}
-</style>

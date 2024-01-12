@@ -1,10 +1,22 @@
-import { warn } from 'vue'
+import { computed, warn } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+import { set } from '@vueuse/core'
 
-export function useShowComponent(ref, timeout = 5000) {
+export function useQuickEnableRef(ref, timeout = 5000) {
   if (typeof ref !== 'object' || ref.value) {
     warn('1 аргумент принимает только значение ref<any>()')
     return
   }
-  ref.value = true
-  setTimeout(() => (ref.value = false), timeout)
+  set(ref, true)
+  setTimeout(() => set(ref, false), timeout)
+}
+
+export function useBreadcrumbs() {
+  const insertBetween = (items, insertion) => {
+    return items.flatMap((value, index, array) =>
+      array.length - 1 !== index ? [value, insertion] : value,
+    )
+  }
+
+  return computed(() => insertBetween(usePage().props.breadcrumbs || [], '/'))
 }

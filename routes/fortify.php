@@ -196,7 +196,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
         ->name('password.confirm');
 
-    // Two Factor Authentication...
+    // Two-Factor Authentication...
     if (Features::enabled(Features::twoFactorAuthentication())) {
         if ($enableViews) {
             Route::get(

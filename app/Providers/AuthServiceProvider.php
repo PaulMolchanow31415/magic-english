@@ -12,7 +12,7 @@ class AuthServiceProvider extends ServiceProvider {
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        // https://runebook.dev/ru/docs/laravel/docs/10.x/authorization#gates:~:text=Policy%20Auto%2DDiscovery
     ];
 
     /**

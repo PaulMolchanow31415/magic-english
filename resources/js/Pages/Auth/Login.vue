@@ -2,12 +2,12 @@
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
+import InputError from '@/Shared/InputError.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
 import { useChallengeV3 } from 'vue-recaptcha'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbCheckbox, FwbInput } from 'flowbite-vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import PrimaryButton from '@/Shared/PrimaryButton.vue'
 
 defineOptions({ layout: StubLayout })
 
