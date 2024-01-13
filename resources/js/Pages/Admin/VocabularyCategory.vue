@@ -69,17 +69,6 @@ function handleCreate() {
   set(isShowEditCell, true)
 }
 
-function onKeyPressed(e) {
-  if (!isShowEditCell.value) {
-    return
-  }
-  if (e.key === 'Enter' && !e.shiftKey) {
-    save()
-  } else if (e.shiftKey && e.code === 'KeyD' && form.id) {
-    remove()
-  }
-}
-
 function editCell(category) {
   scrollTo(0, 0)
   form.id = category.id
@@ -92,7 +81,20 @@ function editCell(category) {
 const formatDate = (timestamp) =>
   useDateFormat(timestamp, 'YYYY-MM-DD hh:mm', { locales: 'ru' }).value.replace(/"/g, '')
 
-useEventListener(document, 'keypress', onKeyPressed)
+function handleKeyDown(e) {
+  if (!isShowEditCell.value) {
+    return
+  }
+
+  if (e.key === 'Enter' && !e.shiftKey) {
+    save()
+  } else if (e.ctrlKey && e.code === 'KeyD' && form.id) {
+    e.preventDefault()
+    remove()
+  }
+}
+
+useEventListener(document, 'keydown', handleKeyDown)
 </script>
 
 <template>
@@ -142,7 +144,7 @@ useEventListener(document, 'keypress', onKeyPressed)
                   Для сохраниния нажмите&nbsp;&nbsp;<kbd class="p-1">Enter</kbd>
                 </p>
                 <p v-show="form.id" class="leading-loose text-red-500">
-                  Чтобы удалить нажмите&nbsp;&nbsp;<kbd class="p-1">Shift</kbd> +
+                  Чтобы удалить нажмите&nbsp;&nbsp;<kbd class="p-1">Ctrl</kbd> +
                   <kbd class="p-1">D</kbd>
                 </p>
               </div>
