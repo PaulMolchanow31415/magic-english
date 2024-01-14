@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const page = usePage()
-const searchedUser = useSearch(props.filters.search, 'admin.user.index')
+const searchedUser = useSearch('admin.user.index', props.filters.search)
 const isShowEditModal = ref(false)
 const userForRemoval = ref(null)
 const form = useForm({ id: null, role: '', is_banned: false })
@@ -151,10 +151,7 @@ function confirmEdit() {
   >
     <div class="space-y-6">
       <InputLabel value="Роль пользователя">
-        <select
-          v-model="form.role"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        >
+        <select v-model="form.role">
           <option v-for="role in roles" :value="role" v-text="role" />
         </select>
       </InputLabel>
@@ -164,37 +161,3 @@ function confirmEdit() {
 </template>
 
 <style scoped></style>
-
-<!--
-/*  .filters-dropdown-label {
-      @apply flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600;
-    }
-    .filters-dropdown-checkbox {
-      @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
-      dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500;
-    }
-    .filters-dropdown-text {
-      @apply w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300 select-none;
-    }*/
-<template #filters>
-        <li>
-          <label class="filters-dropdown-label">
-            <input
-              v-model="selectedFilters.is_banned"
-              type="checkbox"
-              class="filters-dropdown-checkbox"
-            />
-            <span class="filters-dropdown-text">Заблокированный</span>
-          </label>
-        </li>
-        <li>
-          <label class="filters-dropdown-label">
-            <input
-              v-model="selectedFilters.is_admin"
-              type="checkbox"
-              class="filters-dropdown-checkbox"
-            />
-            <span class="filters-dropdown-text">Администратор</span>
-          </label>
-        </li>
-      </template>-->

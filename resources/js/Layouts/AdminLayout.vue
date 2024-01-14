@@ -29,6 +29,9 @@ import NavbarCollapsed from '@/Shared/Admin/NavbarCollapsed.vue'
               </li>
             </NavbarCollapsed>
           </li>
+          <li>
+            <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
+          </li>
         </ul>
       </div>
     </aside>

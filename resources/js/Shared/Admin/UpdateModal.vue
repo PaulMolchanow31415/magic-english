@@ -1,6 +1,6 @@
 <script setup>
 import { FwbButton, FwbModal } from 'flowbite-vue'
-import { useEventListener } from '@vueuse/core'
+import { onKeyPressed, useEventListener } from '@vueuse/core'
 
 defineProps({
   show: {
@@ -36,13 +36,19 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['confirm', 'close'])
+const emit = defineEmits(['confirm', 'close', 'pressEnter'])
 
 function onKeyPress(event) {
   if (event.shiftKey && event.key === 'Enter') {
     emit('confirm')
   }
 }
+
+// без него не получится добавить перевод в Vocabulary.vue
+onKeyPressed('Enter', (e) => {
+  emit('pressEnter')
+  e.preventDefault()
+})
 
 useEventListener(document, 'keypress', onKeyPress)
 </script>
@@ -65,7 +71,7 @@ useEventListener(document, 'keypress', onKeyPress)
             Сохранить
           </FwbButton>
           <p
-            class="text-gray-500 dark:text-gray-400 leading-loose"
+            class="text-gray-500 dark:text-gray-400 leading-[2.5] line-clamp-1"
             :class="{ 'text-xs': size === 'md' }"
           >
             или <kbd class="ms-1">Shift</kbd> + <kbd>Enter</kbd>

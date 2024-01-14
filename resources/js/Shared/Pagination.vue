@@ -47,7 +47,6 @@ onKeyStroke('ArrowRight', () => {
               previous-label="Назад"
               next-label="Вперед"
               show-icons
-              large
             />
           </template>
           <template #content>

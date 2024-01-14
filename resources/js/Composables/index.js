@@ -22,7 +22,7 @@ export function useBreadcrumbs() {
   return computed(() => insertBetween(usePage().props.breadcrumbs || [], '/'))
 }
 
-export function useSearch(searchValue, routeName) {
+export function useSearch(routeName, searchValue) {
   const searched = ref(searchValue || '')
 
   watchThrottled(

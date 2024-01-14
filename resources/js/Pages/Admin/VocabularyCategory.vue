@@ -28,7 +28,7 @@ const isDeleted = ref(false)
 const isError = ref(false)
 const isShowEditCell = ref(false)
 const form = useForm({ id: null, name: '' })
-const searchedCategory = useSearch(props.filters.search, 'admin.vocabulary-category.index')
+const searchedCategory = useSearch('admin.vocabulary-category.index', props.filters.search)
 
 const categoryName = computed({
   get: () => form.name,
@@ -129,7 +129,7 @@ useEventListener(document, 'keydown', handleKeyDown)
       <FwbTableRow v-if="isShowEditCell">
         <FwbTableCell v-text="form.id || 'Пусто'" />
         <FwbTableCell>
-          <Tooltip>
+          <Tooltip placement="bottom">
             <template #trigger>
               <TextInput
                 v-model="categoryName"
@@ -144,8 +144,11 @@ useEventListener(document, 'keydown', handleKeyDown)
                   Для сохраниния нажмите&nbsp;&nbsp;<kbd class="p-1">Enter</kbd>
                 </p>
                 <p v-show="form.id" class="leading-loose text-red-500">
-                  Чтобы удалить нажмите&nbsp;&nbsp;<kbd class="p-1">Ctrl</kbd> +
-                  <kbd class="p-1">D</kbd>
+                  Чтобы удалить нажмите&nbsp;&nbsp;
+                  <kbd class="p-1 bg-red-600 text-white border-red-600">Ctrl</kbd>&nbsp;+&nbsp;<kbd
+                    class="p-1 bg-red-600 text-white border-red-600"
+                    >D</kbd
+                  >
                 </p>
               </div>
             </template>

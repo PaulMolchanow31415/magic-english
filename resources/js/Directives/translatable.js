@@ -77,6 +77,10 @@ async function handleClick(event) {
 
   const res = await axios.get(route('api.translate', { word }))
 
+  if (res.data.length === 0) {
+    return
+  }
+
   popover.show(
     {
       x: event.pageX,
@@ -84,12 +88,7 @@ async function handleClick(event) {
     },
     {
       srcWord: word,
-      // сортировка по убыванию качества преревода - 3 строки в нижнем регистре
-      translated: res.data
-        .sort((a, b) => b.quality - a.quality)
-        .filter((t) => t.translation.match(/^[А-я\s]+$/)) // todo - сделать это на сервере!!!
-        .slice(0, 3)
-        .map((t) => t.translation.trim().toLowerCase()),
+      translated: res.data.length > 2 ? res.data.slice(0, 3) : res.data.slice(0, res.data.length),
     },
   )
 }

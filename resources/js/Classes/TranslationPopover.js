@@ -21,7 +21,7 @@ export default class TranslationPopover {
     this.srcWord = srcWord
     this.translated = translated
 
-    const translations = translated.map((t) => `<li>${t}</li>`).join(' ')
+    const translations = translated.map((t) => `<li>${t}</li>`).join('\n')
     const uuid = crypto.randomUUID()
 
     this.$el.innerHTML = `
