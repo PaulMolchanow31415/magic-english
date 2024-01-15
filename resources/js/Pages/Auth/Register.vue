@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import AuthenticationCard from '@/Components/AuthenticationCard.vue'
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import Checkbox from '@/Shared/Checkbox.vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'

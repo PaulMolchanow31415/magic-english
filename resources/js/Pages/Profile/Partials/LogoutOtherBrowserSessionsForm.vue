@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import ActionSection from '@/Components/ActionSection.vue'
+import ActionSection from '@/Jetstream/ActionSection.vue'
 import DialogModal from '@/Shared/DialogModal.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'

@@ -1,7 +1,7 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3'
-import AuthenticationCard from '@/Components/AuthenticationCard.vue'
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'

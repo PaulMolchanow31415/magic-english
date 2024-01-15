@@ -8,7 +8,7 @@ import {
   FwbButton,
   FwbHeading,
 } from 'flowbite-vue'
-import EmailSubscribe from '@/Components/EmailSubscribe.vue'
+import EmailSubscribe from '@/Shared/EmailSubscribe.vue'
 
 defineProps({ faqs: Array })
 </script>
