@@ -17,7 +17,7 @@ import {
 import Pagination from '@/Shared/Pagination.vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import UpdateModal from '@/Shared/Admin/UpdateModal.vue'
+import UpdateModal from '@/Admin/UpdateModal.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'

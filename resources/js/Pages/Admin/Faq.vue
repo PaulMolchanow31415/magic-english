@@ -14,9 +14,9 @@ import { ref } from 'vue'
 import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import DeleteConfirmationModal from '@/Shared/Admin/DeleteConfirmationModal.vue'
+import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
 import { set } from '@vueuse/core'
-import UpdateModal from '@/Shared/Admin/UpdateModal.vue'
+import UpdateModal from '@/Admin/UpdateModal.vue'
 
 defineProps({ faqs: Array })
 
@@ -74,7 +74,7 @@ function handleDelete(faq) {
 
 <template>
   <Head title="Ответы на частые вопросы" />
-  
+
   <Toaster
     :tosts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Ответ на вопрос успешно добавлен' }),

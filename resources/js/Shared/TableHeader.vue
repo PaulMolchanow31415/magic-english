@@ -6,7 +6,7 @@ import { onMounted } from 'vue'
 import { initDropdowns } from 'flowbite'
 import { useEventListener } from '@vueuse/core'
 import Tooltip from '@/Shared/Tooltip.vue'
-import SearchInput from '@/Shared/Admin/SearchInput.vue'
+import SearchInput from '@/Admin/SearchInput.vue'
 
 const props = defineProps({
   searchPlaceholder: {

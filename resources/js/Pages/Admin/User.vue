@@ -18,10 +18,10 @@ import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
 import { set } from '@vueuse/core'
-import DeleteConfirmationModal from '@/Shared/Admin/DeleteConfirmationModal.vue'
+import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import UpdateModal from '@/Shared/Admin/UpdateModal.vue'
+import UpdateModal from '@/Admin/UpdateModal.vue'
 
 const props = defineProps({
   users: Object,

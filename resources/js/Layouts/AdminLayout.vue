@@ -1,6 +1,6 @@
 <script setup>
-import NavbarLink from '@/Shared/Admin/NavbarLink.vue'
-import NavbarCollapsed from '@/Shared/Admin/NavbarCollapsed.vue'
+import NavbarLink from '@/Admin/NavbarLink.vue'
+import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
 </script>
 
 <template>
