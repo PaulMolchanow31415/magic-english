@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->string('en')->unique();
             $table->json('translations');
             $table->string('poster_url', 2048)->nullable();
-            $table->timestamps();
         });
     }
 

@@ -25,7 +25,12 @@ defineEmits(['close'])
 <template>
   <teleport to="body">
     <ToastWrapper>
-      <FwbToast v-for="(message, index) in tosts" :type="message.type" v-show="message.isShow">
+      <FwbToast
+        v-for="(message, index) in tosts"
+        :type="message.type"
+        v-show="message.isShow"
+        :key="index"
+      >
         <template #icon>
           <Icon v-if="message.type === 'success'" :icon="['fas', 'check']" />
           <Icon v-else-if="message.type === 'info'" :icon="['fas', 'circle-info']" />

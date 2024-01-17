@@ -44,7 +44,7 @@ export default class TranslationPopover {
               </div>
           </div>
           <div class="px-3 py-2">
-              <ul class="mb-2 leading-normal list-disc pl-5">${translations}</ul>
+              <ul class="mb-2 leading-normal list-disc pl-6">${translations}</ul>
               <!-- Learn button -->
               <button id="${uuid}-learn-btn"
                       type="button"

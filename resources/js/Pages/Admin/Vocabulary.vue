@@ -3,7 +3,7 @@ import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Shared/TableHeader.vue'
-import { computed, nextTick, reactive, ref } from 'vue'
+import { computed, inject, nextTick, reactive, ref } from 'vue'
 import {
   FwbAvatar,
   FwbFileInput,
@@ -22,11 +22,14 @@ import TextInput from '@/Shared/TextInput.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import TableActionButton from '@/Admin/TableActionButton.vue'
 
 const props = defineProps({
   dictionary: Object,
   filters: Object,
 })
+
+const avatarInitials = inject('avatarInitials')
 
 const isSaved = ref(false)
 const isDeleted = ref(false)
@@ -192,7 +195,7 @@ function confirmEdit() {
             size="xs"
             :alt="vocabulary.en"
             :img="vocabulary.poster_url"
-            :initials="vocabulary.en.charAt(0)"
+            :initials="avatarInitials(vocabulary.en)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="vocabulary.en" />
@@ -207,20 +210,8 @@ function confirmEdit() {
         </FwbTableCell>
         <FwbTableCell>
           <div class="flex gap-6">
-            <button
-              @click="handleEdit(vocabulary)"
-              type="button"
-              class="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Редактировать
-            </button>
-            <button
-              @click="remove(vocabulary)"
-              type="button"
-              class="text-red-600 dark:text-red-400 hover:underline"
-            >
-              Удалить
-            </button>
+            <TableActionButton @click="handleEdit(vocabulary)">Редактировать</TableActionButton>
+            <TableActionButton @click="remove(vocabulary)" theme="red">Удалить</TableActionButton>
           </div>
         </FwbTableCell>
       </FwbTableRow>

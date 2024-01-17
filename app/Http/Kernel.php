@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\VerifyRecaptcha;
+use App\Http\Middleware\EnsureUserIsAllowed;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel {
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel {
         'verified'         => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'recaptcha'        => VerifyRecaptcha::class,
         'hasRole'          => CheckRole::class,
+        'allowed'          => EnsureUserIsAllowed::class,
     ];
 }

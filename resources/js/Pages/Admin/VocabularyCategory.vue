@@ -79,7 +79,7 @@ function editCell(category) {
 }
 
 const formatDate = (timestamp) =>
-  useDateFormat(timestamp, 'YYYY-MM-DD hh:mm', { locales: 'ru' }).value.replace(/"/g, '')
+  useDateFormat(timestamp, 'YYYY-MM-DD hh:mm').value.replace(/"/g, '')
 
 function handleKeyDown(e) {
   if (!isShowEditCell.value) {
@@ -157,11 +157,13 @@ useEventListener(document, 'keydown', handleKeyDown)
       </FwbTableRow>
       <FwbTableRow v-for="category in categories.data">
         <FwbTableCell v-text="category.id" />
-        <FwbTableCell>
+        <FwbTableCell :title="category.name">
           <Tooltip>
             <template #trigger>
-              <button type="button" class="p-2 text-left" @dblclick="editCell(category)">
-                {{ category.name }}
+              <button type="button" class="text-left" @dblclick="editCell(category)">
+                <span class="line-clamp-1">
+                  {{ category.name }}
+                </span>
               </button>
             </template>
             <template #content>
@@ -171,8 +173,12 @@ useEventListener(document, 'keydown', handleKeyDown)
             </template>
           </Tooltip>
         </FwbTableCell>
-        <FwbTableCell v-text="formatDate(category.updated_at)" />
-        <FwbTableCell v-text="formatDate(category.created_at)" />
+        <FwbTableCell :title="formatDate(category.updated_at)">
+          <span class="line-clamp-1">{{ formatDate(category.updated_at) }}</span>
+        </FwbTableCell>
+        <FwbTableCell :title="formatDate(category.created_at)">
+          <span class="line-clamp-1">{{ formatDate(category.created_at) }}</span>
+        </FwbTableCell>
         <FwbTableCell />
       </FwbTableRow>
     </FwbTableBody>

@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 
 class UserAdministrationController extends Controller {
 
-    private function defineRole(string|null $value): string {
+    private function defineRole(?string $value): string {
         if (empty($value)) {
             return Role::USER;
         } elseif ($value !== Role::USER and $value !== Role::ADMIN) {
@@ -43,7 +43,7 @@ class UserAdministrationController extends Controller {
         ]);
     }
 
-    public function store(Request $request): RedirectResponse {
+    public function store(Request $request): void {
         $request->validate([
             'id'        => ['int', 'required'],
             'role'      => ['string'],
@@ -52,10 +52,8 @@ class UserAdministrationController extends Controller {
 
         $user = User::findOrFail($request['id']);
         $user->role = $this->defineRole($request['role']);
-        $user->is_banned = isset($request['is_banned']) ? $request['is_banned'] : false;
+        $user->is_banned = $request['is_banned'] ?? false;
         $user->save();
-
-        return to_route('admin.user.index');
     }
 
     public function destroy(int $id): RedirectResponse {

@@ -4,8 +4,13 @@ https://mymemory.translated.net/doc/spec.php
 
 # Frameworks
 
+_creates migration, resource controller and factory_
+php artisan make:model Example -mrcf
 _commands_
 https://laravel.com/docs/10.x/eloquent#generating-model-classes
+_seeder commands_
+https://laravel.com/docs/10.x/seeding#running-seeders
+_frontend animations_
 https://gsap.com/docs/v3/Installation/
 https://inertiajs.com/authorization
 https://inertiajs.com/error-handling
@@ -100,6 +105,11 @@ https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html
 * Ctrl + K - быстрый поиск, файл (SearchInput)
 * 2 лкм - редактирование категории лексики, файл (VocabularyCategory)
 * Ctrl + D - Удаление существующей категории лексики (VocabularyCategory)
+
+# Testing
+
+https://laravel.com/docs/10.x/testing
+
 
 <div class="grid gap-4 mb-4 sm:grid-cols-2">
   <div>

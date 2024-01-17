@@ -29,7 +29,7 @@ class VocabularyController extends Controller {
             'id'                  => 'int|nullable',
             'en'                  => 'required|string',
             'translations'        => 'required|array',
-            'photo_external_path' => 'url|nullable',
+            'photo_external_path' => 'active_url|nullable',
         ]);
 
         $word = Vocabulary::firstOrNew(['id' => $request['id']]);

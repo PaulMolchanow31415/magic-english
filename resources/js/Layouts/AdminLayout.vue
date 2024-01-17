@@ -19,6 +19,9 @@ import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
             />
           </li>
           <li>
+            <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
+          </li>
+          <li>
             <NavbarCollapsed text="Категории">
               <li>
                 <NavbarLink
@@ -30,7 +33,7 @@ import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
             </NavbarCollapsed>
           </li>
           <li>
-            <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
+            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
           </li>
         </ul>
       </div>

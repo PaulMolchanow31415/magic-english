@@ -7,8 +7,11 @@ import {
   faBolt,
   faCheck,
   faCircleInfo,
+  faCommentDots,
+  faComments,
   faDatabase,
   faDesktop,
+  faEllipsis,
   faEllipsisVertical,
   faEnvelope,
   faFilter,
@@ -30,9 +33,11 @@ import {
   faUsers,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
 
 library.add(
   fas,
+  far,
   faDesktop,
   faMobileScreenButton,
   faCircleInfo,
@@ -61,6 +66,9 @@ library.add(
   faList,
   faSquareCaretLeft,
   faSquareCaretRight,
+  faEllipsis,
+  faCommentDots,
+  faComments,
 )
 
 // <font-awesome-icon :icon="['fas', 'graduation-cap']" />

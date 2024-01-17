@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique()->nullable(false);
+            $table->string('email')->unique();
             $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });

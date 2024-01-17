@@ -44,7 +44,7 @@ defineProps({ faqs: Array })
         class="border-b border-gray-200 dark:border-gray-700 shadow-md rounded-t-lg"
         :open-first-item="false"
       >
-        <FwbAccordionPanel v-for="faq in faqs">
+        <FwbAccordionPanel v-for="faq in faqs" :key="faq.id">
           <FwbAccordionHeader>{{ faq.heading }}</FwbAccordionHeader>
           <FwbAccordionContent>
             <p v-html="faq.content" class="text-gray-500 dark:text-gray-400 accordion-content" />

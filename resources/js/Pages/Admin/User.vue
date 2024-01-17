@@ -12,7 +12,7 @@ import {
   FwbToggle,
 } from 'flowbite-vue'
 import TableHeader from '@/Shared/TableHeader.vue'
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
@@ -22,12 +22,15 @@ import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import UpdateModal from '@/Admin/UpdateModal.vue'
+import TableActionButton from '@/Admin/TableActionButton.vue'
 
 const props = defineProps({
   users: Object,
   roles: Array,
   filters: Object,
 })
+
+const avatarInitials = inject('avatarInitials')
 
 const page = usePage()
 const searchedUser = useSearch('admin.user.index', props.filters.search)
@@ -89,7 +92,13 @@ function confirmEdit() {
     <FwbTableBody>
       <FwbTableRow v-for="user in users.data">
         <FwbTableCell>
-          <FwbAvatar :alt="user.name" :img="user.profile_photo_url" rounded />
+          <FwbAvatar
+            :alt="user.name"
+            :img="user.profile_photo_url"
+            rounded
+            size="sm"
+            :initials="avatarInitials(user.name)"
+          />
         </FwbTableCell>
         <FwbTableCell v-text="user.name" />
         <FwbTableCell>
@@ -105,20 +114,10 @@ function confirmEdit() {
         </FwbTableCell>
         <FwbTableCell>
           <div class="flex gap-6">
-            <button
-              @click="handleEdit(user)"
-              type="button"
-              class="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Редактировать
-            </button>
-            <button
-              @click="userForRemoval = user"
-              type="button"
-              class="text-red-600 dark:text-red-400 hover:underline"
-            >
+            <TableActionButton @click="handleEdit(user)">Редактировать</TableActionButton>
+            <TableActionButton @click="userForRemoval = user" theme="red">
               Удалить
-            </button>
+            </TableActionButton>
           </div>
         </FwbTableCell>
       </FwbTableRow>
