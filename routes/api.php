@@ -15,9 +15,7 @@ use App\Http\Controllers\VocabularyController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', fn() => request()->user());
 
 Route::get('/translate', [VocabularyController::class, 'translate'])
     ->name('api.translate')

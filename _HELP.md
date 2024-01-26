@@ -1,115 +1,117 @@
 # Apis
 
-https://mymemory.translated.net/doc/spec.php
+<https://mymemory.translated.net/doc/spec.php>
 
-# Frameworks
+## Frameworks
 
-_creates migration, resource controller and factory_
+_creates migration, rest controller and factory_
 php artisan make:model Example -mrcf
 _commands_
-https://laravel.com/docs/10.x/eloquent#generating-model-classes
+<https://laravel.com/docs/10.x/eloquent#generating-model-classes>
 _seeder commands_
-https://laravel.com/docs/10.x/seeding#running-seeders
+<https://laravel.com/docs/10.x/seeding#running-seeders>
 _frontend animations_
-https://gsap.com/docs/v3/Installation/
-https://inertiajs.com/authorization
-https://inertiajs.com/error-handling
-https://laravel.com/docs/10.x/eloquent-mutators#array-object-and-collection-casting
+<https://gsap.com/docs/v3/Installation/>
+<https://inertiajs.com/authorization>
+<https://inertiajs.com/error-handling>
+<https://laravel.com/docs/10.x/eloquent-mutators#array-object-and-collection-casting>
 **database**
-https://laravel.com/docs/10.x/migrations#rolling-back-migrations
+<https://laravel.com/docs/10.x/migrations#rolling-back-migrations>
 **define default language in browser**
-https://vueuse.org/core/usePreferredLanguages/#usepreferredlanguages
+<https://vueuse.org/core/usePreferredLanguages/#usepreferredlanguages>
 **share button**
-https://vueuse.org/core/useShare/#useshare
-**notification**
-https://vueuse.org/core/useWebNotification/#usewebnotification
-**listening key stroke**
-https://vueuse.org/core/onKeyStroke/#onkeystroke
+<https://vueuse.org/core/useShare/#useshare>
+**vue 3 notification**
+<https://vueuse.org/core/useWebNotification/#usewebnotification>
+**listening keystroke**
+<https://vueuse.org/core/onKeyStroke/#onkeystroke>
 **focusing input**
-https://vueuse.org/core/useFocus/#usefocus
+<https://vueuse.org/core/useFocus/#usefocus>
 
-# Components
+## Components
 
-* For course
+- For course
 
+<http://begin-english.ru/>
 **table**
-https://vueup.github.io/vue-quill/guide/modules.html#quill-modules
-https://flowbite.com/docs/components/breadcrumb/#solid-background
-https://flowbite-vue.com/components/radio
-https://flowbite-vue.com/components/card
-https://flowbite.com/blocks/publisher/blog-templates/
-https://flowbite-vue.com/components/tooltip#vue-tooltip-flowbite
-https://flowbite-vue.com/components/progress
-https://vueuse.org/core/useSpeechSynthesis/#usespeechsynthesis
+<https://vueup.github.io/vue-quill/guide/modules.html#quill-modules>
+<https://flowbite.com/docs/components/breadcrumb/#solid-background>
+<https://flowbite-vue.com/components/radio>
+<https://flowbite-vue.com/components/card>
+<https://flowbite.com/blocks/publisher/blog-templates/>
+<https://flowbite-vue.com/components/tooltip#vue-tooltip-flowbite>
+<https://flowbite-vue.com/components/progress>
+<https://vueuse.org/core/useSpeechSynthesis/#usespeechsynthesis>
 **course in process**
-https://flowbite-vue.com/components/timeline#default-timeline-usage
+<https://flowbite-vue.com/components/timeline#default-timeline-usage>
 **infinite scroll**
-https://vueuse.org/core/useInfiniteScroll/#useinfinitescroll
+<https://vueuse.org/core/useInfiniteScroll/#useinfinitescroll>
 
-* For music
+- For music
 
-https://vueuse.org/core/useMemory/#usememory
-https://github.com/vueuse/sound#examples
-https://flowbite.com/docs/components/bottom-navigation/#video-player-bar
+<https://vueuse.org/core/useMemory/#usememory>
+<https://github.com/vueuse/sound#examples>
+<https://flowbite.com/docs/components/bottom-navigation/#video-player-bar>
 
-* For comments
+- For comments
 
-https://flowbite.com/blocks/publisher/comments/#default-comments-list
-https://flowbite-vue.com/components/textarea#comment-box
+<https://flowbite.com/blocks/publisher/comments/#default-comments-list>
+<https://flowbite-vue.com/components/textarea#comment-box>
 **delete comment**
-https://flowbite.com/blocks/marketing/popup/
+<https://flowbite.com/blocks/marketing/popup/>
 
-* For user profile
+- For user profile
 
-https://flowbite-vue.com/components/toggle
+<https://flowbite-vue.com/components/toggle>
 
-* For admin panel
+- For admin panel
 
-https://flowbite-vue.com/components/tooltip#vue-tooltip-flowbite
-https://flowbite-vue.com/components/badge#
-https://flowbite-vue.com/components/sidebar#content-separator
+<https://flowbite-vue.com/components/tooltip#vue-tooltip-flowbite>
+<https://flowbite-vue.com/components/badge#>
+<https://flowbite-vue.com/components/sidebar#content-separator>
 **CRUD**
-https://flowbite-vue.com/components/fileInput#dropone
-https://flowbite-vue.com/components/modal#vue-modal-flowbite
-https://flowbite.com/blocks/application/table-headers/
-https://flowbite-vue.com/components/table#hoverable-example
-https://flowbite.com/blocks/application/crud-update-modals/
-https://flowbite.com/blocks/application/crud-delete-confirm/
+<https://flowbite-vue.com/components/fileInput#dropone>
+<https://flowbite-vue.com/components/modal#vue-modal-flowbite>
+<https://flowbite.com/blocks/application/table-headers/>
+<https://flowbite-vue.com/components/table#hoverable-example>
+<https://flowbite.com/blocks/application/crud-update-modals/>
+<https://flowbite.com/blocks/application/crud-delete-confirm/>
 
-* For user status in network
+- For user status in network
 
-https://flowbite-vue.com/components/avatar#dot-indicator
+<https://flowbite-vue.com/components/avatar#dot-indicator>
 
-* 404
+- 429 Too many attempts
 
-https://flowbite.com/blocks/marketing/404/#default-example
+- 404
 
-* 500
+<https://flowbite.com/blocks/marketing/404/#default-example>
 
-https://flowbite.com/blocks/marketing/500/#default-500-page
+- 500
 
-# Localization
+<https://flowbite.com/blocks/marketing/500/#default-500-page>
 
-https://dev.to/paulocastellano/how-to-work-with-laravel-inertia-js-and-vue-i18n-26ih
-https://kazupon.github.io/vue-i18n/guide/formatting.html#named-formatting
+## Localization
 
-# Diploma docs helpers
+<https://dev.to/paulocastellano/how-to-work-with-laravel-inertia-js-and-vue-i18n-26ih>
+<https://kazupon.github.io/vue-i18n/guide/formatting.html#named-formatting>
 
-https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html
+## Diploma docs helpers
 
-# Short keys in program
+<https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html>
 
-* Shift + N - добавление, файл (TableHeader)
-* ArrowLeft, ArrowRight - навигация в админ панели, файл (Pagination)
-* Shift + Enter - подтверждение сохранения, файл (UpdateModal)
-* Ctrl + K - быстрый поиск, файл (SearchInput)
-* 2 лкм - редактирование категории лексики, файл (VocabularyCategory)
-* Ctrl + D - Удаление существующей категории лексики (VocabularyCategory)
+## Short keys in program
 
-# Testing
+- Shift + N - добавление, файл (TableHeader)
+- ArrowLeft, ArrowRight - навигация в админ панели, файл (Pagination)
+- Shift + Enter - подтверждение сохранения, файл (UpdateModal)
+- Ctrl + K - быстрый поиск, файл (SearchInput)
+- 2 лкм - редактирование категории лексики, файл (VocabularyCategory)
+- Ctrl + D - Удаление существующей категории лексики (VocabularyCategory)
 
-https://laravel.com/docs/10.x/testing
+## Testing
 
+<https://laravel.com/docs/10.x/testing>
 
 <div class="grid gap-4 mb-4 sm:grid-cols-2">
   <div>

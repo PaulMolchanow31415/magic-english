@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Inertia\Response;
 use App\Models\Comment;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
-use Inertia\ResponseFactory;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller {
 
@@ -21,7 +18,7 @@ class CommentController extends Controller {
 
         $created = new Comment();
         $created->message = $request['message'];
-        $user = User::find(Auth::id());
+        $user = User::find(auth()->id());
         $discussion = Discussion::whereForRouteName($request['discussion_name'])->firstOrFail();
         $created->creator()->associate($user);
         $created->discussion()->associate($discussion);
@@ -39,14 +36,14 @@ class CommentController extends Controller {
             'commentId'  => 'int|required',
             'isReported' => 'boolean|nullable',
         ]);
-        
+
         $reported = Comment::findOrFail($request['commentId']);
         $reported->is_reported = $request['isReported'] ?? true;
         $reported->save();
     }
 
     public function destroy(Comment $comment): void {
-        if ($comment->creator_id !== Auth::id()) {
+        if ($comment->creator_id !== auth()->id()) {
             abort(403);
         }
 

@@ -4,6 +4,7 @@ import {
   faAngleLeft,
   faAngleRight,
   faBars,
+  faBell,
   faBolt,
   faCheck,
   faCircleInfo,
@@ -69,6 +70,7 @@ library.add(
   faEllipsis,
   faCommentDots,
   faComments,
+  faBell,
 )
 
 // <font-awesome-icon :icon="['fas', 'graduation-cap']" />

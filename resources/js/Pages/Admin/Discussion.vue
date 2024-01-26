@@ -175,7 +175,7 @@ const formatDate = (timestamp) =>
   <DeleteConfirmationModal
     :show="!!discussionForRemoval"
     @confirm="confirmDelete"
-    @close="discussionForRemoval.value = null"
+    @close="discussionForRemoval = null"
   >
     <template #message v-if="discussionForRemoval">
       Вы уверены, что хотите удалить обсуждение <q>{{ discussionForRemoval.for_route_name }}</q> ?

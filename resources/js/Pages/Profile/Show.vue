@@ -11,6 +11,7 @@ import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import { set } from '@vueuse/core'
+import UpdateSubscribeStatusForm from '@/Pages/Profile/Partials/UpdateSubscribeStatusForm.vue'
 
 defineProps({
   confirmsTwoFactorAuthentication: Boolean,
@@ -26,12 +27,16 @@ const showPasswordInfo = () => useQuickEnableRef(passwordSaved)
 const showSessionCloseInfo = () => useQuickEnableRef(sessionClosed)
 
 function closeToast(index) {
-  if (index === 0) {
-    set(profileInfoSaved, false)
-  } else if (index === 1) {
-    set(passwordSaved, false)
-  } else if (index === 2) {
-    set(sessionClosed, false)
+  switch (index) {
+    case 0:
+      set(profileInfoSaved, false)
+      break
+    case 1:
+      set(passwordSaved, false)
+      break
+    case 2:
+      set(sessionClosed, false)
+      break
   }
 }
 </script>
@@ -77,10 +82,16 @@ function closeToast(index) {
       class="mt-10 sm:mt-0"
     />
 
-    <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+    <div>
+      <HorizontalLine />
+
+      <UpdateSubscribeStatusForm class="mt-10 sm:mt-0" />
+    </div>
+
+    <div v-if="$page.props.jetstream.hasAccountDeletionFeatures">
       <HorizontalLine />
 
       <DeleteUserForm class="mt-10 sm:mt-0" />
-    </template>
+    </div>
   </div>
 </template>

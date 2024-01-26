@@ -2,42 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Inertia\Response;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
+use Inertia\ResponseFactory;
 
 class SubscriberController extends Controller {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index() {
-        // todo
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): void {
-        $request->validate([
-            'email' => 'required|email|unique:subscribers',
-        ]);
+        $request->validate(['email' => 'required|email|unique:subscribers']);
+        Subscriber::create(['email' => $request['email']]);
+    }
 
-        Subscriber::create([
-            'email' => $request['email'],
+    public function isSubscribed(): int {
+        $subscriber = Subscriber::firstOrCreate([
+            'email' => auth()->user()->email,
+        ], ['is_enabled' => false]);
+
+        return $subscriber->is_enabled;
+    }
+
+    public function changeSubscribeStatus(/*request*/): void {
+        Subscriber::whereEmail(auth()->user()->email)->update([
+            'is_enabled' => request('status', false),
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Subscriber $subscriber) {
-        // todo
+    public function index(Request $request): Response|ResponseFactory {
+        return inertia('Admin/Subscriber', [
+            'subscribers' => Subscriber::search($request['search'])->paginate(10),
+
+            'filters' => $request->only(['search']),
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Subscriber $subscriber) {
-        // todo
+    public function destroy(Subscriber $subscriber): void {
+        $subscriber->delete();
     }
 }

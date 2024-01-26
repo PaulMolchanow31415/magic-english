@@ -22,9 +22,9 @@ class UserAdministrationController extends Controller {
         return $value;
     }
 
-    public function index(): Response|ResponseFactory {
+    public function index(Request $request): Response|ResponseFactory {
         return inertia('Admin/User', [
-            'users' => User::search(request('search'))
+            'users' => User::search($request['search'])
                 ->whereNotIn('id', [auth()->user()->id])
                 ->paginate(5)
                 ->through(function ($user) {
@@ -38,7 +38,7 @@ class UserAdministrationController extends Controller {
                     ];
                 }),
 
-            'filters' => request()->only(['search']),
+            'filters' => $request->only(['search']),
             'roles'   => [Role::USER, Role::ADMIN],
         ]);
     }

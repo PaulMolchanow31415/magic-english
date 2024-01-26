@@ -1,6 +1,5 @@
 <script setup>
 import {
-  FwbA,
   FwbAvatar,
   FwbBadge,
   FwbTable,
@@ -13,7 +12,7 @@ import {
 } from 'flowbite-vue'
 import TableHeader from '@/Shared/TableHeader.vue'
 import { inject, ref } from 'vue'
-import { Head, router, useForm, usePage } from '@inertiajs/vue3'
+import { Head, router, useForm } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
@@ -23,6 +22,7 @@ import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import UpdateModal from '@/Admin/UpdateModal.vue'
 import TableActionButton from '@/Admin/TableActionButton.vue'
+import EmailA from '@/Admin/EmailA.vue'
 
 const props = defineProps({
   users: Object,
@@ -32,7 +32,6 @@ const props = defineProps({
 
 const avatarInitials = inject('avatarInitials')
 
-const page = usePage()
 const searchedUser = useSearch('admin.user.index', props.filters.search)
 const isShowEditModal = ref(false)
 const userForRemoval = ref(null)
@@ -102,7 +101,7 @@ function confirmEdit() {
         </FwbTableCell>
         <FwbTableCell v-text="user.name" />
         <FwbTableCell>
-          <FwbA :href="`mailto:${user.email}`">{{ user.email }}</FwbA>
+          <EmailA :email="user.email" />
         </FwbTableCell>
         <FwbTableCell v-text="user.role" />
         <FwbTableCell>

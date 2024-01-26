@@ -6,22 +6,22 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\UserAdministrationController;
 use App\Http\Controllers\VocabularyCategoryController;
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+    ...config('auth.authenticated_permissions'),
     'hasRole:'.Role::ADMIN,
 ])->name('admin.')->prefix("/admin")->group(function () {
     // fortify не позволяет дополнительно настраивать других пользователей, поэтому ->
     Route::resource('user', UserAdministrationController::class)
         ->only(['index', 'store', 'destroy']);
 
-    Route::resource('faq', FaqController::class)
-        ->only(['index', 'store', 'destroy']);
+    Route::resource('subscriber', SubscriberController::class)->only(['index', 'destroy']);
+
+    Route::resource('faq', FaqController::class)->only(['index', 'store', 'destroy']);
 
     Route::resource('vocabulary-category', VocabularyCategoryController::class)
         ->only(['index', 'show', 'store', 'destroy']);

@@ -19,7 +19,7 @@ const { execute } = useChallengeV3('subscribeNewsletter')
 async function submit() {
   form.recaptcha_token = await execute()
 
-  form.post(route('subscribe'), {
+  form.post(route('subscribe.store'), {
     onSuccess: () => useQuickEnableRef(isSuccess, 3000),
     onError: () => useQuickEnableRef(isError, 3000),
     onFinish: () => form.reset(),

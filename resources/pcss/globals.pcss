@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] { display: none; }
+[x-cloak] {
+  display: none;
+}
 
 @layer base {
   select {
@@ -51,15 +53,21 @@
     md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:hover:bg-transparent;
   }
   .accordion-content {
-    p + p { @apply mt-1; }
-    ul, ol { @apply space-y-2 list-decimal list-inside; }
+    p + p {
+      @apply mt-1;
+    }
+    ul,
+    ol {
+      @apply space-y-2 list-decimal list-inside;
+    }
   }
   .accordion-button-group {
     @apply flex mt-6 gap-4;
-    button { @apply font-medium text-gray-700 dark:text-gray-200 text-sm leading-normal hover:underline; }
+    button {
+      @apply font-medium text-gray-700 dark:text-gray-200 text-sm leading-normal hover:underline;
+    }
   }
 }
 
 @layer utilities {
-
 }

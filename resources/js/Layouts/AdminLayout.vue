@@ -19,7 +19,13 @@ import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
             />
           </li>
           <li>
+            <NavbarLink :to="route('admin.subscriber.index')" icon="bell" text="Подписчики" />
+          </li>
+          <li>
             <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
+          </li>
+          <li>
+            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
           </li>
           <li>
             <NavbarCollapsed text="Категории">
@@ -31,9 +37,6 @@ import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
                 />
               </li>
             </NavbarCollapsed>
-          </li>
-          <li>
-            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
           </li>
         </ul>
       </div>
