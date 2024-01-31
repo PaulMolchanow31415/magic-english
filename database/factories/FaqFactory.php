@@ -16,7 +16,7 @@ class FaqFactory extends Factory {
     public function definition(): array {
         return [
             'heading' => $this->faker->sentence().'?',
-            'content' => $this->faker->text(),
+            'content' => $this->faker->text(300),
         ];
     }
 }

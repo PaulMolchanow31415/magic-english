@@ -14,10 +14,10 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
-import TableActionButton from '@/Admin/TableActionButton.vue'
+import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
+import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import Pagination from '@/Shared/Pagination.vue'
-import EmailA from '@/Admin/EmailA.vue'
+import EmailA from '@/Pages/Admin/Partials/EmailA.vue'
 import { set } from '@vueuse/core'
 
 const props = defineProps({
@@ -68,7 +68,7 @@ function confirmDelete() {
         <FwbTableCell>
           <FwbBadge
             :type="subscriber.is_enabled ? 'green' : 'red'"
-            v-text="subscriber.is_enabled ? 'Разблокирован' : 'Заблокирован'"
+            v-text="subscriber.is_enabled ? 'Подписан' : 'Не подписан'"
             class="!mr-0 !rounded-md"
           />
         </FwbTableCell>

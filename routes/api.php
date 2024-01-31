@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VocabularyController;
+use App\Http\Controllers\VocabularyCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,14 @@ use App\Http\Controllers\VocabularyController;
 
 Route::middleware('auth:sanctum')->get('/user', fn() => request()->user());
 
-Route::get('/translate', [VocabularyController::class, 'translate'])
-    ->name('api.translate')
-    ->middleware(['throttle:60,1']);
+Route::name('api.')->group(function () {
+    Route::get('/translate', [VocabularyController::class, 'translate'])
+        ->name('translate')
+        ->middleware(['throttle:60,1']);
+
+    Route::get('/vocabularies/{search}', [VocabularyController::class, 'list'])
+        ->name('vocabulary.list');
+
+    Route::get('/vocabulary-category/{search}', [VocabularyCategoryController::class, 'list'])
+        ->name('vocabulary-category.list');
+});

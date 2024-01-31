@@ -6,6 +6,7 @@ import {
   faBars,
   faBell,
   faBolt,
+  faBook,
   faCheck,
   faCircleInfo,
   faCommentDots,
@@ -71,16 +72,5 @@ library.add(
   faCommentDots,
   faComments,
   faBell,
+  faBook,
 )
-
-// <font-awesome-icon :icon="['fas', 'graduation-cap']" />
-// <font-awesome-icon :icon="['fas', 'envelope']" />
-// <font-awesome-icon :icon="['fas', 'address-card']" />
-// <font-awesome-icon :icon="['fas', 'spell-check']" />
-// <font-awesome-icon :icon="['fas', 'language']" />
-// <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
-// <font-awesome-icon :icon="['fas', 'check']" />
-// <font-awesome-icon :icon="['fas', 'xmark']" />
-// <font-awesome-icon :icon="['fas', 'circle-info']" />
-// <font-awesome-icon :icon="['fas', 'desktop']" />
-// <font-awesome-icon :icon="['fas', 'mobile-screen-button']" />

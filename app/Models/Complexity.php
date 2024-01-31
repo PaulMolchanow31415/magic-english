@@ -3,7 +3,7 @@
 namespace App\Models;
 
 enum Complexity: string {
-    case EASY   = 'Легкий';
-    case MIDDLE = 'Средний';
-    case HARD   = 'Сложный';
+    case EASY   = 'легкий';
+    case MIDDLE = 'средний';
+    case HARD   = 'сложный';
 }

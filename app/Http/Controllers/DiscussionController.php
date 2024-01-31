@@ -16,10 +16,8 @@ class DiscussionController extends Controller {
         ]);
     }
 
-    public function show(string $routeName): array {
-        $discussion = Discussion::firstOrCreate(['for_route_name' => $routeName]);
-
-        return ['comments' => $discussion->comments];
+    public function show(int $id) {
+        return Discussion::find($id);
     }
 
     public function destroy(int $id): void {

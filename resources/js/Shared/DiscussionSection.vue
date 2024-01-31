@@ -10,8 +10,8 @@ export default defineComponent({
   name: 'DiscussionSection',
   components: { TextInput, FwbInput, InputLabel, DiscussionComment, FwbA, FwbButton, FwbTextarea },
   props: {
-    forRouteName: {
-      type: String,
+    discussionId: {
+      type: Number,
       required: true,
     },
   },
@@ -28,14 +28,14 @@ export default defineComponent({
       form: useForm({
         message: '',
         reply_to_id: null,
-        discussion_name: props.forRouteName,
+        discussion_id: props.discussionId,
       }),
     }
   },
   methods: {
     loadComments() {
       axios
-        .get(route('discussion.show', { routeName: this.forRouteName }))
+        .get(route('discussion.show', { id: this.discussionId }))
         .then((res) => (this.discussion = res.data))
     },
     onReply(comment) {
@@ -67,7 +67,7 @@ export default defineComponent({
       const result = []
       const indexed = new Set()
       let anchor
-      let chunk
+      let repliers
 
       for (let i = 0; i < comments.length; i++) {
         if (indexed.has(i)) {
@@ -76,14 +76,14 @@ export default defineComponent({
 
         anchor = comments[i]
 
-        chunk = comments.filter((comment, index) => {
+        repliers = comments.filter((comment, index) => {
           if (comment.reply_to_id === anchor.id && !indexed.has(index)) {
             indexed.add(index)
             return true
           }
         })
 
-        result.push(anchor, ...chunk)
+        result.push(anchor, ...repliers)
       }
 
       return result

@@ -14,9 +14,9 @@ import { ref } from 'vue'
 import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
+import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import { set } from '@vueuse/core'
-import UpdateModal from '@/Admin/UpdateModal.vue'
+import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 
 defineProps({ faqs: Array })
 

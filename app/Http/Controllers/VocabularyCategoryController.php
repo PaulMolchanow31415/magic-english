@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use App\Models\VocabularyCategory;
 use Illuminate\Http\RedirectResponse;
 
@@ -14,8 +15,7 @@ class VocabularyCategoryController extends Controller {
     public function index(): Response|ResponseFactory {
         return inertia('Admin/VocabularyCategory', [
             'categories' => VocabularyCategory::search(request('search'))->paginate(15),
-
-            'filters' => request()->only(['search']),
+            'filters'    => request()->only(['search']),
         ]);
     }
 
@@ -31,6 +31,10 @@ class VocabularyCategoryController extends Controller {
         );
 
         return to_route('admin.vocabulary-category.index');
+    }
+
+    public function list(string $search): JsonResponse {
+        return response()->json(VocabularyCategory::search($search)->paginate(15));
     }
 
     public function show(VocabularyCategory $category) {

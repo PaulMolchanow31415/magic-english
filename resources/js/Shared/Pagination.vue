@@ -34,7 +34,7 @@ onKeyStroke('ArrowRight', () => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div v-if="data.prev_page_url || data.next_page_url" class="w-full">
     <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
       <div
         class="flex flex-col items-center justify-between p-4 pe-6 space-y-3 md:flex-row md:space-y-0 md:space-x-4"

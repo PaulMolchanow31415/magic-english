@@ -6,6 +6,7 @@ use Inertia\Response;
 use App\Models\Vocabulary;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
@@ -18,6 +19,12 @@ class VocabularyController extends Controller {
             'dictionary' => Vocabulary::search(request('search'))->paginate(30),
             'filters'    => request()->only(['search']),
         ]);
+    }
+
+    public function list(string $search): JsonResponse {
+        return response()->json(
+            Vocabulary::search($search)->paginate(15),
+        );
     }
 
     public function show(Vocabulary $vocabulary) {
@@ -34,7 +41,7 @@ class VocabularyController extends Controller {
 
         $word = Vocabulary::firstOrNew(['id' => $request['id']]);
         $oldPath = $word->poster_url;
-        $updatedPath = $this->upload($oldPath, $request);
+        $updatedPath = $this->upload($oldPath);
 
         Vocabulary::updateOrCreate(
             ['id' => $request['id']],
@@ -112,7 +119,7 @@ class VocabularyController extends Controller {
 
         $this->deleteFileIfExist($request['filename']);
 
-        Vocabulary::where('poster_url', $request['filename'])->update(['poster_url' => null]);
+        Vocabulary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
     public function destroy(int $id): RedirectResponse {

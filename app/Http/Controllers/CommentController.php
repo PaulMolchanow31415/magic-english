@@ -11,21 +11,18 @@ class CommentController extends Controller {
 
     public function store(Request $request): void {
         $request->validate([
-            'discussion_name' => 'required|string',
-            'reply_to_id'     => 'int|nullable',
-            'message'         => 'required|string|min:1',
+            'discussion_id' => 'required|int',
+            'reply_to_id'   => 'int|nullable',
+            'message'       => 'required|string|min:1',
         ]);
 
         $created = new Comment();
         $created->message = $request['message'];
-        $user = User::find(auth()->id());
-        $discussion = Discussion::whereForRouteName($request['discussion_name'])->firstOrFail();
-        $created->creator()->associate($user);
-        $created->discussion()->associate($discussion);
+        $created->creator()->associate(User::find(auth()->id()));
+        $created->discussion()->associate($request['discussion_id']);
 
-        if (!empty($request['reply_to_id'])) {
-            $existed = Comment::findOrFail($request['reply_to_id']);
-            $created->reply_to()->associate($existed);
+        if ($request->filled('reply_to_id')) {
+            $created->reply_to()->associate($request['reply_to_id']);
         }
 
         $created->save();

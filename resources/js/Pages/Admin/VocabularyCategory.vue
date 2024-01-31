@@ -39,6 +39,7 @@ const categoryName = computed({
 
 function reset() {
   form.reset()
+  form.id = ''
   form.name = ''
 }
 
@@ -102,7 +103,7 @@ useEventListener(document, 'keydown', handleKeyDown)
 
   <Toaster
     :tosts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Категория слова успешно добавлена' }),
+      new Toast({ type: 'success', isShow: isSaved, value: 'Категория слова успешно сохранена' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Категория успешно удалена!' }),
       new Toast({ type: 'warning', isShow: isError, value: form.errors.name || 'Ошибка' }),
     ]"

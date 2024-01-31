@@ -6,11 +6,11 @@
 
 _creates migration, rest controller and factory_
 php artisan make:model Example -mrcf
-_commands_
+_generate the model commands_
 <https://laravel.com/docs/10.x/eloquent#generating-model-classes>
 _seeder commands_
 <https://laravel.com/docs/10.x/seeding#running-seeders>
-_frontend animations_
+_animations_
 <https://gsap.com/docs/v3/Installation/>
 <https://inertiajs.com/authorization>
 <https://inertiajs.com/error-handling>
@@ -82,6 +82,8 @@ _frontend animations_
 <https://flowbite-vue.com/components/avatar#dot-indicator>
 
 - 429 Too many attempts
+
+- 403 Access denied
 
 - 404
 

@@ -1,6 +1,6 @@
 <script setup>
-import NavbarLink from '@/Admin/NavbarLink.vue'
-import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
+import NavbarLink from './Partials/NavbarLink.vue'
+import NavbarCollapsed from './Partials/NavbarCollapsed.vue'
 </script>
 
 <template>
@@ -22,11 +22,16 @@ import NavbarCollapsed from '@/Admin/NavbarCollapsed.vue'
             <NavbarLink :to="route('admin.subscriber.index')" icon="bell" text="Подписчики" />
           </li>
           <li>
+            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
+          </li>
+          <li>
             <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
           </li>
           <li>
-            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
+            <NavbarLink :to="route('admin.dictionary.index')" icon="book" text="Словари" />
           </li>
+        </ul>
+        <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
           <li>
             <NavbarCollapsed text="Категории">
               <li>

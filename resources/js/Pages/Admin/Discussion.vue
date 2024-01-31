@@ -13,7 +13,7 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import { useDateFormat } from '@vueuse/core'
+import { set, useDateFormat } from '@vueuse/core'
 import { Head, router } from '@inertiajs/vue3'
 import HorizontalLine from '@/Shared/HorizontalLine.vue'
 import { inject, ref } from 'vue'
@@ -21,10 +21,10 @@ import Badge from '@/Shared/Badge.vue'
 import { useQuickEnableRef } from '@/Composables/index.js'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
-import TableActionButton from '@/Admin/TableActionButton.vue'
-import DeleteConfirmationModal from '@/Admin/DeleteConfirmationModal.vue'
+import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 
-const props = defineProps({
+defineProps({
   discussions: Array,
   reportedComments: Array,
 })
@@ -74,7 +74,7 @@ function confirmDelete() {
   router.delete(route('admin.discussion.destroy', { id: discussionForRemoval.value.id }), {
     onSuccess: () => useQuickEnableRef(discussionDeleted),
     onError: () => useQuickEnableRef(isError),
-    onFinish: () => (discussionForRemoval.value = null),
+    onFinish: () => set(discussionForRemoval, null),
   })
 }
 
@@ -108,16 +108,14 @@ const formatDate = (timestamp) =>
 
   <FwbTable striped>
     <FwbTableHead>
-      <FwbTableHeadCell v-text="'Название'" />
-      <FwbTableHeadCell v-text="'Дата последнего обновления'" />
+      <FwbTableHeadCell v-text="'Тип модели на которую ссылается обсуждение'" />
       <FwbTableHeadCell>
         <span class="sr-only">Действия</span>
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
       <FwbTableRow v-for="discussion in discussions" :key="discussion.id">
-        <FwbTableCell v-text="discussion.for_route_name" />
-        <FwbTableCell v-text="formatDate(discussion.updated_at)" />
+        <FwbTableCell v-text="discussion.discussionable_type" />
         <FwbTableCell>
           <TableActionButton @click="discussionForRemoval = discussion" theme="red">
             Удалить
@@ -177,9 +175,7 @@ const formatDate = (timestamp) =>
     @confirm="confirmDelete"
     @close="discussionForRemoval = null"
   >
-    <template #message v-if="discussionForRemoval">
-      Вы уверены, что хотите удалить обсуждение <q>{{ discussionForRemoval.for_route_name }}</q> ?
-    </template>
+    <template #message> Вы уверены, что хотите удалить обсуждение ? </template>
   </DeleteConfirmationModal>
 </template>
 

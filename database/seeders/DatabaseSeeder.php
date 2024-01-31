@@ -6,7 +6,9 @@ namespace Database\Seeders;
 use App\Models\Faq;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\CourseCategory;
 use Illuminate\Database\Seeder;
+use App\Models\VocabularyCategory;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -22,5 +24,9 @@ class DatabaseSeeder extends Seeder {
         ]);
 
         Faq::factory(10)->create();
+
+        VocabularyCategory::factory(20)->create();
+
+        CourseCategory::factory(20)->create();
     }
 }

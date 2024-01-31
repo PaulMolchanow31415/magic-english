@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\DictionaryController;
 use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\UserAdministrationController;
 use App\Http\Controllers\VocabularyCategoryController;
@@ -30,7 +31,7 @@ Route::middleware([
         Route::put('/translation', [VocabularyController::class, 'deleteTranslation'])
             ->name('translation.destroy');
 
-        // inertia не экранирует пути, что вызывает ошибку при delete методе
+        // inertia не экранирует пути в параметрах запроса, что вызывает ошибку при delete методе
         Route::put('/poster', [VocabularyController::class, 'deletePoster'])
             ->name('poster.destroy');
     });
@@ -44,4 +45,10 @@ Route::middleware([
     Route::patch('/report', [CommentController::class, 'report'])->name('comment.report');
 
     Route::resource('discussion', DiscussionController::class)->only(['index', 'destroy']);
+
+    Route::resource('/dictionary', DictionaryController::class)
+        ->only(['index', 'store', 'destroy']);
+
+    Route::put('/dictionary/poster', [DictionaryController::class, 'deletePoster'])
+        ->name('dictionary.delete-poster');
 });

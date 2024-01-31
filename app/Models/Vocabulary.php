@@ -5,10 +5,9 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Vocabulary extends Model {
-    use HasFactory;
     use Searchable;
 
     public $timestamps = false;
@@ -24,6 +23,13 @@ class Vocabulary extends Model {
     ];
 
     public function toSearchableArray(): array {
-        return ['en' => $this->en];
+        return [
+            'en'           => $this->en,
+            'translations' => $this->translations,
+        ];
+    }
+
+    public function dictionaries(): BelongsToMany {
+        return $this->belongsToMany(Dictionary::class);
     }
 }

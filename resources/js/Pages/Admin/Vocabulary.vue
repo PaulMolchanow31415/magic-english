@@ -6,7 +6,6 @@ import TableHeader from '@/Shared/TableHeader.vue'
 import { computed, inject, nextTick, reactive, ref } from 'vue'
 import {
   FwbAvatar,
-  FwbFileInput,
   FwbTable,
   FwbTableBody,
   FwbTableCell,
@@ -17,12 +16,12 @@ import {
 import Pagination from '@/Shared/Pagination.vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import UpdateModal from '@/Admin/UpdateModal.vue'
+import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
-import TableActionButton from '@/Admin/TableActionButton.vue'
+import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 
 const props = defineProps({
   dictionary: Object,
@@ -258,18 +257,13 @@ function confirmEdit() {
           </template>
         </Tooltip>
       </InputLabel>
-      <FwbFileInput v-model="form.photo" dropzone />
-      <InputLabel class="mt-2 block" value="Или введите ссылку на изображение">
-        <TextInput v-model="form.photo_external_path" class="w-full" name="url" />
-      </InputLabel>
-      <SecondaryButton
-        v-if="editable.poster_url"
-        type="button"
-        class="mt-2"
-        @click.prevent="deletePoster"
-      >
-        Удалить фотографию
-      </SecondaryButton>
+
+      <PhotoUploader
+        v-model="form.photo"
+        v-model:external-path="form.photo_external_path"
+        :has-photo="!!editable.poster_url"
+        @delete-photo="deletePoster"
+      />
     </div>
   </UpdateModal>
 </template>

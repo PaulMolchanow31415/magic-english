@@ -35,7 +35,7 @@ const translatedText = `
           <div v-translatable v-html="translatedText" />
         </div>
 
-        <DiscussionSection for-route-name="dashboard" />
+        <DiscussionSection :discussion-id="2" />
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     Route::get('/dashboard', fn() => inertia('Dashboard'))->name('dashboard');
 
     Route::prefix('/discussion')->name('discussion.')->group(function () {
-        Route::get('/{routeName}', [DiscussionController::class, 'show'])
+        Route::get('/{id}', [DiscussionController::class, 'show'])
             ->name('show');
 
         Route::patch('/report', [CommentController::class, 'report'])

@@ -22,7 +22,7 @@ class SubscriberController extends Controller {
         return $subscriber->is_enabled;
     }
 
-    public function changeSubscribeStatus(/*request*/): void {
+    public function changeSubscribeStatus(): void {
         Subscriber::whereEmail(auth()->user()->email)->update([
             'is_enabled' => request('status', false),
         ]);
@@ -31,8 +31,7 @@ class SubscriberController extends Controller {
     public function index(Request $request): Response|ResponseFactory {
         return inertia('Admin/Subscriber', [
             'subscribers' => Subscriber::search($request['search'])->paginate(10),
-
-            'filters' => $request->only(['search']),
+            'filters'     => $request->only(['search']),
         ]);
     }
 

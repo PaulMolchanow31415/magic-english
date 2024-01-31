@@ -15,6 +15,7 @@ function handleSubmit(isEnabled) {
 
   form.put(route('subscribe.change-status'), {
     onSuccess: loadStatus,
+    onError: () => (form.status = !isEnabled),
     preserveScroll: true,
     replace: true,
   })
