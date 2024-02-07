@@ -3,14 +3,14 @@
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GrammarController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\UserAdministrationController;
-use App\Http\Controllers\VocabularyCategoryController;
 
 Route::middleware([
     ...config('auth.authenticated_permissions'),
@@ -24,9 +24,6 @@ Route::middleware([
 
     Route::resource('faq', FaqController::class)->only(['index', 'store', 'destroy']);
 
-    Route::resource('vocabulary-category', VocabularyCategoryController::class)
-        ->only(['index', 'show', 'store', 'destroy']);
-
     Route::name('vocabulary.')->prefix("/vocabulary")->group(function () {
         Route::put('/translation', [VocabularyController::class, 'deleteTranslation'])
             ->name('translation.destroy');
@@ -35,9 +32,6 @@ Route::middleware([
         Route::put('/poster', [VocabularyController::class, 'deletePoster'])
             ->name('poster.destroy');
     });
-
-    Route::resource('course-category', CourseCategoryController::class)
-        ->only(['index', 'show', 'store', 'destroy']);
 
     Route::resource('vocabulary', VocabularyController::class)
         ->only(['index', 'show', 'store', 'destroy']);
@@ -51,4 +45,18 @@ Route::middleware([
 
     Route::put('/dictionary/poster', [DictionaryController::class, 'deletePoster'])
         ->name('dictionary.delete-poster');
+
+    Route::resource('/course', CourseController::class)
+        ->only(['index', 'show', 'store', 'destroy']);
+
+    Route::put('/course/poster', [CourseController::class, 'deletePoster'])
+        ->name('course.delete-poster');
+
+    Route::resource('/grammar', GrammarController::class)->only(['store', 'destroy']);
+
+    Route::get('/grammar/show/{courseId}', [GrammarController::class, 'show'])
+        ->name('grammar.show');
+
+    Route::put('/grammar/change-order', [GrammarController::class, 'changeOrder'])
+        ->name('grammar.change-order');
 });

@@ -10,7 +10,7 @@ defineProps({
     type: Array,
     default: [],
     validator(values) {
-      return values.length === values.filter((r) => r instanceof SuggestListItem).length
+      return values.every((r) => r instanceof SuggestListItem)
     },
   },
   modelValue: {
@@ -72,7 +72,7 @@ onClickOutside(comboBox, () => set(isFocused, false), {
                 <button
                   @click="$emit('add', result)"
                   type="button"
-                  class="opacity-0 group-hover:opacity-100 transition duration-75 flex justify-center items-center p-0.5 w-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                  class="opacity-0 group-hover:opacity-100 transition duration-75 flex justify-center items-center p-0.5 w-4 text-blue-600 dark:text-blue-400 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                 >
                   <Icon :icon="['fas', 'plus']" class="text-xs" />
                 </button>

@@ -9,14 +9,14 @@ import {
 } from 'flowbite-vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import InputError from '@/Shared/InputError.vue'
 import { ref } from 'vue'
-import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import { set } from '@vueuse/core'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import TextRedactor from '@/Shared/TextRedactor.vue'
 
 defineProps({ faqs: Array })
 
@@ -35,6 +35,7 @@ function saveFaq() {
       set(isShowEditModal, false)
       clearForm()
     },
+    preserveScroll: true,
   })
 }
 
@@ -46,6 +47,7 @@ function deleteFaq() {
       set(isShowDeleteModal, false)
       clearForm()
     },
+    preserveScroll: true,
   })
 }
 
@@ -99,14 +101,12 @@ function handleDelete(faq) {
               </FwbInput>
             </InputLabel>
           </div>
-          <HtmlEditor
-            v-model:content="form.content"
-            content-type="html"
+          <TextRedactor
+            v-model="form.content"
+            toolbar-style="minimal"
             placeholder="Ответ на вопрос"
-            class="!bg-gray-50 rounded-b-md"
+            :error-message="form.errors.content"
           />
-          <InputError :message="form.errors.content" class="mt-2" />
-
           <FwbButton type="submit" class="mt-4 flex flex-nowrap" :loading="form.processing">
             Сохранить
           </FwbButton>
@@ -158,13 +158,12 @@ function handleDelete(faq) {
         </FwbInput>
       </InputLabel>
     </div>
-    <HtmlEditor
-      v-model:content="form.content"
-      content-type="html"
+    <TextRedactor
+      v-model="form.content"
       placeholder="Ответ на вопрос"
-      class="!bg-gray-50 rounded-b-md"
+      toolbar-style="minimal"
+      :error-message="form.errors.content"
     />
-    <InputError :message="form.errors.content" class="mt-2" />
   </UpdateModal>
 </template>
 

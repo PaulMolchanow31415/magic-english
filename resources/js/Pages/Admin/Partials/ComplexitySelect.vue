@@ -6,7 +6,7 @@ import { usePage } from '@inertiajs/vue3'
 
 defineProps({
   modelValue: {
-    type: String,
+    type: [null, String],
     required: true,
   },
   errorMessage: {

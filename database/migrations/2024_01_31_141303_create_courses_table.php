@@ -9,9 +9,14 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create('vocabulary_categories', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+
+            $table->string('name', 1024)->unique();
+            $table->string('description', 2048);
+            $table->string('poster_url', 2048)->nullable();
+            $table->string('complexity');
+
             $table->timestamps();
         });
     }
@@ -20,6 +25,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('vocabulary_categories');
+        Schema::dropIfExists('courses');
     }
 };

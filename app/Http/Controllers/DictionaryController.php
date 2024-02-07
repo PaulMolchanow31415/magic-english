@@ -9,7 +9,6 @@ use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
-use App\Models\VocabularyCategory;
 
 class DictionaryController extends Controller {
     use PhotoUploadable;
@@ -24,7 +23,7 @@ class DictionaryController extends Controller {
     public function store(Request $request): void {
         $request->validate([
             'id'                  => 'int|nullable',
-            'category_id'         => 'int|nullable',
+            'category'            => 'string|required|unique:dictionaries',
             'vocabulary_ids'      => 'array|nullable',
             'complexity'          => [Rule::enum(Complexity::class)],
             'photo_external_path' => 'active_url|nullable',
@@ -37,22 +36,15 @@ class DictionaryController extends Controller {
         $dictionary = Dictionary::updateOrCreate(
             ['id' => $request['id']],
             [
-                'complexity'             => $request['complexity'],
-                'vocabulary_category_id' => $request['category_id'],
-                'poster_url'             => $updatedPath ??
-                                            $request['photo_external_path'] ?? $oldPath,
+                'category'   => $request['category'],
+                'complexity' => $request['complexity'],
+                'poster_url' => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
             ],
         );
 
         $dictionary->discussion()->save(
             $dictionary->discussion ?: new Discussion(),
         );
-
-        if ($request->filled('category_id')) {
-            $dictionary->category()->associate(
-                VocabularyCategory::findOrFail($request['category_id']),
-            );
-        }
 
         if ($request->filled('vocabulary_ids')) {
             $dictionary->vocabularies()->sync($request['vocabulary_ids']);
@@ -66,10 +58,7 @@ class DictionaryController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $request->validate(['filename' => 'required|string']);
-
-        $this->deleteFileIfExist($request['filename']);
-
+        $this->handleDeletePoster();
         Dictionary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 

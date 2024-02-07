@@ -55,4 +55,9 @@ trait PhotoUploadable {
 
         return $path;
     }
+
+    public function handleDeletePoster() {
+        request()->validate(['filename' => 'required|string']);
+        $this->deleteFileIfExist(request('filename'));
+    }
 }

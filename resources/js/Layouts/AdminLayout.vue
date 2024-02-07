@@ -1,6 +1,5 @@
 <script setup>
-import NavbarLink from './Partials/NavbarLink.vue'
-import NavbarCollapsed from './Partials/NavbarCollapsed.vue'
+import SidebarLink from './Partials/SidebarLink.vue'
 </script>
 
 <template>
@@ -9,41 +8,36 @@ import NavbarCollapsed from './Partials/NavbarCollapsed.vue'
       <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <ul class="space-y-2">
           <li>
-            <NavbarLink :to="route('admin.user.index')" icon="users" text="Пользователи" />
+            <SidebarLink :to="route('admin.user.index')" icon="users" text="Пользователи" />
           </li>
           <li>
-            <NavbarLink
-              :to="route('admin.faq.index')"
-              icon="person-circle-question"
-              text="Вопросы"
-            />
+            <SidebarLink :to="route('admin.faq.index')" icon="person-circle-question" text="FAQ" />
           </li>
           <li>
-            <NavbarLink :to="route('admin.subscriber.index')" icon="bell" text="Подписчики" />
+            <SidebarLink :to="route('admin.subscriber.index')" icon="bell" text="Подписчики" />
           </li>
           <li>
-            <NavbarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
+            <SidebarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
           </li>
           <li>
-            <NavbarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
+            <SidebarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
           </li>
           <li>
-            <NavbarLink :to="route('admin.dictionary.index')" icon="book" text="Словари" />
+            <SidebarLink :to="route('admin.dictionary.index')" icon="book" text="Словари" />
+          </li>
+          <li>
+            <SidebarLink :to="route('admin.course.index')" icon="folder-tree" text="Курсы" />
           </li>
         </ul>
-        <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+        <!-- <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
           <li>
-            <NavbarCollapsed text="Категории">
+            <NavbarCollapsed text="">
               <li>
-                <NavbarLink
-                  class="pl-6 w-full"
-                  text="Лексика"
-                  :to="route('admin.vocabulary-category.index')"
-                />
+                <NavbarLink class="pl-6 w-full" text="" :to="route('')" />
               </li>
             </NavbarCollapsed>
           </li>
-        </ul>
+        </ul>-->
       </div>
     </aside>
     <div class="flex flex-col gap-6 flex-grow basis-5/6">

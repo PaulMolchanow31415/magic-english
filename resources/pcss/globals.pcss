@@ -31,6 +31,29 @@
   .level-2 {
     @apply mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white;
   }
+  .blockquote-bordered {
+    @apply p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800;
+  }
+  .no-tailwindcss {
+    @apply text-gray-800 dark:text-white;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-size: revert;
+      font-weight: revert;
+    }
+    ol, ul {
+      list-style: revert;
+      margin: revert;
+      padding: revert;
+    }
+    table {
+      @apply my-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
+      tbody {
+        tr { @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700; }
+        td { @apply px-2 py-1; }
+      }
+    }
+  }
 }
 
 @layer components {
@@ -66,6 +89,11 @@
     button {
       @apply font-medium text-gray-700 dark:text-gray-200 text-sm leading-normal hover:underline;
     }
+  }
+  .input-underlined {
+    @apply block pb-2 pt-2.5 ps-2 pe-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+    border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none
+    focus:ring-0 focus:border-blue-600;
   }
 }
 

@@ -17,6 +17,7 @@ import {
   faEllipsisVertical,
   faEnvelope,
   faFilter,
+  faFolderTree,
   faGraduationCap,
   faLanguage,
   faList,
@@ -73,4 +74,5 @@ library.add(
   faComments,
   faBell,
   faBook,
+  faFolderTree,
 )

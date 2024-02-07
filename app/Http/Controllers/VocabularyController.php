@@ -115,18 +115,13 @@ class VocabularyController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $request->validate(['filename' => 'required|string']);
-
-        $this->deleteFileIfExist($request['filename']);
-
+        $this->handleDeletePoster();
         Vocabulary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(int $id): RedirectResponse {
+    public function destroy(int $id): void {
         $vocabulary = Vocabulary::findOrFail($id);
         $this->deleteFileIfExist($vocabulary->poster_url);
         $vocabulary->delete();
-
-        return to_route('admin.vocabulary.index');
     }
 }

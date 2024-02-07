@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Discussion extends Model {
-
-    public static string $alias = 'discussionable';
+    
+    public const ALIAS = 'discussionable';
 
     public $timestamps = false;
 

@@ -7,11 +7,11 @@ import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue'
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue'
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import { set } from '@vueuse/core'
 import UpdateSubscribeStatusForm from '@/Pages/Profile/Partials/UpdateSubscribeStatusForm.vue'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 defineProps({
   confirmsTwoFactorAuthentication: Boolean,

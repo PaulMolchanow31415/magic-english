@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VocabularyController;
-use App\Http\Controllers\VocabularyCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +23,4 @@ Route::name('api.')->group(function () {
 
     Route::get('/vocabularies/{search}', [VocabularyController::class, 'list'])
         ->name('vocabulary.list');
-
-    Route::get('/vocabulary-category/{search}', [VocabularyCategoryController::class, 'list'])
-        ->name('vocabulary-category.list');
 });

@@ -3,8 +3,7 @@ import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import TableHeader from '@/Shared/TableHeader.vue'
-import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
+import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbBadge,
   FwbTable,
@@ -17,8 +16,10 @@ import {
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import Pagination from '@/Shared/Pagination.vue'
-import EmailA from '@/Pages/Admin/Partials/EmailA.vue'
+import EmailLink from '@/Shared/EmailLink.vue'
 import { set } from '@vueuse/core'
+import { useSearch } from '@/Composables/useSearch.js'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const props = defineProps({
   subscribers: Object,
@@ -63,7 +64,7 @@ function confirmDelete() {
     <FwbTableBody>
       <FwbTableRow v-for="subscriber in subscribers.data">
         <FwbTableCell>
-          <EmailA :email="subscriber.email" />
+          <EmailLink :mail="subscriber.email" />
         </FwbTableCell>
         <FwbTableCell>
           <FwbBadge

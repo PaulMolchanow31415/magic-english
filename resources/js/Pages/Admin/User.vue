@@ -10,19 +10,20 @@ import {
   FwbTableRow,
   FwbToggle,
 } from 'flowbite-vue'
-import TableHeader from '@/Shared/TableHeader.vue'
+import TableHeader from './Partials/TableHeader.vue'
 import { inject, ref } from 'vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
 import { set } from '@vueuse/core'
-import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
+import DeleteConfirmationModal from './Partials/DeleteConfirmationModal.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import EmailA from '@/Pages/Admin/Partials/EmailA.vue'
+import UpdateModal from './Partials/UpdateModal.vue'
+import TableActionButton from './Partials/TableActionButton.vue'
+import EmailLink from '@/Shared/EmailLink.vue'
+import { useSearch } from '@/Composables/useSearch.js'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const props = defineProps({
   users: Object,
@@ -101,7 +102,7 @@ function confirmEdit() {
         </FwbTableCell>
         <FwbTableCell v-text="user.name" />
         <FwbTableCell>
-          <EmailA :email="user.email" />
+          <EmailLink :mail="user.email" />
         </FwbTableCell>
         <FwbTableCell v-text="user.role" />
         <FwbTableCell>

@@ -2,7 +2,7 @@
 import { FwbA } from 'flowbite-vue'
 
 defineProps({
-  email: {
+  mail: {
     type: String,
     required: true,
   },
@@ -11,10 +11,10 @@ defineProps({
 
 <template>
   <FwbA
-    :href="`mailto:${email}`"
+    :href="`mailto:${mail}`"
     class="hover:underline hover:text-blue-600 dark:hover:text-blue-400"
   >
-    {{ email }}
+    {{ mail }}
   </FwbA>
 </template>
 

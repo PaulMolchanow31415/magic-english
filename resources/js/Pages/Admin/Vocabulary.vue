@@ -1,8 +1,7 @@
 <script setup>
-import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
-import TableHeader from '@/Shared/TableHeader.vue'
+import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import { computed, inject, nextTick, reactive, ref } from 'vue'
 import {
   FwbAvatar,
@@ -22,6 +21,8 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
+import { useSearch } from '@/Composables/useSearch.js'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const props = defineProps({
   dictionary: Object,
@@ -226,7 +227,7 @@ function confirmEdit() {
     :show="editable.isShowModal"
     :loading="form.processing"
     @confirm="confirmEdit"
-    @close="editable.isShowModal = false"
+    @close="course.isShowModal = false"
     @press-enter="handleAddTranslation"
   >
     <div class="space-y-6">

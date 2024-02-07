@@ -29,14 +29,14 @@ onMounted(() => {
 
 const emit = defineEmits(['update:searchedValue', 'add'])
 
-function onKeyPress(event) {
-  if (event.shiftKey && event.code === 'KeyN' && props.addable) {
-    event.preventDefault()
+function onKeyDown(e) {
+  if (e.ctrlKey && e.code === 'KeyC' && props.addable) {
+    e.preventDefault()
     emit('add')
   }
 }
 
-useEventListener(document, 'keypress', onKeyPress)
+useEventListener(document, 'keydown', onKeyDown)
 </script>
 
 <template>
@@ -67,7 +67,7 @@ useEventListener(document, 'keypress', onKeyPress)
               </FwbButton>
             </template>
             <template #content>
-              <p class="leading-loose"><kbd>Shift</kbd>&nbsp;+&nbsp;<kbd>N</kbd></p>
+              <p class="leading-loose"><kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>C</kbd></p>
             </template>
           </Tooltip>
 

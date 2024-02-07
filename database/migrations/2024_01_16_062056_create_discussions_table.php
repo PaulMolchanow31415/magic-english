@@ -12,7 +12,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('discussions', function (Blueprint $table) {
             $table->id();
-            $table->morphs(Discussion::$alias);
+            $table->morphs(Discussion::ALIAS);
         });
     }
 

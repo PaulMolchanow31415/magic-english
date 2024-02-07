@@ -18,11 +18,11 @@ import { Head, router } from '@inertiajs/vue3'
 import HorizontalLine from '@/Shared/HorizontalLine.vue'
 import { inject, ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
-import { useQuickEnableRef } from '@/Composables/index.js'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 defineProps({
   discussions: Array,

@@ -117,11 +117,10 @@ const searched = ref('')
           <li>
             <Dropdown :align="isShowMenu ? 'left' : 'right'">
               <template #trigger>
-                <button class="nav-item">Тренировки</button>
+                <button class="nav-item">Изучение</button>
               </template>
 
               <template #content>
-                <span class="dropdown-heading">Учетная запись</span>
                 <DropdownLink href="/">
                   <span class="dropdown-line">
                     <Icon :icon="['fas', 'language']" />

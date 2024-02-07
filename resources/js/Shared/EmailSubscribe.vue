@@ -3,9 +3,9 @@ import { FwbA, FwbButton, FwbInput } from 'flowbite-vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { useChallengeV3 } from 'vue-recaptcha'
 import { ref } from 'vue'
-import { useQuickEnableRef } from '@/Composables/index.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const page = usePage()
 const isSuccess = ref(false)

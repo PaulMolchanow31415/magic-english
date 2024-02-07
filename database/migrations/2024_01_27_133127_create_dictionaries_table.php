@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\VocabularyCategory;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,13 +12,10 @@ return new class extends Migration {
         Schema::create('dictionaries', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(VocabularyCategory::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
+            $table->string('category', 1024)->unique();
             $table->string('complexity');
             $table->string('poster_url', 2048)->nullable();
+
             $table->timestamps();
         });
     }

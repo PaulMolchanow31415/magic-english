@@ -10,7 +10,7 @@ defineProps({
     required: true,
     default: [],
     validator(values = []) {
-      return values.length === values.filter((m) => m instanceof Toast).length
+      return values.every((t) => t instanceof Toast)
     },
   },
   closable: {

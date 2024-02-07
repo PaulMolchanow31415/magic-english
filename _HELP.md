@@ -11,9 +11,13 @@ _generate the model commands_
 _seeder commands_
 <https://laravel.com/docs/10.x/seeding#running-seeders>
 _animations_
+<https://vueuse.org/core/useParallax/#useparallax>
+<https://vueuse.org/core/useIntersectionObserver/#useintersectionobserver>
 <https://gsap.com/docs/v3/Installation/>
+_inertia_
 <https://inertiajs.com/authorization>
 <https://inertiajs.com/error-handling>
+_data casting laravel eloquent_
 <https://laravel.com/docs/10.x/eloquent-mutators#array-object-and-collection-casting>
 **database**
 <https://laravel.com/docs/10.x/migrations#rolling-back-migrations>
@@ -104,12 +108,10 @@ _animations_
 
 ## Short keys in program
 
-- Shift + N - добавление, файл (TableHeader)
+- Ctrl + C - добавление, файл (TableHeader)
 - ArrowLeft, ArrowRight - навигация в админ панели, файл (Pagination)
 - Shift + Enter - подтверждение сохранения, файл (UpdateModal)
 - Ctrl + K - быстрый поиск, файл (SearchInput)
-- 2 лкм - редактирование категории лексики, файл (VocabularyCategory)
-- Ctrl + D - Удаление существующей категории лексики (VocabularyCategory)
 
 ## Testing
 

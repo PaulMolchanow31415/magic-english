@@ -2,7 +2,6 @@ import './bootstrap'
 import '../pcss/globals.pcss'
 
 import '@/Libraries/font-awesome'
-import '@/Libraries/quill.js'
 
 import { createApp, h, warn } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -10,15 +9,15 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
 import { VueRecaptchaPlugin } from 'vue-recaptcha/head'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import RecaptchaLayout from '@/Layouts/RecaptchaLayout.vue'
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { QuillEditor } from '@vueup/vue-quill'
 
 import translatable from '@/Directives/translatable.js'
-import AdminLayout from '@/Layouts/AdminLayout.vue'
 
 const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
@@ -35,16 +34,16 @@ await createInertiaApp({
         if (name.startsWith('Admin')) {
           return [RecaptchaLayout, BaseLayout, AdminLayout]
         }
+
         if (!(layout instanceof Array)) {
-          // layout is object or undefined
           return [RecaptchaLayout, layout || BaseLayout]
         }
-        // check that layout[] contains RecaptchaLayout
-        if (layout.find((value) => value.__name === RecaptchaLayout.__name)) {
+
+        if (layout.find((component) => component.__name === RecaptchaLayout.__name)) {
           return layout
         }
+
         if (layout.length > 0) {
-          // layout[] without RecaptchaLayout
           layout.unshift(RecaptchaLayout)
           return layout
         }
@@ -61,8 +60,8 @@ await createInertiaApp({
       .use(plugin)
       .use(ZiggyVue)
       .use(VueRecaptchaPlugin, { v3SiteKey: captchaKey })
+      .use(CKEditor)
       .component('Icon', FontAwesomeIcon)
-      .component('HtmlEditor', QuillEditor)
       .directive('translatable', translatable)
       .mount(el),
 

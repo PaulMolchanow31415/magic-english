@@ -1,13 +1,12 @@
 <script setup>
-import { useQuickEnableRef, useSearch } from '@/Composables/index.js'
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import { inject, reactive, ref } from 'vue'
-import TableHeader from '@/Shared/TableHeader.vue'
+import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
-  FwbHeading,
+  FwbInput,
   FwbTable,
   FwbTableBody,
   FwbTableCell,
@@ -25,6 +24,9 @@ import SuggestListItem from '@/Classes/SuggestListItem.js'
 import Badge from '@/Shared/Badge.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
+import InputLabel from '@/Shared/InputLabel.vue'
+import { useSearch } from '@/Composables/useSearch.js'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const props = defineProps({
   filters: Object,
@@ -40,16 +42,13 @@ const isDeleted = ref(false)
 const isError = ref(false)
 const searchedVocabulary = ref('')
 const vocabularies = ref([])
-const searchedCategory = ref('')
-const categories = ref([])
 const selectedVocabularies = ref(new Map())
-const selectedCategory = ref()
 const dictionaryForRemoval = ref(null)
 
 const form = useForm({
   id: null,
+  category: null,
   complexity: page.props.complexities[0],
-  category_id: null,
   vocabulary_ids: [],
   photo: null,
   photo_external_path: null,
@@ -69,11 +68,9 @@ function handleCreate() {
 function handleEdit(d) {
   form.id = d.id
   form.complexity = d.complexity
-  form.category_id = null
-  set(selectedCategory, new SuggestListItem({ id: d.category.id, value: d.category.name }))
+  form.category = d.category
   selectedVocabularies.value.clear()
   d.vocabularies.forEach((v) => selectedVocabularies.value.set(v.id, v.en))
-
   form.vocabulary_ids = d.vocabularies.map((v) => v.id)
   form.photo = null
   form.photo_external_path = d.photo_external_path
@@ -83,7 +80,6 @@ function handleEdit(d) {
 
 function confirmUpdate() {
   form.vocabulary_ids = Array.from(selectedVocabularies.value.keys())
-  form.category_id = +selectedCategory.value.id
 
   form.post(route('admin.dictionary.store'), {
     onSuccess: () => {
@@ -93,7 +89,6 @@ function confirmUpdate() {
       form.reset()
     },
     onError: () => useQuickEnableRef(isError),
-    preserveState: true,
     preserveScroll: true,
   })
 }
@@ -124,25 +119,13 @@ function deletePoster() {
 
 watchThrottled(
   searchedVocabulary,
-  (v) =>
-    axios.get(route('api.vocabulary.list', { search: `${v || 'a'}` })).then((res) => {
+  (value) =>
+    axios.get(route('api.vocabulary.list', { search: `${value || 'a'}` })).then((res) =>
       set(
         vocabularies,
         res.data.data.map((v) => new SuggestListItem({ id: v.id, value: v.en })),
-      )
-    }),
-  { throttle: 300 },
-)
-
-watchThrottled(
-  searchedCategory,
-  (v) =>
-    axios.get(route('api.vocabulary-category.list', { search: `${v || 'a'}` })).then((res) => {
-      set(
-        categories,
-        res.data.data.map((c) => new SuggestListItem({ id: c.id, value: c.name })),
-      )
-    }),
+      ),
+    ),
   { throttle: 300 },
 )
 </script>
@@ -170,6 +153,7 @@ watchThrottled(
       <FwbTableHeadCell v-text="'Фото'" />
       <FwbTableHeadCell v-text="'Категория'" />
       <FwbTableHeadCell v-text="'Сложность'" />
+      <FwbTableHeadCell v-text="'Дата последнего обновления'" />
       <FwbTableHeadCell>
         <span class="sr-only">Действия</span>
       </FwbTableHeadCell>
@@ -179,13 +163,14 @@ watchThrottled(
         <FwbTableCell>
           <FwbAvatar
             size="xs"
-            :alt="dictionary.category.name"
+            :alt="dictionary.category"
             :img="dictionary.poster_url"
-            :initials="avatarInitials(dictionary.category.name)"
+            :initials="avatarInitials(dictionary.category)"
           />
         </FwbTableCell>
-        <FwbTableCell v-text="dictionary.category.name" />
+        <FwbTableCell v-text="dictionary.category" />
         <FwbTableCell v-text="dictionary.complexity" />
+        <FwbTableCell v-text="dictionary.updated_at" />
         <FwbTableCell>
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>
@@ -210,15 +195,17 @@ watchThrottled(
     @close="editable.isShowModal = false"
   >
     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
-      <div class="space-y-4 col-span-2">
-        <FwbHeading tag="h6" v-if="selectedCategory" v-text="selectedCategory.value" />
-
-        <SuggestComboBox
-          v-model="searchedCategory"
-          :results="categories"
-          label="Категория словаря"
-          @add="selectedCategory = $event"
-        />
+      <div class="col-span-2">
+        <InputLabel value="Категория">
+          <FwbInput
+            v-model="form.category"
+            :validation-status="form.errors.category ? 'error' : ''"
+          >
+            <template #validationMessage>
+              {{ form.errors.category }}
+            </template>
+          </FwbInput>
+        </InputLabel>
       </div>
 
       <div
@@ -262,7 +249,7 @@ watchThrottled(
   >
     <template #message v-if="dictionaryForRemoval">
       Вы уверены, что хотите удалить словарь
-      <b>{{ dictionaryForRemoval.category.name }}</b
+      <b>{{ dictionaryForRemoval.category }}</b
       >&nbsp;?
     </template>
   </DeleteConfirmationModal>
