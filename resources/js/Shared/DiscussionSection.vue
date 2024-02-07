@@ -1,14 +1,12 @@
 <script>
 import { defineComponent } from 'vue'
-import { FwbA, FwbButton, FwbInput, FwbTextarea } from 'flowbite-vue'
+import { FwbA, FwbButton, FwbTextarea } from 'flowbite-vue'
 import DiscussionComment from '@/Shared/DiscussionComment.vue'
-import InputLabel from '@/Shared/InputLabel.vue'
-import TextInput from '@/Shared/TextInput.vue'
 import { router, useForm } from '@inertiajs/vue3'
 
 export default defineComponent({
   name: 'DiscussionSection',
-  components: { TextInput, FwbInput, InputLabel, DiscussionComment, FwbA, FwbButton, FwbTextarea },
+  components: { DiscussionComment, FwbA, FwbButton, FwbTextarea },
   props: {
     discussionId: {
       type: Number,

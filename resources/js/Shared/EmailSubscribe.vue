@@ -14,7 +14,7 @@ const form = useForm({
   email: '',
   recaptcha_token: null,
 })
-const { execute } = useChallengeV3('subscribeNewsletter')
+const { execute } = useChallengeV3('subscribeNotifications')
 
 async function submit() {
   form.recaptcha_token = await execute()
@@ -22,7 +22,10 @@ async function submit() {
   form.post(route('subscribe.store'), {
     onSuccess: () => useQuickEnableRef(isSuccess, 3000),
     onError: () => useQuickEnableRef(isError, 3000),
-    onFinish: () => form.reset(),
+    onFinish: () => {
+      form.email = ''
+      form.recaptcha_token = null
+    },
     preserveScroll: true,
   })
 }

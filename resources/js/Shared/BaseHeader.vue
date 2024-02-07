@@ -24,6 +24,7 @@ const searched = ref('')
             type="search"
             placeholder="Поиск..."
             class="text-gray-700 dark:text-gray-300"
+            size="sm"
           >
             <template #prefix>
               <Icon class="text-gray-700 dark:text-gray-300" :icon="['fas', 'magnifying-glass']" />

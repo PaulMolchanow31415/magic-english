@@ -3,7 +3,7 @@ import { nextTick, reactive, ref } from 'vue'
 import DialogModal from '../Shared/DialogModal.vue'
 import PrimaryButton from '../Shared/PrimaryButton.vue'
 import SecondaryButton from '../Shared/SecondaryButton.vue'
-import TextInput from '@/Shared/TextInput.vue'
+import FocusableInput from '@/Shared/FocusableInput.vue'
 import InputError from '@/Shared/InputError.vue'
 
 const emit = defineEmits(['confirmed'])
@@ -87,7 +87,7 @@ const closeModal = () => {
         {{ content }}
 
         <div class="mt-4">
-          <TextInput
+          <FocusableInput
             ref="passwordInput"
             v-model="form.password"
             type="password"
@@ -98,17 +98,6 @@ const closeModal = () => {
           />
           <InputError :message="form.error" class="mt-2" />
         </div>
-        <!--          <FwbInput
-            ref="passwordInput"
-            v-model="form.password"
-            type="password"
-            class="w-3/4 block"
-            placeholder="Пароль"
-            autocomplete="current-password"
-            @keyup.enter="confirmPassword"
-          >
-            <template #validationMessage>{{ form.error }}</template>
-          </FwbInput>-->
       </template>
 
       <template #footer>

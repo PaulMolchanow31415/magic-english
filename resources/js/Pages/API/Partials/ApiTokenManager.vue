@@ -12,7 +12,7 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import SectionBorder from '@/Shared/HorizontalLine.vue'
-import TextInput from '@/Shared/TextInput.vue'
+import FocusableInput from '@/Shared/FocusableInput.vue'
 
 const props = defineProps({
   tokens: Array,
@@ -85,7 +85,7 @@ const deleteApiToken = () => {
         <!-- Token Name -->
         <div class="col-span-6 sm:col-span-4">
           <InputLabel for="name" value="Name" />
-          <TextInput
+          <FocusableInput
             id="name"
             v-model="createApiTokenForm.name"
             type="text"

@@ -6,7 +6,7 @@ import DangerButton from '@/Shared/DangerButton.vue'
 import DialogModal from '@/Shared/DialogModal.vue'
 import InputError from '@/Shared/InputError.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
-import TextInput from '@/Shared/TextInput.vue'
+import FocusableInput from '@/Shared/FocusableInput.vue'
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
@@ -64,7 +64,7 @@ const closeModal = () => {
           пароль для подтверждения, что вы хотели бы безвозвратно удалить свою учетную запись.
 
           <div class="mt-4">
-            <TextInput
+            <FocusableInput
               ref="passwordInput"
               v-model="form.password"
               type="password"

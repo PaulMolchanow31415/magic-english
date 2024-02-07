@@ -16,7 +16,7 @@ import Pagination from '@/Shared/Pagination.vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import TextInput from '@/Shared/TextInput.vue'
+import FocusableInput from '@/Shared/FocusableInput.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
@@ -227,12 +227,12 @@ function confirmEdit() {
     :show="editable.isShowModal"
     :loading="form.processing"
     @confirm="confirmEdit"
-    @close="course.isShowModal = false"
+    @close="editable.isShowModal = false"
     @press-enter="handleAddTranslation"
   >
     <div class="space-y-6">
       <InputLabel value="Слово на английском">
-        <TextInput class="w-full" ref="wordInput" v-model="editableWord" />
+        <FocusableInput class="w-full" ref="wordInput" v-model="editableWord" />
       </InputLabel>
       <div class="flex items-start flex-wrap gap-y-2">
         <Badge
@@ -251,7 +251,7 @@ function confirmEdit() {
       <InputLabel class="mt-2 block" value="Добавить перевод">
         <Tooltip placement="right">
           <template #trigger>
-            <TextInput class="w-full" v-model="editableTranslation" />
+            <FocusableInput class="w-full" v-model="editableTranslation" />
           </template>
           <template #content>
             <p class="leading-loose">Для добавления нажмите&nbsp;<kbd>Enter</kbd></p>

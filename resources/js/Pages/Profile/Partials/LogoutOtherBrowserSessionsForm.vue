@@ -6,7 +6,7 @@ import DialogModal from '@/Shared/DialogModal.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import InputError from '@/Shared/InputError.vue'
-import TextInput from '@/Shared/TextInput.vue'
+import FocusableInput from '@/Shared/FocusableInput.vue'
 
 defineProps({ sessions: Array })
 
@@ -112,7 +112,7 @@ const closeModal = () => {
           браузера сеансы на всех ваших устройствах.
 
           <div class="mt-4">
-            <TextInput
+            <FocusableInput
               ref="passwordInput"
               v-model="form.password"
               type="password"
