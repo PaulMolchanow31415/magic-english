@@ -16,7 +16,9 @@ class VocabularyController extends Controller {
 
     public function index(): Response|ResponseFactory {
         return inertia('Admin/Vocabulary', [
-            'dictionary' => Vocabulary::search(request('search'))->paginate(30),
+            'dictionary' => Vocabulary::search(request('search'))
+                ->orderBy('en')
+                ->paginate(30),
             'filters'    => request()->only(['search']),
         ]);
     }
