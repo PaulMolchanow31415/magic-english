@@ -1,24 +1,139 @@
 <script setup>
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, set } from '@vueuse/core'
 import { ref } from 'vue'
+import { FwbButton } from 'flowbite-vue'
+import { useChallengeV3 } from 'vue-recaptcha'
+import Toast from '@/Classes/Toast.js'
+import Toaster from '@/Shared/Toaster.vue'
+import { router } from '@inertiajs/vue3'
+import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 
 const wrapper = ref(null)
+const srcWord = ref('')
+const translations = ref([])
+const popover = ref(null)
+const isAdded = ref(false)
+const isError = ref(false)
 
-function handleClick(e) {
-  // e = e || event
-  // get selection
+const { execute } = useChallengeV3('translate')
+
+async function translateOrHide(event) {
+  const selection = getSelection()
+  const range = selection.getRangeAt(0)
+  const text = selection.anchorNode.textContent
+  let word
+  let startIndex
+  let endIndex
+  let currentIndex = range.startOffset
+
+  while (typeof startIndex !== 'number') {
+    if (currentIndex === -1) {
+      startIndex = 0
+    } else if (text[--currentIndex] === ' ') {
+      startIndex = currentIndex + 1
+    }
+  }
+
+  currentIndex = range.startOffset
+
+  while (!endIndex) {
+    if (currentIndex + 1 === text.length) {
+      endIndex = text.length
+    } else if (text[++currentIndex] === ' ') {
+      endIndex = currentIndex
+    }
+  }
+
+  word = text.slice(startIndex, endIndex).replaceAll(/[^a-zA-Z\s]+/g, '')
+
+  if (!word || word.length === 0 || word.match(/^[А-я]+$/)) {
+    return hide()
+  }
+
+  const recaptcha_token = await execute()
+
+  const res = await axios.get(route('api.translate', { word, recaptcha_token }))
+
+  if (res.data.length === 0) {
+    return
+  }
+
+  popover.value.style.top = event.pageY + 'px'
+  popover.value.style.left = event.pageX + 'px'
+
+  set(srcWord, word)
+  set(translations, res.data.length > 4 ? res.data.slice(0, 5) : res.data.slice(0, res.data.length))
 }
 
-function handleClickOutside() {
-  //
+function learn() {
+  router.post(
+    route('current-user.add-vocabulary'),
+    { word: srcWord.value },
+    {
+      onSuccess: () => {
+        hide()
+        useQuickEnableRef(isAdded)
+      },
+      onError: () => useQuickEnableRef(isError),
+      preserveScroll: true,
+    },
+  )
 }
 
-onClickOutside(wrapper, handleClickOutside)
+function hide() {
+  set(srcWord, '')
+  set(translations, [])
+}
+
+onClickOutside(wrapper, hide, { ignore: [popover] })
 </script>
 
 <template>
-  <div @click="handleClick" ref="wrapper">
-    <slot />
+  <div>
+    <Toaster
+      :tosts="[
+        new Toast({ type: 'success', isShow: isAdded, value: 'Слово добавлено!' }),
+        new Toast({ type: 'warning', isShow: isError, value: 'Не удалось добавить в словарь' }),
+      ]"
+    />
+
+    <div @click="translateOrHide" ref="wrapper">
+      <slot />
+    </div>
+
+    <div
+      v-show="srcWord"
+      ref="popover"
+      style="transform: translate(-50%, calc(-100% - 1rem))"
+      role="tooltip"
+      class="absolute inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+    >
+      <div
+        class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700"
+      >
+        <div class="flex justify-between items-center">
+          <h3 class="font-semibold text-gray-900 dark:text-white">{{ srcWord }}</h3>
+          <!-- Close button -->
+          <button @click="hide" type="button" class="shrink-0">
+            <Icon :icon="['fas', 'circle-xmark']" />
+          </button>
+        </div>
+      </div>
+      <div class="px-3 py-2">
+        <ul class="mb-4 leading-normal list-disc pl-6">
+          <li v-for="t in translations">{{ t }}</li>
+        </ul>
+        <!-- Learn button -->
+        <FwbButton
+          @click="learn"
+          type="button"
+          class="w-full items-center gap-2.5 px-3 py-2 text-xs"
+          size="sm"
+        >
+          Выучить
+        </FwbButton>
+      </div>
+    </div>
   </div>
 </template>
 

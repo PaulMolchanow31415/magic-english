@@ -1,6 +1,10 @@
 import ValidationError from '@/Classes/ValidationError.js'
 
 export default class Toast {
+  type
+  isShow
+  value
+
   constructor({ type, isShow, value }) {
     this.type = type
     this.isShow = isShow

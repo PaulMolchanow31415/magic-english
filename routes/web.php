@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\UserAdministrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,12 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     Route::resource('comment', CommentController::class)
         ->middleware(['allowed', 'throttle:20,1'])
         ->only(['store', 'destroy']);
+
+    Route::post(
+        '/current-user/add-vocabulary',
+        [UserAdministrationController::class, 'addVocabulary'],
+    )
+        ->name('current-user.add-vocabulary');
 });
 
 require_once __DIR__."/admin.php";

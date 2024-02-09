@@ -5,6 +5,7 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Vocabulary extends Model {
@@ -31,5 +32,9 @@ class Vocabulary extends Model {
 
     public function dictionaries(): BelongsToMany {
         return $this->belongsToMany(Dictionary::class);
+    }
+
+    public function students(): MorphToMany {
+        return $this->morphToMany(User::class, User::STUDENTABLE);
     }
 }

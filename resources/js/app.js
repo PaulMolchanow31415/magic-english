@@ -17,8 +17,6 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import translatable from '@/Directives/translatable.js'
-
 const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
 
@@ -62,7 +60,6 @@ await createInertiaApp({
       .use(VueRecaptchaPlugin, { v3SiteKey: captchaKey })
       .use(CKEditor)
       .component('Icon', FontAwesomeIcon)
-      .directive('translatable', translatable)
       .mount(el),
 
   progress: {

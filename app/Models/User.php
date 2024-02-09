@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Laravel\Scout\Searchable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class User extends Authenticatable implements MustVerifyEmail {
     use HasApiTokens;
@@ -20,11 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail {
     use TwoFactorAuthenticatable;
     use Searchable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    public const STUDENTABLE = 'studentable';
+
     protected $fillable = [
         'name',
         'email',
@@ -33,11 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail {
         'is_banned',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -45,20 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail {
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
     protected $appends = [
         'profile_photo_url',
     ];
@@ -66,4 +49,29 @@ class User extends Authenticatable implements MustVerifyEmail {
     public function comments(): HasMany {
         return $this->hasMany(Comment::class);
     }
+
+    public function vocabularies(): MorphToMany {
+        return $this->morphedByMany(Vocabulary::class, self::STUDENTABLE);
+    }
+
+    public function courses(): MorphToMany {
+        return $this->morphedByMany(Course::class, self::STUDENTABLE);
+    }
+
+    public function studiedVocabulary(): MorphToMany {
+        return $this->vocabularies()->wherePivotIn('is_completed', 0);
+    }
+
+    public function completedVocabulary(): MorphToMany {
+        return $this->vocabularies()->wherePivotIn('is_completed', 1);
+    }
+
+    public function studiedCourses(): MorphToMany {
+        return $this->courses()->wherePivotIn('is_completed', 0);
+    }
+
+    public function completedCourses(): MorphToMany {
+        return $this->courses()->wherePivotIn('is_completed', 1);
+    }
+
 }
