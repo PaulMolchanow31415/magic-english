@@ -53,8 +53,17 @@ class DictionaryController extends Controller {
         $dictionary->save();
     }
 
-    public function show(Dictionary $dictionary) {
-        //
+    public function glossary(): Response|ResponseFactory {
+        return inertia('Skills/Dictionary/Index', [
+            'dictionaries'               => Dictionary::paginate(4),
+            'learnableVocabulariesCount' => auth()->user()->vocabularies()->count(),
+        ]);
+    }
+
+    public function show(string $category) {
+        return inertia('Skills/Dictionary/Show', [
+            'dictionary' => Dictionary::whereCategory($category)->firstOrFail(),
+        ]);
     }
 
     public function deletePoster(Request $request): void {

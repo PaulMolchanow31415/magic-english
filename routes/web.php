@@ -3,8 +3,10 @@
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\DictionaryController;
 use App\Http\Controllers\UserAdministrationController;
 
 /*
@@ -20,23 +22,19 @@ use App\Http\Controllers\UserAdministrationController;
 
 Route::inertia('/', 'Welcome', ['faqs' => Faq::all()]);
 
-Route::prefix("/subscribe")->name("subscribe.")->group(function () {
-    Route::post('/store', [SubscriberController::class, 'store'])
-        ->name('store')
-        ->middleware(['recaptcha', 'throttle:60,1']);
+Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController::class)
+    ->group(function () {
+        Route::post('/store', 'store')->name('store')->middleware(['recaptcha', 'throttle:60,1']);
 
-    Route::get('/is-subscribed', [SubscriberController::class, 'isSubscribed'])
-        ->name('is-subscribed');
+        Route::get('/is-subscribed', 'isSubscribed')->name('is-subscribed');
 
-    Route::put("/current-user", [SubscriberController::class, 'changeSubscribeStatus'])
-        ->middleware(['throttle:10,1', 'verified', 'auth:sanctum'])
-        ->name('change-status');
-});
+        Route::put("/current-user", 'changeSubscribeStatus')
+            ->middleware(['throttle:10,1', 'verified', 'auth:sanctum'])
+            ->name('change-status');
+    });
 
 Route::middleware(config('auth.authenticated_permissions'))->group(function () {
-    // todo: remove
-    Route::get('/dashboard', fn() => inertia('Dashboard'))->name('dashboard');
-
+    // Comments
     Route::prefix('/discussion')->name('discussion.')->group(function () {
         Route::get('/{id}', [DiscussionController::class, 'show'])
             ->name('show');
@@ -50,11 +48,41 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
         ->middleware(['allowed', 'throttle:20,1'])
         ->only(['store', 'destroy']);
 
-    Route::post(
-        '/current-user/add-vocabulary',
-        [UserAdministrationController::class, 'addVocabulary'],
-    )
-        ->name('current-user.add-vocabulary');
+    // Student
+    Route::prefix('/student')->name('student.')->controller(StudentController::class)
+        ->group(function () {
+            Route::post('/add-vocabulary/{word}', 'addVocabulary')->name('add-vocabulary');
+
+            Route::delete('/remove-vocabulary/{id}', 'removeVocabulary')->name('remove-vocabulary');
+
+            Route::post('/complete-vocabularies', 'completeVocabularies')
+                ->name('complete-vocabularies');
+
+            Route::post('/add-dictionary/{id}', 'addDictionary')->name('add-dictionary');
+
+            Route::delete('/flush-vocabularies', 'flushVocabularies')->name('flush-vocabularies');
+
+            Route::prefix('/vocabularies')->name('vocabularies.')->group(function () {
+                Route::get('/dashboard', 'showVocabularyDashboard')->name('dashboard');
+
+                Route::get('/challenge', 'showVocabularyChallenge')->name('challenge');
+            });
+
+            /*Route::prefix('/courses')->name('courses.')->group(function () {
+                Route::get('/show', 'showCourse')->name('show');
+            });*/
+
+            Route::post('/add-course/{id}', 'addCourse')->name('add-course');
+        });
+
+    // Skill pages
+    Route::prefix('/skills')->name('skills.')->group(function () {
+        Route::prefix('/dictionaries')->controller(DictionaryController::class)->group(function () {
+            Route::get('/', 'glossary')->name('glossary');
+
+            Route::get('/{category}', 'show')->name('dictionary.show');
+        });
+    });
 });
 
 require_once __DIR__."/admin.php";

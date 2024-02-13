@@ -7,7 +7,9 @@ import {
   faBell,
   faBolt,
   faBook,
+  faBookBookmark,
   faCheck,
+  faCircleCheck,
   faCircleInfo,
   faCommentDots,
   faComments,
@@ -19,6 +21,7 @@ import {
   faFilter,
   faFolderTree,
   faGraduationCap,
+  faHouse,
   faLanguage,
   faList,
   faMagnifyingGlass,
@@ -34,6 +37,7 @@ import {
   faSun,
   faTrashCan,
   faUsers,
+  faVolumeHigh,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
@@ -75,4 +79,8 @@ library.add(
   faBell,
   faBook,
   faFolderTree,
+  faHouse,
+  faBookBookmark,
+  faVolumeHigh,
+  faCircleCheck,
 )

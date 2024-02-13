@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { initTooltips } from 'flowbite'
 
-defineProps({
+const props = defineProps({
   placement: {
     type: String,
     default: 'top',
@@ -10,17 +10,26 @@ defineProps({
       return v === 'bottom' || v === 'top' || v === 'left' || v === 'right'
     },
   },
-  /*theme: {
+  theme: {
     type: String,
     default: 'dark',
     validator(v) {
       return v === 'dark' || v === 'light'
     },
-  },*/
+  },
 })
 
 onMounted(() => {
   initTooltips()
+})
+
+const classes = computed(() => {
+  if (props.theme === 'dark') {
+    return 'text-white bg-gray-900 dark:bg-gray-700'
+  }
+  if (props.theme === 'light') {
+    return 'text-gray-900 bg-white border border-gray-200'
+  }
 })
 
 const uuid = crypto.randomUUID()
@@ -35,7 +44,8 @@ const uuid = crypto.randomUUID()
     <div
       :id="uuid"
       role="tooltip"
-      class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+      class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip"
+      :class="classes"
     >
       <div>
         <slot name="content" />

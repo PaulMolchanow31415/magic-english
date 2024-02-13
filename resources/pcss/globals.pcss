@@ -95,6 +95,14 @@
     border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none
     focus:ring-0 focus:border-blue-600;
   }
+  .card {
+    @apply cursor-pointer transition hover:shadow-2xl;
+
+    img { @apply w-full h-36 object-cover;}
+  }
+  .poster {
+    img { @apply object-cover aspect-video;}
+  }
 }
 
 @layer utilities {

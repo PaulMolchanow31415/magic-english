@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use Inertia\Response;
-use App\Models\Vocabulary;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
@@ -54,14 +53,6 @@ class UserAdministrationController extends Controller {
         $user->role = $this->defineRole($request['role']);
         $user->is_banned = $request['is_banned'] ?? false;
         $user->save();
-    }
-
-    public function addVocabulary(Request $request) {
-        $request->validate(['word' => 'string|required']);
-
-        auth()->user()->vocabularies()->syncWithoutDetaching(
-            Vocabulary::whereEn($request['word'])->get()->first(),
-        );
     }
 
     public function destroy(int $id): RedirectResponse {

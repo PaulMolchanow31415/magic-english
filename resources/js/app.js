@@ -1,7 +1,7 @@
 import './bootstrap'
-import '../pcss/globals.pcss'
-
 import '@/Libraries/font-awesome'
+
+import '../pcss/globals.pcss'
 
 import { createApp, h, warn } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -14,6 +14,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import RecaptchaLayout from '@/Layouts/RecaptchaLayout.vue'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
+import SkillsLayout from '@/Layouts/SkillsLayout.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -21,7 +22,7 @@ const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
 
 await createInertiaApp({
-  title: (title) => `${title} - ${appName}`,
+  title: (title) => `${title} | ${appName}`,
 
   resolve(name) {
     const page = resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue'))
@@ -31,6 +32,10 @@ await createInertiaApp({
 
         if (name.startsWith('Admin')) {
           return [RecaptchaLayout, BaseLayout, AdminLayout]
+        }
+
+        if (name.startsWith('Skills')) {
+          return [RecaptchaLayout, BaseLayout, SkillsLayout]
         }
 
         if (!(layout instanceof Array)) {

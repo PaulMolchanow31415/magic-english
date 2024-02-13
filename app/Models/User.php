@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     use TwoFactorAuthenticatable;
     use Searchable;
 
-    public const STUDENTABLE = 'studentable';
+    public const LEARNABLE = 'learnable';
 
     protected $fillable = [
         'name',
@@ -51,27 +51,27 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     public function vocabularies(): MorphToMany {
-        return $this->morphedByMany(Vocabulary::class, self::STUDENTABLE);
+        return $this->morphedByMany(Vocabulary::class, self::LEARNABLE);
     }
 
     public function courses(): MorphToMany {
-        return $this->morphedByMany(Course::class, self::STUDENTABLE);
+        return $this->morphedByMany(Course::class, self::LEARNABLE);
     }
 
-    public function studiedVocabulary(): MorphToMany {
-        return $this->vocabularies()->wherePivotIn('is_completed', 0);
+    public function studiedVocabularies(): MorphToMany {
+        return $this->vocabularies()->wherePivot('is_completed', 0);
     }
 
-    public function completedVocabulary(): MorphToMany {
-        return $this->vocabularies()->wherePivotIn('is_completed', 1);
+    public function completedVocabularies(): MorphToMany {
+        return $this->vocabularies()->wherePivot('is_completed', 1);
     }
 
     public function studiedCourses(): MorphToMany {
-        return $this->courses()->wherePivotIn('is_completed', 0);
+        return $this->courses()->wherePivot('is_completed', 0);
     }
 
     public function completedCourses(): MorphToMany {
-        return $this->courses()->wherePivotIn('is_completed', 1);
+        return $this->courses()->wherePivot('is_completed', 1);
     }
 
 }

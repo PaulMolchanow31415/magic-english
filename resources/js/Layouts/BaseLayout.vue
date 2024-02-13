@@ -9,6 +9,16 @@ provide('avatarInitials', (name = 'default') => {
     name.length > 1 ? name[0].charAt(0).concat(name[1].charAt(0)) : name[0].charAt(0)
   ).toUpperCase()
 })
+
+provide('randomInt', (min, max) => {
+  const minCeiled = Math.ceil(min)
+  const maxFloored = Math.floor(max)
+  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled)
+})
+
+provide('shuffle', (array = []) => {
+  return array.sort(() => Math.random() - 0.5)
+})
 </script>
 
 <template>
@@ -16,7 +26,7 @@ provide('avatarInitials', (name = 'default') => {
     <BaseHeader />
 
     <!-- Page Content -->
-    <main class="flex-grow">
+    <main class="flex-grow relative">
       <slot />
     </main>
 

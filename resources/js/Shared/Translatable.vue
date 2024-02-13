@@ -27,7 +27,9 @@ async function translateOrHide(event) {
   let currentIndex = range.startOffset
 
   while (typeof startIndex !== 'number') {
-    if (currentIndex === -1) {
+    if (text[currentIndex] === ' ') {
+      startIndex = currentIndex - 1
+    } else if (currentIndex === -1) {
       startIndex = 0
     } else if (text[--currentIndex] === ' ') {
       startIndex = currentIndex + 1
@@ -37,7 +39,9 @@ async function translateOrHide(event) {
   currentIndex = range.startOffset
 
   while (!endIndex) {
-    if (currentIndex + 1 === text.length) {
+    if (text[currentIndex] === ' ') {
+      endIndex = currentIndex - 1
+    } else if (currentIndex + 1 === text.length) {
       endIndex = text.length
     } else if (text[++currentIndex] === ' ') {
       endIndex = currentIndex
@@ -66,18 +70,14 @@ async function translateOrHide(event) {
 }
 
 function learn() {
-  router.post(
-    route('current-user.add-vocabulary'),
-    { word: srcWord.value },
-    {
-      onSuccess: () => {
-        hide()
-        useQuickEnableRef(isAdded)
-      },
-      onError: () => useQuickEnableRef(isError),
-      preserveScroll: true,
+  router.post(route('student.add-vocabulary', { word: srcWord.value }), null, {
+    onSuccess: () => {
+      hide()
+      useQuickEnableRef(isAdded, 1600)
     },
-  )
+    onError: () => useQuickEnableRef(isError, 1600),
+    preserveScroll: true,
+  })
 }
 
 function hide() {
@@ -123,7 +123,7 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
         <ul class="mb-4 leading-normal list-disc pl-6">
           <li v-for="t in translations">{{ t }}</li>
         </ul>
-        <!-- Learn button -->
+        <!-- Challenges button -->
         <FwbButton
           @click="learn"
           type="button"

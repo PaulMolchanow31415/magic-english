@@ -35,6 +35,6 @@ class Vocabulary extends Model {
     }
 
     public function students(): MorphToMany {
-        return $this->morphToMany(User::class, User::STUDENTABLE);
+        return $this->morphToMany(User::class, User::LEARNABLE);
     }
 }

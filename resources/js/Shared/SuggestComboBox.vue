@@ -17,12 +17,14 @@ defineProps({
     type: String,
     required: true,
   },
-  size: {
+  className: {
     type: String,
     default: 'w-full',
   },
-  label: {
+  label: String,
+  placeholder: {
     type: String,
+    default: 'Найти...',
   },
 })
 
@@ -38,7 +40,7 @@ onClickOutside(comboBox, () => set(isFocused, false), {
 </script>
 
 <template>
-  <div>
+  <div role="searchbox">
     <div>
       <InputLabel :value="label">
         <FwbInput
@@ -47,8 +49,8 @@ onClickOutside(comboBox, () => set(isFocused, false), {
           @input="$emit('update:modelValue', $event.target.value)"
           :model-value="modelValue"
           size="sm"
-          placeholder="Найти..."
-          :class="size"
+          :placeholder="placeholder"
+          :class="className"
         >
           <template #prefix>
             <Icon
@@ -64,7 +66,10 @@ onClickOutside(comboBox, () => set(isFocused, false), {
     <div v-show="isFocused && results.length > 0" ref="comboBox" class="relative">
       <div class="z-50 pt-1.5 absolute w-full">
         <aside class="relative bg-white rounded-lg shadow w-full dark:bg-gray-700">
-          <ul class="max-h-52 p-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
+          <ul
+            class="max-h-52 p-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+            role="listbox"
+          >
             <li v-for="result in results" :key="result.id">
               <div
                 class="group flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"

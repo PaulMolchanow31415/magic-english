@@ -118,11 +118,11 @@ const searched = ref('')
           <li>
             <Dropdown :align="isShowMenu ? 'left' : 'right'">
               <template #trigger>
-                <button class="nav-item">Изучение</button>
+                <button class="nav-item">Обучение</button>
               </template>
 
               <template #content>
-                <DropdownLink href="/">
+                <DropdownLink :href="route('skills.glossary')">
                   <span class="dropdown-line">
                     <Icon :icon="['fas', 'language']" />
                     Слова
@@ -206,8 +206,8 @@ router.put(route('current-team.update'), { team_id: team.id }, { preserveState: 
           class="control-btn"
           @click="showingNavigationDropdown = !showingNavigationDropdown"
         >
-          <Icon v-if="showingNavigationDropdown" :icon="['fas', 'xmark']" size="lg" class="w-4" />
-          <Icon v-else :icon="['fas', 'bars']" size="lg" class="w-4" />
+          <Icon v-if="showingNavigationDropdown" :icon="['fas', 'xmark']" class="lg" class="w-4" />
+          <Icon v-else :icon="['fas', 'bars']" class="lg" class="w-4" />
         </button>
       </div>
     </div>
@@ -487,8 +487,8 @@ router.put(route('current-team.update'), { team_id: team.id }, { preserveState: 
       class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
       @click="showingNavigationDropdown = !showingNavigationDropdown"
     >
-      <Icon v-if="showingNavigationDropdown" :icon="['fas', 'xmark']" size="lg" class="w-4" />
-      <Icon v-else :icon="['fas', 'bars']" size="lg" class="w-4" />
+      <Icon v-if="showingNavigationDropdown" :icon="['fas', 'xmark']" class="lg" class="w-4" />
+      <Icon v-else :icon="['fas', 'bars']" class="lg" class="w-4" />
     </button>
   </div>
 </div>

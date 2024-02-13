@@ -10,14 +10,14 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create(User::STUDENTABLE.'s', function (Blueprint $table) {
+        Schema::create(User::LEARNABLE.'s', function (Blueprint $table) {
             $table->id();
 
             $table->foreignIdFor(User::class)
                 ->constrained()
                 ->cascadeOnUpdate();
 
-            $table->morphs(User::STUDENTABLE);
+            $table->morphs(User::LEARNABLE);
             $table->boolean('is_completed')->default(false);
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('studyables');
+        Schema::dropIfExists(User::LEARNABLE.'s');
     }
 };

@@ -9,7 +9,7 @@ return [
     |
     | The following language lines contain the default error tosts used by
     | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these tosts here.
+    | as the class rules. Feel free to tweak each of these tosts here.
     |
     */
 
@@ -142,11 +142,11 @@ return [
     'required_without'     => 'The :attribute field is required when :values is not present.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
     'same'                 => 'The :attribute field must match :other.',
-    'size'                 => [
-        'array'   => 'The :attribute field must contain :size items.',
-        'file'    => 'The :attribute field must be :size kilobytes.',
-        'numeric' => 'The :attribute field must be :size.',
-        'string'  => 'The :attribute field must be :size characters.',
+    'class'                => [
+        'array'   => 'The :attribute field must contain :class items.',
+        'file'    => 'The :attribute field must be :class kilobytes.',
+        'numeric' => 'The :attribute field must be :class.',
+        'string'  => 'The :attribute field must be :class characters.',
     ],
     'starts_with'          => 'The :attribute field must start with one of the following: :values.',
     'string'               => 'The :attribute field must be a string.',

@@ -17,16 +17,16 @@ import {
 import Pagination from '@/Shared/Pagination.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import { set, watchThrottled } from '@vueuse/core'
+import { set } from '@vueuse/core'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
-import SuggestListItem from '@/Classes/SuggestListItem.js'
 import Badge from '@/Shared/Badge.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import useSuggest from '@/Composables/useSuggest.js'
 
 const props = defineProps({
   filters: Object,
@@ -36,12 +36,11 @@ const props = defineProps({
 const avatarInitials = inject('avatarInitials')
 
 const searchedDictionary = useSearch('admin.dictionary.index', props.filters.search)
+const { searched: searchedVocabulary, results: vocabularies } = useSuggest('api.vocabulary.list')
 const page = usePage()
 const isSaved = ref(false)
 const isDeleted = ref(false)
 const isError = ref(false)
-const searchedVocabulary = ref('')
-const vocabularies = ref([])
 const selectedVocabularies = ref(new Map())
 const dictionaryForRemoval = ref(null)
 
@@ -62,6 +61,7 @@ const editable = reactive({
 function handleCreate() {
   editable.isShowModal = true
   editable.poster_url = null
+  selectedVocabularies.value.clear()
   form.reset()
 }
 
@@ -116,18 +116,6 @@ function deletePoster() {
     },
   )
 }
-
-watchThrottled(
-  searchedVocabulary,
-  (value) =>
-    axios.get(route('api.vocabulary.list', { search: `${value || 'a'}` })).then((res) =>
-      set(
-        vocabularies,
-        res.data.data.map((v) => new SuggestListItem({ id: v.id, value: v.en })),
-      ),
-    ),
-  { throttle: 300 },
-)
 </script>
 
 <template>
