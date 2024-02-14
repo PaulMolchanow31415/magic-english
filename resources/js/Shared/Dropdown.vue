@@ -1,5 +1,6 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
 
 const props = defineProps({
   align: {
@@ -16,16 +17,7 @@ const props = defineProps({
   },
 })
 
-let open = ref(false)
-
-const closeOnEscape = (e) => {
-  if (open.value && e.key === 'Escape') {
-    open.value = false
-  }
-}
-
-onMounted(() => document.addEventListener('keydown', closeOnEscape))
-onUnmounted(() => document.removeEventListener('keydown', closeOnEscape))
+const open = ref(false)
 
 const widthClass = computed(() => {
   return {
@@ -44,16 +36,21 @@ const alignmentClasses = computed(() => {
 
   return 'origin-top'
 })
+
+const closeOnEscape = (e) => {
+  if (open.value && e.key === 'Escape') {
+    open.value = false
+  }
+}
+
+useEventListener('keydown', closeOnEscape)
 </script>
 
 <template>
-  <div class="relative">
-    <div @click="open = !open">
+  <div class="relative" @mouseenter="open = true" @mouseleave="open = false">
+    <div>
       <slot name="trigger" />
     </div>
-
-    <!-- Full Screen Dropdown Overlay -->
-    <div v-show="open" class="fixed inset-0 z-40" @click="open = false" />
 
     <transition
       enter-active-class="transition ease-out duration-200"
@@ -70,6 +67,9 @@ const alignmentClasses = computed(() => {
         style="display: none"
         @click="open = false"
       >
+        <!-- Overlay -->
+        <div class="absolute w-full -z-10" style="height: calc(100% + 1rem); top: -1rem" />
+
         <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
           <slot name="content" />
         </div>
