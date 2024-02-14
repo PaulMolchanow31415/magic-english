@@ -53,6 +53,8 @@
         td { @apply px-2 py-1; }
       }
     }
+    p + p { @apply mt-2; }
+    p, li { @apply dark:text-gray-100; }
   }
 }
 
@@ -102,6 +104,14 @@
   }
   .poster {
     img { @apply object-cover aspect-video;}
+  }
+  .dashboard-cta-section {
+    @apply flex items-center gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50
+    dark:bg-gray-800 dark:border-gray-700 transition duration-100 hover:bg-gray-100
+    dark:hover:bg-gray-700 cursor-pointer;
+  }
+  .dashboard-cta-button {
+    @apply font-bold min-w-60 px-12 me-4;
   }
 }
 

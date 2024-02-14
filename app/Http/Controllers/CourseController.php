@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Response;
 use App\Models\Course;
 use App\Models\Complexity;
 use Illuminate\Http\Request;
+use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
 
 class CourseController extends Controller {
     use PhotoUploadable;
 
-    public function index() {
+    public function index(): Response|ResponseFactory {
         return inertia('Admin/Course', [
             'courses' => Course::search(request('search'))->paginate(10),
             'filters' => request()->only(['search']),
@@ -41,15 +43,24 @@ class CourseController extends Controller {
         );
     }
 
-    public function show(Course $course) {
-        //
+    public function courses(): Response|ResponseFactory {
+        return inertia('Skills/Course/Index', [
+            'courses'               => Course::paginate(4),
+            'learnableCoursesCount' => auth()->user()->courses()->count(),
+        ]);
+    }
+
+    public function show(string $name): Response|ResponseFactory {
+        return inertia('Skills/Course/Show', [
+            'course' => Course::whereName($name)->with('grammarRules')->firstOrFail(),
+        ]);
     }
 
     public function deletePoster(Request $request): void {
         $this->handleDeletePoster();
         Course::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
-    
+
     public function destroy(int $id): void {
         $course = Course::findOrFail($id);
         $this->deleteFileIfExist($course->poster_url);

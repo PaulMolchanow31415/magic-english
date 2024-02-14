@@ -2,6 +2,7 @@
 
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubscriberController;
@@ -68,9 +69,9 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
                 Route::get('/challenge', 'showVocabularyChallenge')->name('challenge');
             });
 
-            /*Route::prefix('/courses')->name('courses.')->group(function () {
-                Route::get('/show', 'showCourse')->name('show');
-            });*/
+            Route::prefix('/courses')->name('courses.')->group(function () {
+                Route::get('/dashboard', 'showCoursesDashboard')->name('dashboard');
+            });
 
             Route::post('/add-course/{id}', 'addCourse')->name('add-course');
         });
@@ -81,6 +82,12 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
             Route::get('/', 'glossary')->name('glossary');
 
             Route::get('/{category}', 'show')->name('dictionary.show');
+        });
+
+        Route::prefix('/courses')->controller(CourseController::class)->group(function () {
+            Route::get('/', 'courses')->name('courses');
+
+            Route::get('/{name}', 'show')->name('course.show');
         });
     });
 });

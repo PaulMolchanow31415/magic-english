@@ -13,20 +13,20 @@ class StudentController extends Controller {
 
     public function showVocabularyDashboard(Request $request) {
         $request->validate([
-            'filter' => ['nullable', Rule::enum(VocabularyFilter::class)],
+            'filter' => ['nullable', Rule::enum(LearnableFilter::class)],
         ]);
 
-        $filter = VocabularyFilter::tryFrom($request['filter']) ?? VocabularyFilter::ALL;
+        $filter = LearnableFilter::tryFrom($request['filter']) ?? LearnableFilter::ALL;
         $result = null;
 
         switch ($filter) {
-            case VocabularyFilter::ALL:
+            case LearnableFilter::ALL:
                 $result = auth()->user()->vocabularies();
                 break;
-            case VocabularyFilter::ONLY_COMPLETED:
+            case LearnableFilter::ONLY_COMPLETED:
                 $result = auth()->user()->completedVocabularies();
                 break;
-            case VocabularyFilter::ONLY_STUDIED:
+            case LearnableFilter::ONLY_STUDIED:
                 $result = auth()->user()->studiedVocabularies();
                 break;
         }
@@ -37,7 +37,13 @@ class StudentController extends Controller {
                 ->orderBy('en')->get(),
 
             'selectedFilter' => $filter->value,
-            'filters'        => VocabularyFilter::cases(),
+            'filters'        => LearnableFilter::cases(),
+        ]);
+    }
+
+    public function showCoursesDashboard() {
+        return inertia('Skills/Dashboard/AddedCourses', [
+            'courses' => auth()->user()->courses,
         ]);
     }
 
@@ -87,7 +93,9 @@ class StudentController extends Controller {
         ]);
     }
 
-    public function addCourse(int $id): void {
+    public function addCourse(int $id): RedirectResponse {
         auth()->user()->courses()->syncWithoutDetaching(Course::findOrFail($id));
+
+        return to_route('skills.courses');
     }
 }

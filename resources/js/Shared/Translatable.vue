@@ -101,39 +101,41 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
       <slot />
     </div>
 
-    <div
-      v-show="srcWord"
-      ref="popover"
-      style="transform: translate(-50%, calc(-100% - 1rem))"
-      role="tooltip"
-      class="absolute inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
-    >
+    <teleport to="body">
       <div
-        class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700"
+        v-show="srcWord"
+        ref="popover"
+        style="transform: translate(-50%, calc(-100% - 1rem))"
+        role="tooltip"
+        class="absolute inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
       >
-        <div class="flex justify-between items-center">
-          <h3 class="font-semibold text-gray-900 dark:text-white">{{ srcWord }}</h3>
-          <!-- Close button -->
-          <button @click="hide" type="button" class="shrink-0">
-            <Icon :icon="['fas', 'circle-xmark']" />
-          </button>
+        <div
+          class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700"
+        >
+          <div class="flex justify-between items-center">
+            <h3 class="font-semibold text-gray-900 dark:text-white">{{ srcWord }}</h3>
+            <!-- Close button -->
+            <button @click="hide" type="button" class="shrink-0">
+              <Icon :icon="['fas', 'circle-xmark']" />
+            </button>
+          </div>
+        </div>
+        <div class="px-3 py-2">
+          <ul class="mb-4 leading-normal list-disc pl-6">
+            <li v-for="t in translations">{{ t }}</li>
+          </ul>
+          <!-- Challenges button -->
+          <FwbButton
+            @click="learn"
+            type="button"
+            class="w-full items-center gap-2.5 px-3 py-2 text-xs"
+            size="sm"
+          >
+            Выучить
+          </FwbButton>
         </div>
       </div>
-      <div class="px-3 py-2">
-        <ul class="mb-4 leading-normal list-disc pl-6">
-          <li v-for="t in translations">{{ t }}</li>
-        </ul>
-        <!-- Challenges button -->
-        <FwbButton
-          @click="learn"
-          type="button"
-          class="w-full items-center gap-2.5 px-3 py-2 text-xs"
-          size="sm"
-        >
-          Выучить
-        </FwbButton>
-      </div>
-    </div>
+    </teleport>
   </div>
 </template>
 

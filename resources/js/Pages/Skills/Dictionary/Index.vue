@@ -1,51 +1,29 @@
 <script setup>
-import { Head, router, usePage } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 import { FwbButton, FwbCard, FwbHeading, FwbP } from 'flowbite-vue'
-import { useInfiniteScroll } from '@vueuse/core'
+import useInfiniteScrollLoader from '@/Composables/useInfiniteScrollLoader.js'
 import { ref, toRef } from 'vue'
+import AutoHead from '@/Shared/AutoHead.vue'
 
 const props = defineProps({
   dictionaries: Object,
   learnableVocabulariesCount: Number,
 })
 
-const page = usePage()
-const list = ref(null)
-const allItems = toRef(props.dictionaries.data)
-const initialUrl = page.url
+const dictionaries = toRef(props, 'dictionaries')
 
-useInfiniteScroll(
-  list,
-  () => {
-    router.get(
-      props.dictionaries.next_page_url,
-      {},
-      {
-        onSuccess() {
-          allItems.value.push(...props.dictionaries.data)
-          history.replaceState({}, page.title, initialUrl)
-        },
-        preserveScroll: true,
-        preserveState: true,
-        replace: true,
-      },
-    )
-  },
-  {
-    canLoadMore: () => Boolean(props.dictionaries.next_page_url),
-    interval: 1000,
-    distance: 10,
-  },
-)
+const list = ref(null)
+
+const { allItems } = useInfiniteScrollLoader(list, dictionaries)
 </script>
 
 <template>
-  <Head title="Глоссарий" />
+  <AutoHead />
 
   <section
     @click.stop="router.visit(route('student.vocabularies.dashboard'))"
     v-if="learnableVocabulariesCount > 0"
-    class="group flex items-center gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 transition duration-100 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+    class="group dashboard-cta-section"
   >
     <Icon
       :icon="['fas', 'book-bookmark']"
@@ -60,7 +38,7 @@ useInfiniteScroll(
         {{ learnableVocabulariesCount }} слов
       </FwbP>
     </div>
-    <FwbButton size="lg" gradient="purple" class="font-bold px-12 me-4"> Повторить </FwbButton>
+    <FwbButton size="lg" gradient="purple" class="dashboard-cta-button"> Повторить </FwbButton>
   </section>
 
   <div ref="list" class="grid grid-cols-5 gap-x-3 gap-y-4">

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-enum VocabularyFilter: string {
+enum LearnableFilter: string {
     case ALL            = 'Все';
     case ONLY_COMPLETED = 'Только изученные';
     case ONLY_STUDIED   = 'Изучаемые';

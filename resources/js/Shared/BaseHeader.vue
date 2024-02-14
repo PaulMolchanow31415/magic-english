@@ -128,7 +128,7 @@ const searched = ref('')
                     Слова
                   </span>
                 </DropdownLink>
-                <DropdownLink href="/">
+                <DropdownLink :href="route('skills.courses')">
                   <span class="dropdown-line">
                     <Icon :icon="['fas', 'spell-check']" />
                     Грамматика

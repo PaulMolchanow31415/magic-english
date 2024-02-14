@@ -23,7 +23,11 @@ function add(dictionary) {
       @click.stop="add(dictionary)"
       class="flex items-center gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 transition duration-100 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
     >
-      <FwbAvatar size="xl" :img="dictionary.poster_url" class="poster" />
+      <FwbAvatar size="xl" :img="dictionary.poster_url" class="poster">
+        <template #placeholder>
+          <Icon :icon="['fas', 'book-bookmark']" size="8x" />
+        </template>
+      </FwbAvatar>
       <div class="grow">
         <FwbHeading tag="h3" v-text="dictionary.category" />
         <FwbP>{{ dictionary.vocabularies.length }} слов</FwbP>

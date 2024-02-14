@@ -7,9 +7,9 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { inject, ref } from 'vue'
-import { set, useSpeechSynthesis } from '@vueuse/core'
+import { inject } from 'vue'
 import { router } from '@inertiajs/vue3'
+import useSay from '@/Composables/useSay.js'
 
 defineProps({
   vocabularies: {
@@ -21,19 +21,7 @@ defineProps({
 
 const avatarInitials = inject('avatarInitials')
 
-const vocalizedWord = ref('')
-
-const { isSupported, stop, isPlaying, speak } = useSpeechSynthesis(vocalizedWord, {
-  lang: 'en-US',
-  pitch: 1,
-  rate: 1,
-  volume: 1,
-})
-
-function say(word) {
-  set(vocalizedWord, word)
-  speak()
-}
+const { isSupported, stop, isPlaying, say } = useSay()
 
 function handleRemove(vocabulary) {
   router.delete(route('student.remove-vocabulary', { id: vocabulary.id }), {
@@ -66,9 +54,10 @@ function handleRemove(vocabulary) {
         </div>
       </div>
 
-      <template v-if="isSupported" #suffix>
+      <template #suffix>
         <div class="flex gap-3 me-2 transition duration-75 opacity-0 group-hover:opacity-100">
           <FwbButton
+            v-if="isSupported"
             @click="isPlaying ? stop() : say(vocabulary.en)"
             pill
             square
