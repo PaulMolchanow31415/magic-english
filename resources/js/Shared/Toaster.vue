@@ -1,8 +1,8 @@
 <script setup>
 import { FwbToast } from 'flowbite-vue'
-import ToastWrapper from '@/Shared/ToastWrapper.vue'
 import Toast from '@/Classes/Toast.js'
 import ToastCloseButton from '@/Shared/ToastCloseButton.vue'
+import SlideLeftTransition from '@/Animations/SlideLeftTransition.vue'
 
 defineProps({
   tosts: {
@@ -24,24 +24,26 @@ defineEmits(['close'])
 
 <template>
   <teleport to="body">
-    <ToastWrapper>
-      <FwbToast
-        v-for="(message, index) in tosts"
-        :type="message.type"
-        v-show="message.isShow"
-        :key="index"
-      >
-        <template #icon>
-          <Icon v-if="message.type === 'success'" :icon="['fas', 'check']" />
-          <Icon v-else-if="message.type === 'info'" :icon="['fas', 'circle-info']" />
-          <Icon v-else-if="message.type === 'warning'" :icon="['fas', 'bolt']" size="xs" />
-        </template>
-        <div class="info-line">
-          {{ message.value }}
-          <ToastCloseButton v-if="closable" @close="$emit('close', index)" />
-        </div>
-      </FwbToast>
-    </ToastWrapper>
+    <div class="fixed right-5 top-5 flex flex-col gap-2.5">
+      <SlideLeftTransition>
+        <FwbToast
+          v-for="(message, index) in tosts"
+          :type="message.type"
+          v-show="message.isShow"
+          :key="index"
+        >
+          <template #icon>
+            <Icon v-if="message.type === 'success'" :icon="['fas', 'check']" />
+            <Icon v-else-if="message.type === 'info'" :icon="['fas', 'circle-info']" />
+            <Icon v-else-if="message.type === 'warning'" :icon="['fas', 'bolt']" size="xs" />
+          </template>
+          <div class="info-line">
+            {{ message.value }}
+            <ToastCloseButton v-if="closable" @close="$emit('close', index)" />
+          </div>
+        </FwbToast>
+      </SlideLeftTransition>
+    </div>
   </teleport>
 </template>
 
