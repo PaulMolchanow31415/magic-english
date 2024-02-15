@@ -172,15 +172,19 @@ export default defineComponent({
         :class="{ '!blur-none': picked?.isRightAnswer }"
       />
       <ul v-if="questions.length" class="space-y-4 w-full grow">
-        <li v-for="question in questions">
-          <Radio
-            :key="question.id"
-            v-model="picked"
-            :value="question"
-            :label="question.translations[0]"
-            :status="selectionStatus(question)"
-            :disabled="picked?.isRightAnswer"
-          />
+        <li v-for="(question, keyIndex) in questions" :key="question.id">
+          <Tooltip theme="light" placement="left">
+            <template #trigger>
+              <Radio
+                v-model="picked"
+                :value="question"
+                :label="question.translations[0]"
+                :status="selectionStatus(question)"
+                :disabled="picked?.isRightAnswer"
+              />
+            </template>
+            <template #content>{{ keyIndex + 1 }}</template>
+          </Tooltip>
         </li>
       </ul>
     </div>

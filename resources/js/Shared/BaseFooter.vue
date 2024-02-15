@@ -8,17 +8,21 @@ import { Link } from '@inertiajs/vue3'
   <FwbFooter footer-type="logo">
     <div class="w-full container mx-auto">
       <div class="sm:flex sm:items-center sm:justify-between">
-        <Link class="shrink-0" href="/public">
-          <ApplicationMark class="block h-9 w-auto" />
-        </Link>
-
         <ul
           class="flex flex-wrap items-center mt-4 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 space-x-8"
         >
-          <li><Link class="hover:underline" href="/public">Главная</Link></li>
-          <li><Link class="hover:underline" href="/public">Музыка</Link></li>
-          <li><Link class="hover:underline" href="/public">Книги</Link></li>
+          <li><Link class="hover:underline" href="/">Главная</Link></li>
+          <li><Link class="hover:underline" href="/">Музыка</Link></li>
+          <li>
+            <Link class="hover:underline" :href="route('skills.self-education')">
+              Самоучитель
+            </Link>
+          </li>
         </ul>
+
+        <Link class="shrink-0" href="/public">
+          <ApplicationMark class="block h-9 w-auto" />
+        </Link>
       </div>
       <hr class="my-4 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-6" />
       <FwbFooterCopyright by="Magic English™" copyright-message="Все права сохранены" />
