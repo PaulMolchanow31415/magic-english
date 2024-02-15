@@ -28,6 +28,13 @@ import SidebarLink from './Partials/SidebarLink.vue'
           <li>
             <SidebarLink :to="route('admin.course.index')" icon="folder-tree" text="Курсы" />
           </li>
+          <li>
+            <SidebarLink
+              :to="route('admin.lesson.index')"
+              icon="graduation-cap"
+              text="Самоучитель"
+            />
+          </li>
         </ul>
         <!-- <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
           <li>

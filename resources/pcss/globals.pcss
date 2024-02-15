@@ -40,6 +40,8 @@
     h1, h2, h3, h4, h5, h6 {
       font-size: revert;
       font-weight: revert;
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
     }
     ol, ul {
       list-style: revert;
@@ -47,9 +49,8 @@
       padding: revert;
     }
     table {
-      @apply my-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
+      @apply my-4 w-full text-sm text-left rtl:text-right;
       tbody {
-        tr { @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700; }
         td { @apply px-2 py-1; }
       }
     }

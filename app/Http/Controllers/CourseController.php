@@ -8,6 +8,7 @@ use App\Models\Complexity;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
+use App\Service\DiscussionService;
 
 class CourseController extends Controller {
     use PhotoUploadable;
@@ -19,7 +20,7 @@ class CourseController extends Controller {
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request, DiscussionService $service) {
         $request->validate([
             'id'                  => 'int|nullable',
             'name'                => 'string|required|max:1024|unique:courses',
@@ -32,14 +33,13 @@ class CourseController extends Controller {
         $oldPath = $course->poster_url;
         $updatedPath = $this->upload($oldPath);
 
-        Course::updateOrCreate(
-            ['id' => $request['id']],
-            [
+        $service->createOrUpdate(
+            Course::updateOrCreate(['id' => $request['id']], [
                 'name'        => $request['name'],
                 'description' => $request['description'],
                 'complexity'  => $request['complexity'],
                 'poster_url'  => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
-            ],
+            ]),
         );
     }
 
@@ -61,8 +61,9 @@ class CourseController extends Controller {
         Course::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(int $id): void {
+    public function destroy(int $id, DiscussionService $service): void {
         $course = Course::findOrFail($id);
+        $service->deleteFrom($course);
         $this->deleteFileIfExist($course->poster_url);
         $course->delete();
     }

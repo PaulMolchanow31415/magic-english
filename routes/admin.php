@@ -4,6 +4,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GrammarController;
 use App\Http\Controllers\VocabularyController;
@@ -59,4 +60,6 @@ Route::middleware([
 
     Route::put('/grammar/change-order', [GrammarController::class, 'changeOrder'])
         ->name('grammar.change-order');
+
+    Route::resource('/lesson', LessonController::class)->only(['index', 'store', 'destroy']);
 });

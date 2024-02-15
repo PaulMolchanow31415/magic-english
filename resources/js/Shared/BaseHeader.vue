@@ -134,7 +134,7 @@ const searched = ref('')
                     Грамматика
                   </span>
                 </DropdownLink>
-                <DropdownLink href="/">
+                <DropdownLink :href="route('skills.self-education')">
                   <span class="dropdown-line">
                     <Icon :icon="['fas', 'graduation-cap']" />
                     Самоучитель

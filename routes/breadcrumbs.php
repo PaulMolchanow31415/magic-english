@@ -28,3 +28,15 @@ Breadcrumbs::for('skills.course.show', fn(BreadcrumbTrail $trail, $name) => $tra
 Breadcrumbs::for('student.courses.dashboard', fn(BreadcrumbTrail $trail) => $trail
     ->parent('skills.courses')
     ->push('Изучаемые курсы', route('student.courses.dashboard')));
+
+Breadcrumbs::for('skills.self-education', fn(BreadcrumbTrail $trail) => $trail
+    ->push('Самоучитель', route('skills.self-education')));
+
+Breadcrumbs::for('skills.lesson.show', fn(BreadcrumbTrail $trail, $number) => $trail
+    ->parent('skills.self-education')
+    ->push($number.' Урок', route('skills.lesson.show', ['number' => $number])));
+
+Breadcrumbs::for('student.lessons.dashboard', fn(BreadcrumbTrail $trail) => $trail
+    ->parent('skills.self-education')
+    ->push('Изучаемые уроки', route('student.lessons.dashboard')));
+

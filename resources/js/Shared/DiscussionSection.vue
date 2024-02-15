@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'DiscussionSection',
   components: { DiscussionComment, FwbA, FwbButton, FwbTextarea },
   props: {
-    discussionableId: {
+    discussionId: {
       type: Number,
       required: true,
     },
@@ -26,14 +26,14 @@ export default defineComponent({
       form: useForm({
         message: '',
         reply_to_id: null,
-        discussion_id: props.discussionableId,
+        discussion_id: props.discussionId,
       }),
     }
   },
   methods: {
     loadComments() {
       axios
-        .get(route('discussion.show', { id: this.discussionableId }))
+        .get(route('discussion.show', { id: this.discussionId }))
         .then((res) => (this.discussion = res.data))
     },
     onReply(comment) {

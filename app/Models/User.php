@@ -58,20 +58,8 @@ class User extends Authenticatable implements MustVerifyEmail {
         return $this->morphedByMany(Course::class, self::LEARNABLE);
     }
 
-    public function studiedVocabularies(): MorphToMany {
-        return $this->vocabularies()->wherePivot('is_completed', 0);
-    }
-
-    public function completedVocabularies(): MorphToMany {
-        return $this->vocabularies()->wherePivot('is_completed', 1);
-    }
-
-    public function studiedCourses(): MorphToMany {
-        return $this->courses()->wherePivot('is_completed', 0);
-    }
-
-    public function completedCourses(): MorphToMany {
-        return $this->courses()->wherePivot('is_completed', 1);
+    public function lessons(): MorphToMany {
+        return $this->morphedByMany(Lesson::class, self::LEARNABLE);
     }
 
 }

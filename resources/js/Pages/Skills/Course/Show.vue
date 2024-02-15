@@ -84,7 +84,7 @@ onKeyStroke('Enter', () => hasNext.value && currentStep.value++)
       </Tooltip>
       <FwbButton
         v-else
-        @click="router.post(route('student.add-course', { id: props.course.id }))"
+        @click="router.post(route('student.add-course', { id: course.id }))"
         size="lg"
         type="button"
         color="green"
@@ -98,7 +98,7 @@ onKeyStroke('Enter', () => hasNext.value && currentStep.value++)
     </div>
   </article>
 
-  <DiscussionSection :discussionable-id="course.id" />
+  <DiscussionSection :discussion-id="course.discussion.id" />
 </template>
 
 <style scoped></style>

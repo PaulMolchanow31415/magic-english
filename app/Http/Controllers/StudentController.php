@@ -3,41 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Vocabulary;
 use App\Models\Dictionary;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\RedirectResponse;
 
 class StudentController extends Controller {
+    use Filterable;
 
-    public function showVocabularyDashboard(Request $request) {
-        $request->validate([
-            'filter' => ['nullable', Rule::enum(LearnableFilter::class)],
-        ]);
-
-        $filter = LearnableFilter::tryFrom($request['filter']) ?? LearnableFilter::ALL;
-        $result = null;
-
-        switch ($filter) {
-            case LearnableFilter::ALL:
-                $result = auth()->user()->vocabularies();
-                break;
-            case LearnableFilter::ONLY_COMPLETED:
-                $result = auth()->user()->completedVocabularies();
-                break;
-            case LearnableFilter::ONLY_STUDIED:
-                $result = auth()->user()->studiedVocabularies();
-                break;
-        }
+    public function showVocabularyDashboard() {
+        $this->handleFilter('vocabularies');
 
         return inertia('Skills/Dashboard/MyGlossary', [
-            'vocabularies' => $result
+            'vocabularies' => $this->list
                 ->withPivot(['is_completed'])
                 ->orderBy('en')->get(),
 
-            'selectedFilter' => $filter->value,
-            'filters'        => LearnableFilter::cases(),
+            ...$this->filterOptions(),
         ]);
     }
 
@@ -47,14 +30,47 @@ class StudentController extends Controller {
         ]);
     }
 
+    public function showLessonsDashboard() {
+        $this->handleFilter('lessons');
+
+        return inertia('Skills/Dashboard/AddedLessons', [
+            'lessons' => $this->list
+                ->withPivot(['is_completed'])
+                ->orderBy('number')->get(),
+
+            ...$this->filterOptions(),
+        ]);
+    }
+
+    public function latestAddedLesson(): RedirectResponse {
+        $lesson = auth()->user()->lessons()->latest('number')->first()
+                  ?? Lesson::latest('number')->first();
+
+        return to_route('skills.lesson.show', ['number' => $lesson->number]);
+    }
+
     public function addVocabulary(string $word): void {
         auth()->user()->vocabularies()->syncWithoutDetaching(
             Vocabulary::whereEn($word)->first(),
         );
     }
 
-    public function removeVocabulary(int $id) {
-        auth()->user()->vocabularies()->detach($id);
+    public function addDictionary(int $id): RedirectResponse {
+        auth()->user()->vocabularies()->syncWithoutDetaching(
+            Dictionary::findOrFail($id)->vocabularies,
+        );
+
+        return to_route('student.vocabularies.challenge', ['dictionaryId' => $id]);
+    }
+
+    public function addCourse(int $id): RedirectResponse {
+        auth()->user()->courses()->syncWithoutDetaching(Course::findOrFail($id));
+
+        return to_route('skills.courses');
+    }
+
+    public function addLesson(int $id): void {
+        auth()->user()->lessons()->syncWithoutDetaching(Lesson::findOrFail($id));
     }
 
     public function completeVocabularies(Request $request) {
@@ -69,18 +85,30 @@ class StudentController extends Controller {
             ], false);
     }
 
+    public function completeLesson(int $id) {
+        auth()->user()->lessons()->syncWithPivotValues(Lesson::findOrFail($id), [
+            'is_completed' => true,
+        ], false);
+    }
+
+    public function removeVocabulary(int $id) {
+        auth()->user()->vocabularies()->detach($id);
+    }
+
+    public function removeLesson(int $number) {
+        auth()->user()->lessons()->detach(Lesson::whereNumber($number)->firstOrFail());
+    }
+
     public function flushVocabularies() {
         auth()->user()->vocabularies()->detach();
 
         return to_route('student.vocabularies.dashboard');
     }
 
-    public function addDictionary(int $id): RedirectResponse {
-        auth()->user()->vocabularies()->syncWithoutDetaching(
-            Dictionary::findOrFail($id)->vocabularies,
-        );
+    public function flushLessons() {
+        auth()->user()->lessons()->detach();
 
-        return to_route('student.vocabularies.challenge', ['dictionaryId' => $id]);
+        return to_route('student.lessons.dashboard');
     }
 
     public function showVocabularyChallenge(Request $request) {
@@ -91,11 +119,5 @@ class StudentController extends Controller {
                 ? Dictionary::findOrFail($request['dictionaryId'])->vocabularies
                 : auth()->user()->vocabularies,
         ]);
-    }
-
-    public function addCourse(int $id): RedirectResponse {
-        auth()->user()->courses()->syncWithoutDetaching(Course::findOrFail($id));
-
-        return to_route('skills.courses');
     }
 }

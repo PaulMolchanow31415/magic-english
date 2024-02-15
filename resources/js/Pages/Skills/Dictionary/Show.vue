@@ -37,7 +37,7 @@ function add(dictionary) {
 
     <VocabularyList :vocabularies="dictionary.vocabularies" />
 
-    <DiscussionSection :discussionable-id="dictionary.id" />
+    <DiscussionSection :discussion-id="dictionary.discussion.id" />
   </article>
 </template>
 

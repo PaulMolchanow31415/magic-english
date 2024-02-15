@@ -3,12 +3,12 @@
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\UserAdministrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +63,16 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
 
             Route::delete('/flush-vocabularies', 'flushVocabularies')->name('flush-vocabularies');
 
+            Route::post('/add-lesson/{id}', 'addLesson')->name('add-lesson');
+
+            Route::post('/complete-lesson/{id}', 'completeLesson')->name('complete-lesson');
+
+            Route::delete('/remove-lesson/{number}', 'removeLesson')->name('remove-lesson');
+
+            Route::delete('/flush-lessons', 'flushLessons')->name('flush-lessons');
+
+            Route::get('/latest-added-lesson', 'latestAddedLesson')->name('latest-added-lesson');
+
             Route::prefix('/vocabularies')->name('vocabularies.')->group(function () {
                 Route::get('/dashboard', 'showVocabularyDashboard')->name('dashboard');
 
@@ -74,6 +84,10 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
             });
 
             Route::post('/add-course/{id}', 'addCourse')->name('add-course');
+
+            Route::prefix('/lessons')->name('lessons.')->group(function () {
+                Route::get('/dashboard', 'showLessonsDashboard')->name('dashboard');
+            });
         });
 
     // Skill pages
@@ -88,6 +102,12 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
             Route::get('/', 'courses')->name('courses');
 
             Route::get('/{name}', 'show')->name('course.show');
+        });
+
+        Route::prefix('/self-education')->controller(LessonController::class)->group(function () {
+            Route::get('/', 'lessons')->name('self-education');
+
+            Route::get('/{number}', 'show')->name('lesson.show');
         });
     });
 });

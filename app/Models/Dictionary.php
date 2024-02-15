@@ -16,7 +16,7 @@ class Dictionary extends Model {
         'poster_url',
     ];
 
-    protected $with = ['vocabularies'];
+    protected $with = ['vocabularies', 'discussion'];
 
     protected $casts = [
         'complexity' => Complexity::class,

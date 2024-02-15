@@ -9,6 +9,7 @@ use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
+use App\Service\DiscussionService;
 
 class DictionaryController extends Controller {
     use PhotoUploadable;
@@ -20,7 +21,7 @@ class DictionaryController extends Controller {
         ]);
     }
 
-    public function store(Request $request): void {
+    public function store(Request $request, DiscussionService $service): void {
         $request->validate([
             'id'                  => 'int|nullable',
             'category'            => 'string|required|unique:dictionaries',
@@ -42,9 +43,7 @@ class DictionaryController extends Controller {
             ],
         );
 
-        $dictionary->discussion()->save(
-            $dictionary->discussion ?: new Discussion(),
-        );
+        $service->createOrUpdate($dictionary);
 
         if ($request->filled('vocabulary_ids')) {
             $dictionary->vocabularies()->sync($request['vocabulary_ids']);
@@ -71,8 +70,9 @@ class DictionaryController extends Controller {
         Dictionary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(int $id): void {
+    public function destroy(int $id, DiscussionService $service): void {
         $dictionary = Dictionary::findOrFail($id);
+        $service->deleteFrom($dictionary);
         $this->deleteFileIfExist($dictionary->poster_url);
         $dictionary->delete();
     }

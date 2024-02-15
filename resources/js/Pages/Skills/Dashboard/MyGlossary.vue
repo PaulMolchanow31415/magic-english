@@ -1,15 +1,16 @@
 <script setup>
-import { FwbButton, FwbSelect } from 'flowbite-vue'
+import { FwbButton } from 'flowbite-vue'
 import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
 import useSuggest from '@/Composables/useSuggest.js'
 import { router } from '@inertiajs/vue3'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
-import SelectOption from '@/Classes/SelectOption.js'
+import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
+import useFilter from '@/Composables/useFilter.js'
 
 const props = defineProps({
   vocabularies: Array,
@@ -18,9 +19,9 @@ const props = defineProps({
 })
 
 const { searched, results } = useSuggest('api.vocabulary.list')
+const selectedFilter = useFilter('student.vocabularies.dashboard', props.selectedFilter)
 
 const isEmpty = ref(false)
-const selectedFilter = ref(props.selectedFilter)
 
 function add(event) {
   router.post(route('student.add-vocabulary', { word: event.value }), null, {
@@ -36,14 +37,6 @@ function train() {
 
   useQuickEnableRef(isEmpty)
 }
-
-watch(selectedFilter, (filter, oldFilterValue) => {
-  if (oldFilterValue !== filter) {
-    router.visit(route('student.vocabularies.dashboard', { filter }), {
-      preserveScroll: true,
-    })
-  }
-})
 </script>
 
 <template>
@@ -68,13 +61,7 @@ watch(selectedFilter, (filter, oldFilterValue) => {
         @add="add"
       />
       <div class="mt-3 flex gap-2.5">
-        <FwbSelect
-          v-model="selectedFilter"
-          :options="filters.map((f) => new SelectOption({ value: f, name: f }))"
-          size="sm"
-          placeholder="Фильтр"
-          class="max-w-fit"
-        />
+        <FilterSelect v-model="selectedFilter" :filters="filters" />
         <FwbButton
           @click="router.delete(route('student.flush-vocabularies'), { preserveScroll: true })"
           size="sm"
