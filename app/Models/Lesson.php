@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Laravel\Scout\Searchable;
+use App\Events\LessonCreated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -17,6 +17,10 @@ class Lesson extends Model {
     ];
 
     protected $with = ['discussion'];
+
+    protected $dispatchesEvents = [
+        'created' => LessonCreated::class,
+    ];
 
     public function discussion(): MorphOne {
         return $this->morphOne(Discussion::class, Discussion::ALIAS);

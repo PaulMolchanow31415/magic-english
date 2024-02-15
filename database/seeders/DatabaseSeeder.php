@@ -6,7 +6,6 @@ namespace Database\Seeders;
 use App\Models\Faq;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Subscriber;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder {
@@ -21,8 +20,6 @@ class DatabaseSeeder extends Seeder {
             'email' => 'pmolch3.1415@gmail.com',
             'role'  => Role::ADMIN,
         ]);
-
-        Subscriber::factory(20)->create();
 
         Faq::factory(10)->create();
     }
