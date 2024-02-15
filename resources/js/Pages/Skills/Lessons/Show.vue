@@ -36,7 +36,6 @@ router.post(route('student.add-lesson', { id: props.lesson.id }))
       <FwbButton
         v-if="prevPageUrl"
         @click="router.visit(prevPageUrl)"
-        size="lg"
         type="button"
         color="alternative"
       >
@@ -46,7 +45,6 @@ router.post(route('student.add-lesson', { id: props.lesson.id }))
       <FwbButton
         v-if="canComplete"
         @click="complete"
-        size="lg"
         type="button"
         color="green"
         class="flex items-center"
@@ -60,7 +58,6 @@ router.post(route('student.add-lesson', { id: props.lesson.id }))
       <FwbButton
         v-if="nextPageUrl"
         @click="router.visit(nextPageUrl)"
-        size="lg"
         type="button"
         class="flex items-center"
       >
