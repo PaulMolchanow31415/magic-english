@@ -114,10 +114,10 @@ function confirmDelete() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="lesson in lessons.data" :key="lesson.id">
+      <FwbTableRow v-for="lesson in lessons.data" :key="lesson.id" class="group">
         <FwbTableCell v-text="lesson.number" />
         <FwbTableCell v-text="lesson.created_at" />
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6 justify-end pe-4">
             <TableActionButton @click="handleEdit(lesson)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="lessonForRemoval = lesson">

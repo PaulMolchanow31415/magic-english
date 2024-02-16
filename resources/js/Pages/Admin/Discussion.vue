@@ -114,9 +114,9 @@ const formatDate = (timestamp) =>
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="discussion in discussions" :key="discussion.id">
+      <FwbTableRow v-for="discussion in discussions" :key="discussion.id" class="group">
         <FwbTableCell v-text="discussion.discussionable_type" />
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="discussionForRemoval = discussion" theme="red">
             Удалить
           </TableActionButton>

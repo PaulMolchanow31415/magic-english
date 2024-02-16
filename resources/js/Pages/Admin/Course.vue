@@ -138,7 +138,7 @@ function deletePoster() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="course in courses.data" :key="course.id">
+      <FwbTableRow v-for="course in courses.data" :key="course.id" class="group">
         <FwbTableCell>
           <FwbAvatar
             size="xs"
@@ -150,7 +150,7 @@ function deletePoster() {
         <FwbTableCell v-text="course.name" />
         <FwbTableCell v-text="course.description" />
         <FwbTableCell v-text="course.complexity" />
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton theme="green" @click="selectedId = course.id">
               Грамматика

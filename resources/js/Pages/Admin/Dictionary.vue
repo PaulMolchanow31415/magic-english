@@ -147,7 +147,7 @@ function deletePoster() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="dictionary in dictionaries.data" :key="dictionary.id">
+      <FwbTableRow v-for="dictionary in dictionaries.data" :key="dictionary.id" class="group">
         <FwbTableCell>
           <FwbAvatar
             size="xs"
@@ -159,7 +159,7 @@ function deletePoster() {
         <FwbTableCell v-text="dictionary.category" />
         <FwbTableCell v-text="dictionary.complexity" />
         <FwbTableCell v-text="dictionary.updated_at" />
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="dictionaryForRemoval = dictionary">

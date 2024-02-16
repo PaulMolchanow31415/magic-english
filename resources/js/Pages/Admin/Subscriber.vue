@@ -62,7 +62,7 @@ function confirmDelete() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="subscriber in subscribers.data">
+      <FwbTableRow v-for="subscriber in subscribers.data" class="group">
         <FwbTableCell>
           <EmailLink :mail="subscriber.email" />
         </FwbTableCell>
@@ -74,7 +74,7 @@ function confirmDelete() {
           />
         </FwbTableCell>
         <FwbTableCell v-text="subscriber.created_at" />
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="subscriberForRemoval = subscriber" theme="red">
             Удалить
           </TableActionButton>

@@ -189,7 +189,7 @@ function confirmEdit() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="vocabulary in dictionary.data">
+      <FwbTableRow v-for="vocabulary in dictionary.data" class="group">
         <FwbTableCell>
           <FwbAvatar
             size="xs"
@@ -208,7 +208,7 @@ function confirmEdit() {
             <span class="line-clamp-1" :title="translation">{{ translation }}</span>
           </Badge>
         </FwbTableCell>
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(vocabulary)">Редактировать</TableActionButton>
             <TableActionButton @click="remove(vocabulary)" theme="red">Удалить</TableActionButton>

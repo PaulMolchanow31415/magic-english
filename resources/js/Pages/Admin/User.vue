@@ -90,7 +90,7 @@ function confirmEdit() {
       </FwbTableHeadCell>
     </FwbTableHead>
     <FwbTableBody>
-      <FwbTableRow v-for="user in users.data">
+      <FwbTableRow v-for="user in users.data" class="group">
         <FwbTableCell>
           <FwbAvatar
             :alt="user.name"
@@ -112,7 +112,7 @@ function confirmEdit() {
             class="!mr-0 !rounded-md"
           />
         </FwbTableCell>
-        <FwbTableCell>
+        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(user)">Редактировать</TableActionButton>
             <TableActionButton @click="userForRemoval = user" theme="red">
