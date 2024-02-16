@@ -1,7 +1,7 @@
 <script setup>
 import { FwbToast } from 'flowbite-vue'
 import Toast from '@/Classes/Toast.js'
-import ToastCloseButton from '@/Shared/ToastCloseButton.vue'
+import CloseButton from '@/Shared/CloseButton.vue'
 import SlideLeftTransition from '@/Animations/SlideLeftTransition.vue'
 
 defineProps({
@@ -39,7 +39,7 @@ defineEmits(['close'])
           </template>
           <div class="info-line">
             {{ message.value }}
-            <ToastCloseButton v-if="closable" @close="$emit('close', index)" />
+            <CloseButton v-if="closable" @close="$emit('close', index)" />
           </div>
         </FwbToast>
       </SlideLeftTransition>

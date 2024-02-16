@@ -4,6 +4,7 @@ use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\CookieController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubscriberController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\DictionaryController;
 */
 
 Route::inertia('/', 'Welcome', ['faqs' => Faq::all()]);
+
+Route::post('/accept-cookies', CookieController::class)->name('accept-cookies');
 
 Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController::class)
     ->group(function () {

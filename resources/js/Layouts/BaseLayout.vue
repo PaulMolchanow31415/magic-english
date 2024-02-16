@@ -2,6 +2,7 @@
 import BaseHeader from '@/Shared/BaseHeader.vue'
 import BaseFooter from '@/Shared/BaseFooter.vue'
 import { provide } from 'vue'
+import CookiePopup from '@/Shared/CookiePopup.vue'
 
 provide('avatarInitials', (name = 'default') => {
   name = name.trim().split(' ')
@@ -29,6 +30,8 @@ provide('shuffle', (array = []) => {
     <main class="flex-grow relative">
       <slot />
     </main>
+
+    <CookiePopup />
 
     <BaseFooter />
   </div>

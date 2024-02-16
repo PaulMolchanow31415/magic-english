@@ -22,9 +22,10 @@ return new class extends Migration {
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
-            // added new
+            // custom
             $table->boolean('is_banned')->default(false);
             $table->string('role');
+            $table->boolean('is_accept_cookies')->default(false);
         });
     }
 

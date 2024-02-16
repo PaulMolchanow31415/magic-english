@@ -13,6 +13,7 @@ import {
   faCircleInfo,
   faCommentDots,
   faComments,
+  faCookieBite,
   faDatabase,
   faDesktop,
   faEllipsis,
@@ -83,4 +84,5 @@ library.add(
   faBookBookmark,
   faVolumeHigh,
   faCircleCheck,
+  faCookieBite,
 )

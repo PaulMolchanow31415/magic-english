@@ -39,7 +39,8 @@ class HandleInertiaRequests extends Middleware {
      */
     public function share(Request $request): array {
         return array_merge(parent::share($request), [
-            'complexities' => Complexity::cases(),
+            'complexities'      => Complexity::cases(),
+            'is_accept_cookies' => session('is_accept_cookies', auth()->user()?->is_accept_cookies),
         ]);
     }
 }
