@@ -9,8 +9,11 @@ import {
   FwbHeading,
 } from 'flowbite-vue'
 import EmailSubscribe from '@/Shared/EmailSubscribe.vue'
+import { ref } from 'vue'
 
 defineProps({ faqs: Array })
+
+const subscribeSection = ref(null)
 </script>
 
 <template>
@@ -28,13 +31,23 @@ defineProps({ faqs: Array })
         🎞 📻 📖 📋 💎
       </p>
       <div class="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-y-0 gap-3">
-        <FwbButton @click="router.visit('dashboard')" size="xl" class="justify-center">
+        <FwbButton
+          @click="router.visit(route('skills.self-education'))"
+          size="xl"
+          class="justify-center"
+        >
           Начать
           <template #suffix>
             <Icon :icon="['fas', 'arrow-right']" size="sm" class="-mb-0.5" />
           </template>
         </FwbButton>
-        <FwbButton color="alternative" size="xl">Проверить навыки</FwbButton>
+        <FwbButton
+          @click="subscribeSection.scrollIntoView({ behavior: 'smooth' })"
+          color="alternative"
+          size="xl"
+        >
+          Оформить подписку
+        </FwbButton>
       </div>
     </section>
 
@@ -53,7 +66,7 @@ defineProps({ faqs: Array })
       </FwbAccordion>
     </section>
 
-    <section class="px-4 pt-12 mb-28">
+    <section ref="subscribeSection" class="px-4 pt-12 mb-28">
       <FwbHeading tag="h2" class="mb-6"> Оформление подписки на предстоящие курсы</FwbHeading>
       <EmailSubscribe />
     </section>
