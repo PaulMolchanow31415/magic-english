@@ -7,7 +7,7 @@ use App\Events\LessonCreated;
 use App\Notifications\NewLesson;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendLessonCreatedNotifications implements ShouldQueue {
+class SendLessonCreatedNotification implements ShouldQueue {
     /**
      * Create the event listener.
      */

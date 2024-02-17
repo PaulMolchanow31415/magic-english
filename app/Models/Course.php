@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Laravel\Scout\Searchable;
+use App\Events\CourseCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -23,7 +24,11 @@ class Course extends Model {
     protected $casts = [
         'complexity' => Complexity::class,
     ];
-    
+
+    protected $dispatchesEvents = [
+        'created' => CourseCreated::class,
+    ];
+
     public function grammarRules(): HasMany {
         return $this->hasMany(Grammar::class);
     }
