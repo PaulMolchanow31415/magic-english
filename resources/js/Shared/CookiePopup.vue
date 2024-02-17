@@ -13,7 +13,10 @@ if (!page.props.is_accept_cookies) {
 }
 
 function accept() {
-  router.post(route('accept-cookies'))
+  router.post(route('accept-cookies'), null, {
+    preserveScroll: true,
+    preserveState: true,
+  })
   set(isShow, false)
 }
 </script>
@@ -29,7 +32,7 @@ function accept() {
       <div class="flex items-center justify-between gap-4">
         <div class="flex gap-4 items-center mb-2">
           <Icon :icon="['fas', 'cookie-bite']" size="2xl" />
-          <FwbP class="font-medium">Наш сайт использует куки</FwbP>
+          <FwbP class="font-bold">Наш сайт использует куки</FwbP>
         </div>
         <CloseButton @close="isShow = false" />
       </div>
