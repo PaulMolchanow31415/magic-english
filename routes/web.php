@@ -76,6 +76,10 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
 
             Route::get('/latest-added-lesson', 'latestAddedLesson')->name('latest-added-lesson');
 
+            Route::post('/add-course/{id}', 'addCourse')->name('add-course');
+
+            Route::post('/complete-course/{id}', 'completeCourse')->name('complete-course');
+
             Route::prefix('/vocabularies')->name('vocabularies.')->group(function () {
                 Route::get('/dashboard', 'showVocabularyDashboard')->name('dashboard');
 
@@ -85,8 +89,6 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
             Route::prefix('/courses')->name('courses.')->group(function () {
                 Route::get('/dashboard', 'showCoursesDashboard')->name('dashboard');
             });
-
-            Route::post('/add-course/{id}', 'addCourse')->name('add-course');
 
             Route::prefix('/lessons')->name('lessons.')->group(function () {
                 Route::get('/dashboard', 'showLessonsDashboard')->name('dashboard');

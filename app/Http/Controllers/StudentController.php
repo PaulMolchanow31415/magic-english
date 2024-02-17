@@ -27,7 +27,7 @@ class StudentController extends Controller {
 
         return inertia('Skills/Dashboard/AddedCourses', [
             'courses' => $this->getFilteredUserRelation('courses')
-                ->whereComplexity($complexity)->get(),
+                ->where('complexity', $complexity)->get(),
 
             'filters' => [
                 'learnable'  => $this->learnableFilter,
@@ -41,7 +41,7 @@ class StudentController extends Controller {
 
         return inertia('Skills/Dashboard/AddedLessons', [
             'lessons' => $this->getFilteredUserRelation('lessons')
-                ->whereComplexity($complexity)
+                ->where('complexity', $complexity)
                 ->withPivot(['is_completed'])
                 ->orderBy('number')->get(),
 
@@ -73,10 +73,8 @@ class StudentController extends Controller {
         return to_route('student.vocabularies.challenge', ['dictionaryId' => $id]);
     }
 
-    public function addCourse(int $id): RedirectResponse {
+    public function addCourse(int $id): void {
         auth()->user()->courses()->syncWithoutDetaching(Course::findOrFail($id));
-
-        return to_route('skills.courses');
     }
 
     public function addLesson(int $id): void {
@@ -89,10 +87,9 @@ class StudentController extends Controller {
             'vocabulary_ids.*' => 'int|required',
         ]);
 
-        auth()->user()->vocabularies()
-            ->syncWithPivotValues($request['vocabulary_ids'], [
-                'is_completed' => true,
-            ], false);
+        auth()->user()->vocabularies()->syncWithPivotValues($request['vocabulary_ids'], [
+            'is_completed' => true,
+        ], false);
 
         return to_route('student.vocabularies.dashboard');
     }
@@ -101,6 +98,14 @@ class StudentController extends Controller {
         auth()->user()->lessons()->syncWithPivotValues(Lesson::findOrFail($id), [
             'is_completed' => true,
         ], false);
+    }
+
+    public function completeCourse(int $id) {
+        auth()->user()->courses()->syncWithPivotValues(Course::findOrFail($id), [
+            'is_completed' => true,
+        ], false);
+
+        return to_route('student.courses.dashboard');
     }
 
     public function removeVocabulary(int $id) {

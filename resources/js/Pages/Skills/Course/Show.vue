@@ -9,7 +9,10 @@ import { onKeyStroke } from '@vueuse/core'
 import useSay from '@/Composables/useSay.js'
 import { router } from '@inertiajs/vue3'
 
-const props = defineProps({ course: Object })
+const props = defineProps({
+  course: Object,
+  isCompleted: Boolean,
+})
 
 const { isSupported, stop, isPlaying, say } = useSay()
 
@@ -25,6 +28,10 @@ const progress = computed(() => Math.round((currentStep.value / (grammars.value.
 watch(currentStep, () => article.value.scrollIntoView({ behavior: 'smooth' }))
 
 onKeyStroke('Enter', () => hasNext.value && currentStep.value++)
+
+if (!props.isCompleted) {
+  router.post(route('student.add-course', { id: props.course.id }))
+}
 </script>
 
 <template>
@@ -82,19 +89,30 @@ onKeyStroke('Enter', () => hasNext.value && currentStep.value++)
           <span class="leading-loose">Нажмите</span>&nbsp;&nbsp;<kbd>Enter</kbd>
         </template>
       </Tooltip>
-      <FwbButton
-        v-else
-        @click="router.post(route('student.add-course', { id: course.id }))"
-        size="lg"
-        type="button"
-        color="green"
-        class="flex items-center"
-      >
-        Завершить
-        <template #suffix>
-          <Icon :icon="['fas', 'check']" size="sm" />
-        </template>
-      </FwbButton>
+      <template v-else>
+        <FwbButton
+          v-if="isCompleted"
+          @click="router.visit(route('student.courses.dashboard'))"
+          size="lg"
+          type="button"
+          color="alternative"
+        >
+          Вернутся в дашборд курсов
+        </FwbButton>
+        <FwbButton
+          v-else
+          @click="router.post(route('student.complete-course', { id: course.id }))"
+          size="lg"
+          type="button"
+          color="green"
+          class="flex items-center"
+        >
+          Завершить
+          <template #suffix>
+            <Icon :icon="['fas', 'check']" size="sm" />
+          </template>
+        </FwbButton>
+      </template>
     </div>
   </article>
 
