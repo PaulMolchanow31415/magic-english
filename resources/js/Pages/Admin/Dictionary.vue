@@ -35,7 +35,7 @@ const props = defineProps({
 
 const avatarInitials = inject('avatarInitials')
 
-const searchedDictionary = useSearch('admin.dictionary.index', props.filters.search)
+const searchedDictionary = useSearch(props.filters.search)
 const { searched: searchedVocabulary, results: vocabularies } = useSuggest('api.vocabulary.list')
 const page = usePage()
 const isSaved = ref(false)

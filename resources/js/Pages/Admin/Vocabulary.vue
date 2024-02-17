@@ -35,7 +35,7 @@ const isSaved = ref(false)
 const isDeleted = ref(false)
 const isWordDeletionError = ref(false)
 const isSavingError = ref(false)
-const searchedVocabulary = useSearch('admin.vocabulary.index', props.filters.search)
+const searchedVocabulary = useSearch(props.filters.search)
 const form = useForm({
   id: null,
   en: '',

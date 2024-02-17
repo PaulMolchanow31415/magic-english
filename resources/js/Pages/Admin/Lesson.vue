@@ -34,7 +34,7 @@ const props = defineProps({
 const avatarInitials = inject('avatarInitials')
 
 const page = usePage()
-const searchedLesson = useSearch('admin.lesson.index', props.filters.search)
+const searchedLesson = useSearch(props.filters.search)
 const number = ref(props.prevLessonNumber)
 const isSaved = ref(false)
 const isDeleted = ref(false)

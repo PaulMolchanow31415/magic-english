@@ -2,14 +2,14 @@ import { ref } from 'vue'
 import { watchThrottled } from '@vueuse/core'
 import { router } from '@inertiajs/vue3'
 
-export function useSearch(routeName, searchValue) {
+export function useSearch(searchValue) {
   const searched = ref(searchValue || '')
 
   watchThrottled(
     searched,
     (value) =>
       router.get(
-        route(routeName),
+        route(route().current()),
         { search: `${value}` },
         {
           preserveState: true,

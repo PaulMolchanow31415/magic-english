@@ -33,7 +33,7 @@ const props = defineProps({
 
 const avatarInitials = inject('avatarInitials')
 
-const searchedUser = useSearch('admin.user.index', props.filters.search)
+const searchedUser = useSearch(props.filters.search)
 const isShowEditModal = ref(false)
 const userForRemoval = ref(null)
 const form = useForm({ id: null, role: '', is_banned: false })

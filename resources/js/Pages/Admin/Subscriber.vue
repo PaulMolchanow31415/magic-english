@@ -26,7 +26,7 @@ const props = defineProps({
   filters: Object,
 })
 
-const searchedSubscriber = useSearch('admin.subscriber.index', props.filters.search)
+const searchedSubscriber = useSearch(props.filters.search)
 const isDeleted = ref(false)
 const isError = ref(false)
 const subscriberForRemoval = ref(null)
