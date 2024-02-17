@@ -3,10 +3,12 @@ import AutoHead from '@/Shared/AutoHead.vue'
 import { router } from '@inertiajs/vue3'
 import { FwbButton, FwbHeading } from 'flowbite-vue'
 import LessonList from '@/Pages/Skills/Patials/LessonList.vue'
+import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
 defineProps({
   lessons: Array,
   learnableLessonsCount: Number,
+  filters: Object,
 })
 </script>
 
@@ -30,6 +32,8 @@ defineProps({
     </div>
     <FwbButton size="lg" gradient="cyan" class="dashboard-cta-button">Перейти</FwbButton>
   </section>
+
+  <FilterPane :filters="filters" />
 
   <LessonList :lessons="lessons" />
 </template>

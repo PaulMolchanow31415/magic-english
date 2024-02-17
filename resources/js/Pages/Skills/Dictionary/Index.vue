@@ -4,10 +4,12 @@ import { FwbButton, FwbCard, FwbHeading, FwbP } from 'flowbite-vue'
 import useInfiniteScrollLoader from '@/Composables/useInfiniteScrollLoader.js'
 import { ref, toRef } from 'vue'
 import AutoHead from '@/Shared/AutoHead.vue'
+import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
 const props = defineProps({
   dictionaries: Object,
   learnableVocabulariesCount: Number,
+  filters: Object,
 })
 
 const dictionaries = toRef(props, 'dictionaries')
@@ -40,6 +42,8 @@ const { allItems } = useInfiniteScrollLoader(list, dictionaries)
     </div>
     <FwbButton size="lg" gradient="purple" class="dashboard-cta-button"> Повторить </FwbButton>
   </section>
+
+  <FilterPane :filters="filters" />
 
   <div ref="list" class="grid grid-cols-5 gap-x-3 gap-y-4">
     <FwbCard

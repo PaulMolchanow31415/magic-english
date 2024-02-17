@@ -9,6 +9,10 @@ defineProps({
     type: [null, String],
     required: true,
   },
+  label: {
+    type: String,
+    default: 'Сложность набора',
+  },
   errorMessage: {
     type: String,
   },
@@ -21,7 +25,7 @@ const options = usePage().props.complexities.map((c) => new SelectOption({ value
 
 <template>
   <div>
-    <InputLabel value="Сложность набора">
+    <InputLabel :value="label">
       <FwbSelect
         :model-value="modelValue"
         @update:model-value="$emit('update:modelValue', $event)"

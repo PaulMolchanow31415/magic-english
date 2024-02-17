@@ -20,6 +20,10 @@ class Course extends Model {
 
     protected $with = ['discussion'];
 
+    protected $casts = [
+        'complexity' => Complexity::class,
+    ];
+    
     public function grammarRules(): HasMany {
         return $this->hasMany(Grammar::class);
     }

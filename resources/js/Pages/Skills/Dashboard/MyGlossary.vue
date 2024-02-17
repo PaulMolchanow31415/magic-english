@@ -4,23 +4,23 @@ import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
 import useSuggest from '@/Composables/useSuggest.js'
-import { router } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { router, usePage } from '@inertiajs/vue3'
+import { ref, toRef, watch } from 'vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
-import useFilter from '@/Composables/useFilter.js'
 
 const props = defineProps({
   vocabularies: Array,
-  selectedFilter: String,
-  filters: Array,
+  filters: Object,
 })
 
 const { searched, results } = useSuggest('api.vocabulary.list')
-const selectedFilter = useFilter('student.vocabularies.dashboard', props.selectedFilter)
+const page = usePage()
 
+const filters = toRef(props, 'filters')
+const selectedFilter = ref(filters.learnable)
 const isEmpty = ref(false)
 
 function add(event) {
@@ -37,6 +37,13 @@ function train() {
 
   useQuickEnableRef(isEmpty)
 }
+
+watch(selectedFilter, (learnable) => {
+  router.visit(route(route().current(), { filters: { learnable } }), {
+    preserveState: true,
+    preserveScroll: true,
+  })
+})
 </script>
 
 <template>
@@ -61,7 +68,7 @@ function train() {
         @add="add"
       />
       <div class="mt-3 flex gap-2.5">
-        <FilterSelect v-model="selectedFilter" :filters="filters" />
+        <FilterSelect v-model="selectedFilter" />
         <FwbButton
           @click="router.delete(route('student.flush-vocabularies'), { preserveScroll: true })"
           size="sm"

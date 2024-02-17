@@ -8,7 +8,7 @@ import CloseButton from '@/Shared/CloseButton.vue'
 const page = usePage()
 const isShow = ref(false)
 
-if (!page.props.is_accept_cookies) {
+if (!page.props.isAcceptCookies) {
   setTimeout(() => set(isShow, true), 10_000)
 }
 

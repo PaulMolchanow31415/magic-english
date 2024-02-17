@@ -45,7 +45,7 @@ const icon = computed(() => {
 <template>
   <label
     :class="labelClasses"
-    class="text-slate-700 grid grid-cols-[24px_1fr_auto] items-center gap-6 rounded-lg p-4 ring-1 ring-slate-100 hover:bg-slate-100"
+    class="text-slate-700 dark:text-slate-200 grid grid-cols-[24px_1fr_auto] items-center gap-6 rounded-lg p-4 ring-1 ring-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900 select-none cursor-pointer"
   >
     <Icon :icon="icon" class="w-8" />
 

@@ -12,6 +12,7 @@ use App\Service\DiscussionService;
 
 class CourseController extends Controller {
     use PhotoUploadable;
+    use FilteredLearnable;
 
     public function index(): Response|ResponseFactory {
         return inertia('Admin/Course', [
@@ -44,9 +45,14 @@ class CourseController extends Controller {
     }
 
     public function courses(): Response|ResponseFactory {
+        $complexity = ComplexityFilter::extract();
+
         return inertia('Skills/Course/Index', [
-            'courses'               => Course::paginate(4),
+            'courses' => Course::whereComplexity($complexity)->paginate(4),
+
             'learnableCoursesCount' => auth()->user()->courses()->count(),
+
+            'filters' => ['complexity' => $complexity],
         ]);
     }
 

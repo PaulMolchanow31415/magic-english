@@ -14,6 +14,7 @@ return new class extends Migration {
 
             $table->smallInteger('number')->unique();
             $table->longText('content');
+            $table->string('complexity');
 
             $table->timestamps();
         });

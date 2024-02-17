@@ -10,35 +10,45 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 class StudentController extends Controller {
-    use Filterable;
+    use FilteredLearnable;
 
     public function showVocabularyDashboard() {
-        $this->handleFilter('vocabularies');
-
         return inertia('Skills/Dashboard/MyGlossary', [
-            'vocabularies' => $this->list
+            'vocabularies' => $this->getFilteredUserRelation('vocabularies')
                 ->withPivot(['is_completed'])
                 ->orderBy('en')->get(),
 
-            ...$this->filterOptions(),
+            'filters' => ['learnable' => $this->learnableFilter],
         ]);
     }
 
     public function showCoursesDashboard() {
+        $complexity = ComplexityFilter::extract();
+
         return inertia('Skills/Dashboard/AddedCourses', [
-            'courses' => auth()->user()->courses,
+            'courses' => $this->getFilteredUserRelation('courses')
+                ->whereComplexity($complexity)->get(),
+
+            'filters' => [
+                'learnable'  => $this->learnableFilter,
+                'complexity' => $complexity,
+            ],
         ]);
     }
 
     public function showLessonsDashboard() {
-        $this->handleFilter('lessons');
+        $complexity = ComplexityFilter::extract();
 
         return inertia('Skills/Dashboard/AddedLessons', [
-            'lessons' => $this->list
+            'lessons' => $this->getFilteredUserRelation('lessons')
+                ->whereComplexity($complexity)
                 ->withPivot(['is_completed'])
                 ->orderBy('number')->get(),
 
-            ...$this->filterOptions(),
+            'filters' => [
+                'complexity' => $complexity,
+                'learnable'  => $this->learnableFilter,
+            ],
         ]);
     }
 
@@ -83,6 +93,8 @@ class StudentController extends Controller {
             ->syncWithPivotValues($request['vocabulary_ids'], [
                 'is_completed' => true,
             ], false);
+
+        return to_route('student.vocabularies.dashboard');
     }
 
     public function completeLesson(int $id) {

@@ -3,16 +3,13 @@ import AutoHead from '@/Shared/AutoHead.vue'
 import LessonList from '@/Pages/Skills/Patials/LessonList.vue'
 import { router } from '@inertiajs/vue3'
 import { FwbButton } from 'flowbite-vue'
-import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
-import useFilter from '@/Composables/useFilter.js'
+import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
 const props = defineProps({
   lessons: Array,
   selectedFilter: String,
-  filters: Array,
+  filters: Object,
 })
-
-const selectedFilter = useFilter('student.lessons.dashboard', props.selectedFilter)
 </script>
 
 <template>
@@ -22,19 +19,16 @@ const selectedFilter = useFilter('student.lessons.dashboard', props.selectedFilt
     class="group flex items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="grow">
-      <div class="mt-3 flex gap-2.5">
-        <FilterSelect v-model="selectedFilter" :filters="filters" />
-        <FwbButton
-          @click="router.delete(route('student.flush-lessons'), { preserveScroll: true })"
-          size="sm"
-          color="alternative"
-          type="button"
-          class="py-2"
-        >
-          <Icon :icon="['far', 'trash-can']" class="me-1" />
-          Удалить все уроки
-        </FwbButton>
-      </div>
+      <FwbButton
+        @click="router.delete(route('student.flush-lessons'), { preserveScroll: true })"
+        size="sm"
+        color="alternative"
+        type="button"
+        class="py-2"
+      >
+        <Icon :icon="['far', 'trash-can']" class="me-1" />
+        Удалить все уроки
+      </FwbButton>
     </div>
 
     <FwbButton
@@ -47,6 +41,8 @@ const selectedFilter = useFilter('student.lessons.dashboard', props.selectedFilt
       Перейти к последнему
     </FwbButton>
   </section>
+
+  <FilterPane :filters="filters" />
 
   <LessonList removable :lessons="lessons" />
 </template>

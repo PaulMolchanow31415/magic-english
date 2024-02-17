@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Inertia\Response;
 use App\Models\Dictionary;
 use App\Models\Complexity;
-use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
@@ -53,9 +52,14 @@ class DictionaryController extends Controller {
     }
 
     public function glossary(): Response|ResponseFactory {
+        $complexity = ComplexityFilter::extract();
+
         return inertia('Skills/Dictionary/Index', [
-            'dictionaries'               => Dictionary::paginate(4),
+            'dictionaries' => Dictionary::whereComplexity($complexity)->paginate(4),
+
             'learnableVocabulariesCount' => auth()->user()->vocabularies()->count(),
+
+            'filters' => ['complexity' => $complexity],
         ]);
     }
 

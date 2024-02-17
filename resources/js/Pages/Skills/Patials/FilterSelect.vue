@@ -2,10 +2,7 @@
 import SelectOption from '@/Classes/SelectOption.js'
 import { FwbSelect } from 'flowbite-vue'
 
-defineProps({
-  modelValue: String,
-  filters: Array,
-})
+defineProps({ modelValue: String })
 
 defineEmits(['update:modelValue'])
 </script>
@@ -14,7 +11,7 @@ defineEmits(['update:modelValue'])
   <FwbSelect
     :model-value="modelValue"
     @update:model-value="$emit('update:modelValue', $event)"
-    :options="filters.map((f) => new SelectOption({ value: f, name: f }))"
+    :options="$page.props.learnableFilters.map((f) => new SelectOption({ value: f, name: f }))"
     size="sm"
     placeholder="Фильтр"
     class="max-w-fit"

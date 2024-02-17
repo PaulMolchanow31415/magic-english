@@ -1,6 +1,6 @@
 import { router, usePage } from '@inertiajs/vue3'
-import { isRef, toRef, warn } from 'vue'
-import { useInfiniteScroll } from '@vueuse/core'
+import { isRef, toRef, warn, watch } from 'vue'
+import { set, useInfiniteScroll } from '@vueuse/core'
 
 export default function (element, wrappedList) {
   if (!isRef(wrappedList)) {
@@ -59,6 +59,8 @@ export default function (element, wrappedList) {
       ...scrollConfig('top'),
     },
   )
+
+  watch(wrappedList, (object) => set(allItems, object.data))
 
   return { allItems }
 }

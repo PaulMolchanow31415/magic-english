@@ -23,6 +23,7 @@ import { set } from '@vueuse/core'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
 import InputError from '@/Shared/InputError.vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 
 const props = defineProps({
   lessons: Object,
@@ -45,12 +46,14 @@ const form = useForm({
   id: null,
   number: number.value + 1,
   content: '',
+  complexity: page.props.complexities[0],
 })
 
 function handleCreate() {
   form.id = null
   form.number = number.value + 1
   form.content = ''
+  form.complexity = page.props.complexities[0]
   set(isShowEditModal, true)
 }
 
@@ -58,6 +61,7 @@ function handleEdit(lesson) {
   form.id = lesson.id
   form.number = lesson.number || number.value + 1
   form.content = lesson.content
+  form.complexity = lesson.complexity
   set(isShowEditModal, true)
 }
 
@@ -109,6 +113,7 @@ function confirmDelete() {
     <FwbTableHead>
       <FwbTableHeadCell v-text="'Номер урока'" />
       <FwbTableHeadCell v-text="'Дата создания'" />
+      <FwbTableHeadCell v-text="'Сложность'" />
       <FwbTableHeadCell>
         <span class="sr-only">Действия</span>
       </FwbTableHeadCell>
@@ -117,6 +122,7 @@ function confirmDelete() {
       <FwbTableRow v-for="lesson in lessons.data" :key="lesson.id" class="group">
         <FwbTableCell v-text="lesson.number" />
         <FwbTableCell v-text="lesson.created_at" />
+        <FwbTableCell v-text="lesson.complexity" />
         <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6 justify-end pe-4">
             <TableActionButton @click="handleEdit(lesson)"> Редактировать </TableActionButton>
@@ -139,12 +145,19 @@ function confirmDelete() {
     @confirm="confirmUpdate"
     @close="isShowEditModal = false"
   >
-    <div class="mb-6">
+    <div class="mb-4">
       <InputLabel value="Номер урока">
         <NumberInput v-model="form.number" class="max-w-[10rem]" placeholder="999" />
       </InputLabel>
       <InputError :message="form.errors.number" />
     </div>
+
+    <ComplexitySelect
+      class="mb-6"
+      label="Сложность урока"
+      v-model="form.complexity"
+      :error-message="form.errors.complexity"
+    />
 
     <TextRedactor
       v-model="form.content"

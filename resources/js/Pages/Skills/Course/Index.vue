@@ -5,17 +5,19 @@ import { FwbButton, FwbHeading, FwbP } from 'flowbite-vue'
 import { ref, toRef } from 'vue'
 import useInfiniteScrollLoader from '@/Composables/useInfiniteScrollLoader.js'
 import CourseList from '@/Pages/Skills/Patials/CourseList.vue'
+import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
 const props = defineProps({
   courses: Object,
   learnableCoursesCount: Number,
+  filters: Object,
 })
 
 const courses = toRef(props, 'courses')
 
-const list = ref(null)
+const element = ref(null)
 
-const { allItems } = useInfiniteScrollLoader(list, courses)
+const { allItems } = useInfiniteScrollLoader(element, courses)
 </script>
 
 <template>
@@ -42,7 +44,9 @@ const { allItems } = useInfiniteScrollLoader(list, courses)
     <FwbButton size="lg" gradient="green-blue" class="dashboard-cta-button"> Повторить </FwbButton>
   </section>
 
-  <div ref="list">
+  <FilterPane :filters="filters" />
+
+  <div ref="element">
     <CourseList :courses="allItems" />
   </div>
 </template>

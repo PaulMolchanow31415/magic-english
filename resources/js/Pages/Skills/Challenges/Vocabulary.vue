@@ -4,7 +4,7 @@ import { FwbButton, FwbHeading, FwbProgress } from 'flowbite-vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import Radio from '@/Shared/Radio.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
-import { router, useForm } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 
 const makeAnswer = (obj, isRight) => ({
   ...obj,
@@ -148,10 +148,7 @@ export default defineComponent({
       }
     },
     finish() {
-      if (this.progress === 100) {
-        this.completed.post(route('student.complete-vocabularies'))
-      }
-      router.visit(route('student.vocabularies.dashboard'))
+      this.completed.post(route('student.complete-vocabularies'))
     },
   },
 })

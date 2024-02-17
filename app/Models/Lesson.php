@@ -14,9 +14,14 @@ class Lesson extends Model {
     protected $fillable = [
         'number',
         'content',
+        'complexity',
     ];
 
     protected $with = ['discussion'];
+
+    protected $casts = [
+        'complexity' => Complexity::class,
+    ];
 
     protected $dispatchesEvents = [
         'created' => LessonCreated::class,
