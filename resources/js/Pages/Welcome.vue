@@ -26,8 +26,8 @@ const subscribeSection = ref(null)
       </FwbHeading>
       <p class="px-14 mb-14 text-lg text-gray-700 lg:text-xl dark:text-gray-200">
         Онлайн-самоучитель позволит поднять английский на нормальный уровень. Уже через месяц вы
-        сможете с легкостью выражать свои мысли, понимать собеседников, смотреть и понимать фильмы в
-        оригинале, зарубежные форумы, переводить и понимать текст песен. <br />
+        сможете с легкостью выражать свои мысли, понимать собеседников, понимать фильмы в оригинале,
+        зарубежные форумы, переводить текст песен. <br />
         🎞 📻 📖 📋 💎
       </p>
       <div class="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-y-0 gap-3">
@@ -52,7 +52,7 @@ const subscribeSection = ref(null)
     </section>
 
     <section v-if="faqs.length > 0" class="px-4 py-14 md:py-24 lg:py-32">
-      <FwbHeading tag="h2" class="mb-6">Ответы на часто задаваемые вопросы</FwbHeading>
+      <FwbHeading tag="h2" class="mb-6">Ответы на вопросы</FwbHeading>
       <FwbAccordion
         class="border-b border-gray-200 dark:border-gray-700 shadow-md rounded-t-lg"
         :open-first-item="false"
@@ -67,7 +67,7 @@ const subscribeSection = ref(null)
     </section>
 
     <section ref="subscribeSection" class="px-4 pt-12 mb-28">
-      <FwbHeading tag="h2" class="mb-6"> Оформление подписки на предстоящие курсы</FwbHeading>
+      <FwbHeading tag="h2" class="mb-6"> Оформление подписки</FwbHeading>
       <EmailSubscribe />
     </section>
   </div>
