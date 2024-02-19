@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Laravel\Scout\Searchable;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
@@ -20,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Searchable;
+    use Billable;
 
     public const LEARNABLE = 'learnable';
 

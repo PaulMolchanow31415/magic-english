@@ -1,9 +1,50 @@
+https://laravel-docs.com/ru/docs/10.x/billing#configuration:~:text=%2D%3EasStripeCustomer()%3B-,%D0%9C%D0%B5%D1%82%D0%BE%D0%B4,-createOrGetStripeCustomer
+
+https://laravel-docs.com/ru/docs/10.x/billing#syncing-customer-data-with-stripe
+
+можно просматривать свои транзакции
+https://laravel-docs.com/ru/docs/10.x/billing#billing-portal
+
+для подписок
+https://laravel-docs.com/ru/docs/10.x/billing#payment-methods-for-subscriptions
+
+Поскольку с продуктом может быть связано несколько цен, вам необходимо указать, какую цену использовать при
+создании сеансов оформления заказа, ссылок на оплату, счетов-фактур, предложений или подписок.
+
+https://laravel.com/docs/10.x/billing#quickstart-selling-products
+
+проверка подписки
+https://laravel.com/docs/10.x/billing#quickstart-building-a-subscribed-middleware
+
+список методов
+https://laravel.com/docs/10.x/billing#creating-subscriptions:~:text=%D0%9F%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D1%8B%D1%85%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D0%B5%D0%B9%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B5%D0%BD%20%D0%BD%D0%B8%D0%B6%D0%B5%3A
+
+отмена / возобновление подписки
+https://laravel.com/docs/10.x/billing#cancelling-subscriptions
+
+рассылка email о продлении подписки
+https://laravel.com/docs/10.x/billing#off-session-payment-notifications
+
+получение заказов пользователя
+
+https://laravel.com/docs/10.x/billing#retrieving-invoices
+
+## Vue stripe
+
+https://vuestripe.com/stripe-plugin/getting-started/
+
+## offer form
+
+https://flowbite.com/docs/forms/number-input/#credit-card-input
+
 # Apis
 
 <https://mymemory.translated.net/doc/spec.php>
 
 ## Frameworks
 
+**laravel event tutorial**
+<https://bootcamp.laravel.com/blade/notifications-and-events>
 _creates migration, rest controller and factory_
 php artisan make:model Example -mrcf
 _generate the model commands_
@@ -31,6 +72,9 @@ _data casting laravel eloquent_
 <https://vueuse.org/core/onKeyStroke/#onkeystroke>
 **focusing input**
 <https://vueuse.org/core/useFocus/#usefocus>
+**text editor**
+<https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/vuejs-v3.html#using-es6-modules>
+<https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html>
 
 ## Components
 
