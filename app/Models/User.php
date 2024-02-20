@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail {
     use HasApiTokens;
@@ -63,6 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail {
 
     public function lessons(): MorphToMany {
         return $this->morphedByMany(Lesson::class, self::LEARNABLE);
+    }
+
+    public function products(): BelongsToMany {
+        return $this->belongsToMany(\App\Models\Product::class);
     }
 
 }

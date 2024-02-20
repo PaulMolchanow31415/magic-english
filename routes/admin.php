@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GrammarController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\SubscriberController;
@@ -62,4 +63,9 @@ Route::middleware([
         ->name('grammar.change-order');
 
     Route::resource('/lesson', LessonController::class)->only(['index', 'store', 'destroy']);
+
+    Route::resource('/product', ProductController::class)->only(['index', 'store', 'destroy']);
+
+    Route::put('/product/poster', [ProductController::class, 'deletePoster'])
+        ->name('product.delete-poster');
 });

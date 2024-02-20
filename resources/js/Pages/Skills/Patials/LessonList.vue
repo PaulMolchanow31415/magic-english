@@ -1,6 +1,6 @@
 <script setup>
 import { Link, router } from '@inertiajs/vue3'
-import { FwbButton, FwbHeading } from 'flowbite-vue'
+import { FwbButton } from 'flowbite-vue'
 
 defineProps({
   lessons: Array,
@@ -49,10 +49,6 @@ function remove(lesson) {
       </Link>
     </template>
   </div>
-
-  <FwbHeading v-if="!lessons.length" tag="h5" class="text-center mt-6">
-    Здесь пока ничего нет
-  </FwbHeading>
 </template>
 
 <style scoped>

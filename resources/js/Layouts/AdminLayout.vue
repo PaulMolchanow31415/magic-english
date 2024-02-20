@@ -1,5 +1,6 @@
 <script setup>
 import SidebarLink from './Partials/SidebarLink.vue'
+import SidebarCollapsed from '@/Layouts/Partials/SidebarCollapsed.vue'
 </script>
 
 <template>
@@ -36,13 +37,27 @@ import SidebarLink from './Partials/SidebarLink.vue'
             />
           </li>
         </ul>
-        <!-- <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+        <ul class="collapsed-list">
           <li>
-            <NavbarCollapsed text="">
+            <SidebarCollapsed text="Продажа">
               <li>
-                <NavbarLink class="pl-6 w-full" text="" :to="route('')" />
+                <SidebarLink
+                  icon="person-chalkboard"
+                  class="pl-6 w-full"
+                  text="Продукты"
+                  :to="route('admin.product.index')"
+                />
               </li>
-            </NavbarCollapsed>
+            </SidebarCollapsed>
+          </li>
+        </ul>
+        <!-- <ul class="collapsed-list">
+          <li>
+            <SidebarCollapsed text="">
+              <li>
+                <SidebarLink class="pl-6 w-full" text="" :to="route('')" />
+              </li>
+            </SidebarCollapsed>
           </li>
         </ul>-->
       </div>
@@ -52,3 +67,9 @@ import SidebarLink from './Partials/SidebarLink.vue'
     </div>
   </div>
 </template>
+
+<style scoped>
+.collapsed-list {
+  @apply pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700;
+}
+</style>

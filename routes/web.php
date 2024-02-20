@@ -117,6 +117,10 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     });
 });
 
+Route::inertia('/ecommerce', 'Ecommerce/Index', [
+    'title' => 'Тарифы',
+])->name('ecommerce');
+
 require_once __DIR__."/admin.php";
 require_once __DIR__."/fortify.php";
 require_once __DIR__."/jetstream.php";

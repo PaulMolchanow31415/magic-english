@@ -35,9 +35,12 @@ const searched = ref('')
 
       <template #default="{ isShowMenu }">
         <FwbNavbarCollapse :is-show-menu="isShowMenu">
-          <li>
-            <!-- :class="{ selected: route().current() }" -->
+          <!--<li>
+            &lt;!&ndash; :class="{ selected: route().current() }" &ndash;&gt;
             <Link class="nav-item" href="/"> Музыка </Link>
+          </li>-->
+          <li>
+            <Link class="nav-item" :href="route('ecommerce')">Тарифы</Link>
           </li>
           <template v-if="$page.props.auth.user">
             <li>
