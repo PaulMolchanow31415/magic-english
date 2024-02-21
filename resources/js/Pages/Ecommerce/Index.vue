@@ -1,6 +1,6 @@
 <script setup>
 import ExtraLessonsSection from '@/Pages/Ecommerce/Partials/ExtraLessonsSection.vue'
-import { Link, Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 defineProps({
   filters: Object,
@@ -13,10 +13,12 @@ defineProps({
   <Head title="Тарифы" />
 
   <div class="container mx-auto pt-32 pb-24">
-    <!-- <PlansSection />-->
-
-    <!-- class="pt-48" -->
     <ExtraLessonsSection :lessons="lessons" />
+
+    <!--
+    coming soon...
+    <PlansSection class="pt-48" />
+    -->
   </div>
 
   <!-- Open cart button -->

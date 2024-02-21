@@ -49,9 +49,9 @@ function onCloseToast(index) {
   />
 
   <section>
-    <div class="mb-12 xl:w-1/2">
+    <div class="px-4 text-center mb-12">
       <FwbHeading tag="h1" class="mb-8">Дополнительные уроки</FwbHeading>
-      <FwbP class="text-lg text-gray-700 lg:text-xl dark:text-gray-200">
+      <FwbP class="px-32 text-lg text-gray-700 lg:text-xl dark:text-gray-200">
         Улучшите свои навыки английского языка с помощью нашего специального набора дополнительных
         уроков. Здесь вы найдете разносторонние материалы, которые помогут вам углубить знания и
         развить навыки, необходимые для успешного обучения английского языка.
@@ -60,7 +60,7 @@ function onCloseToast(index) {
 
     <div
       v-if="lessons.length > 0"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:justify-center gap-x-4 gap-y-6"
     >
       <EcommerceCard
         @add-to-cart="handleAddToCart(lesson)"
