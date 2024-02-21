@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler {
     /**
@@ -25,4 +27,32 @@ class Handler extends ExceptionHandler {
             //
         });
     }
+
+    /**
+     * Prepare exception for rendering.
+     *
+     * @param  \Throwable  $e
+     *
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function render($request, Throwable $e): JsonResponse|Response {
+        $response = parent::render($request, $e);
+
+        if (!app()->environment(['local', 'testing'])
+            && in_array($response->status(), [500, 503, 404, 403])
+        ) {
+            return inertia('Error', ['status' => $response->status()])
+                ->toResponse($request)
+                ->setStatusCode($response->status());
+        } elseif ($response->status() === 419) {
+            return back()->with(['message' => 'Страница устарела, попробуйте перезагрузить.']);
+        }
+
+        /*return inertia('Error', ['status' => $response->status()])
+            ->toResponse($request)
+            ->setStatusCode($response->status());*/
+
+        return $response;
+    }
+
 }
