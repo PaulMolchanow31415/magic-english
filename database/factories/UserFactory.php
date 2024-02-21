@@ -5,9 +5,9 @@ namespace Database\Factories;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Role;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -29,7 +29,6 @@ class UserFactory extends Factory {
             'two_factor_recovery_codes' => null,
             'remember_token'            => Str::random(10),
             'profile_photo_path'        => null,
-            'current_team_id'           => null,
             // added new
             'role'                      => Role::USER,
         ];

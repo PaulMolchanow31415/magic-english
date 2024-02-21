@@ -2,11 +2,14 @@
 
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\EcommerceController;
+use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\DictionaryController;
@@ -117,9 +120,32 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     });
 });
 
-Route::inertia('/ecommerce', 'Ecommerce/Index', [
-    'title' => 'Тарифы',
-])->name('ecommerce');
+// Ecommerce page
+Route::get('/ecommerce', EcommerceController::class)->name('ecommerce');
+
+// Cart
+Route::prefix('/cart')->name('cart.')->controller(CartController::class)
+    ->middleware(['auth:sanctum'])->group(function () {
+        Route::post('/add-product/{product}', 'addProduct')->name('add-product');
+
+        Route::get('/', 'show')->name('show');
+
+        Route::delete('/remove-product/{product}', 'removeProduct')->name('remove-product');
+
+        Route::delete('/clear', 'clearCart')->name('clear');
+
+        Route::get('/checkout', 'checkout')->name('checkout');
+
+        Route::get('/checkout/success', 'handleSuccessCheckout')->name('checkout.success');
+    });
+
+// User`s purchased lessons and plans
+Route::prefix('/purchased')->name('purchased.')->controller(PurchasedController::class)
+    ->middleware(['auth:sanctum'])->group(function () {
+        Route::prefix('/lesson')->name('lesson.')->group(function () {
+            Route::get('/all', 'lessons')->name('all');
+        });
+    });
 
 require_once __DIR__."/admin.php";
 require_once __DIR__."/fortify.php";

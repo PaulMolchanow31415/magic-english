@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 import { FwbBadge } from 'flowbite-vue'
 
 export default defineComponent({
+  name: 'Badge',
   components: { FwbBadge },
   props: {
     closable: {

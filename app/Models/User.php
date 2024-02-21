@@ -9,6 +9,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,6 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail {
 
     public function products(): BelongsToMany {
         return $this->belongsToMany(\App\Models\Product::class);
+    }
+
+    public function cart(): HasOne {
+        return $this->hasOne(Cart::class);
     }
 
 }

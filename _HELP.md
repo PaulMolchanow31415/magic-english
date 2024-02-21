@@ -26,7 +26,6 @@ https://laravel.com/docs/10.x/billing#cancelling-subscriptions
 https://laravel.com/docs/10.x/billing#off-session-payment-notifications
 
 получение заказов пользователя
-
 https://laravel.com/docs/10.x/billing#retrieving-invoices
 
 ## Vue stripe
@@ -36,6 +35,10 @@ https://vuestripe.com/stripe-plugin/getting-started/
 ## offer form
 
 https://flowbite.com/docs/forms/number-input/#credit-card-input
+
+## 2FA Challenge completing before ordering
+
+https://laracasts.com/discuss/channels/laravel/laravel-fortify-2fa-middleware?page=1&replyId=902903
 
 # Apis
 

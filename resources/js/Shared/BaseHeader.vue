@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/vue3'
 import ApplicationMark from '@/Shared/ApplicationMark.vue'
 import DropdownLink from '@/Shared/DropdownLink.vue'
 import { ref } from 'vue'
-import { FwbInput, FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
+import { FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
 import ToggleThemeButton from '@/Shared/ToggleThemeButton.vue'
 import Dropdown from './Dropdown.vue'
 
@@ -18,7 +18,7 @@ const searched = ref('')
           <ApplicationMark class="block h-9 w-auto" />
         </Link>
 
-        <div class="ms-5 flex-grow pe-[5%] lg:pe-[25%] xl:pe-[40%] 2xl:pe-[50%]">
+        <!--<div class="ms-5 flex-grow pe-[5%] lg:pe-[25%] xl:pe-[40%] 2xl:pe-[50%]">
           <FwbInput
             v-model.lazy="searched"
             type="search"
@@ -30,7 +30,7 @@ const searched = ref('')
               <Icon class="text-gray-700 dark:text-gray-300" :icon="['fas', 'magnifying-glass']" />
             </template>
           </FwbInput>
-        </div>
+        </div>-->
       </template>
 
       <template #default="{ isShowMenu }">
@@ -40,8 +40,35 @@ const searched = ref('')
             <Link class="nav-item" href="/"> Музыка </Link>
           </li>-->
           <li>
-            <Link class="nav-item" :href="route('ecommerce')">Тарифы</Link>
+            <Dropdown :align="isShowMenu ? 'left' : 'right'">
+              <template #trigger>
+                <button class="nav-item">Дополнительно</button>
+              </template>
+
+              <template #content>
+                <span class="dropdown-heading">Можно купить</span>
+                <DropdownLink :href="route('ecommerce')">
+                  <span class="dropdown-line">
+                    <Icon :icon="['fas', 'store']" />
+                    Магазин
+                  </span>
+                </DropdownLink>
+                <DropdownLink :href="route('cart.show')">
+                  <span class="dropdown-line">
+                    <Icon :icon="['fas', 'shopping-cart']" />
+                    Корзина ({{ $page.props.cartItemsAmount }})
+                  </span>
+                </DropdownLink>
+                <DropdownLink :href="route('purchased.lesson.all')">
+                  <span class="dropdown-line">
+                    <Icon :icon="['fas', 'bag-shopping']" />
+                    Покупки
+                  </span>
+                </DropdownLink>
+              </template>
+            </Dropdown>
           </li>
+
           <template v-if="$page.props.auth.user">
             <li>
               <Dropdown :align="isShowMenu ? 'left' : 'right'">
