@@ -101,13 +101,13 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
       <slot />
     </div>
 
-    <teleport to="body">
+    <Teleport to="body">
       <div
         v-show="srcWord"
         ref="popover"
         style="transform: translate(-50%, calc(-100% - 1rem))"
         role="tooltip"
-        class="absolute inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+        class="z-50 absolute inline-block w-64 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
       >
         <div
           class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700"
@@ -135,7 +135,7 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
           </FwbButton>
         </div>
       </div>
-    </teleport>
+    </Teleport>
   </div>
 </template>
 
