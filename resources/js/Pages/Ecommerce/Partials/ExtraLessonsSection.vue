@@ -1,5 +1,5 @@
 <script setup>
-import { FwbButton, FwbHeading, FwbP } from 'flowbite-vue'
+import { FwbButton, FwbP } from 'flowbite-vue'
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
@@ -49,9 +49,9 @@ function onCloseToast(index) {
   />
 
   <section>
-    <div class="px-4 text-center mb-12">
-      <FwbHeading tag="h1" class="mb-8">Дополнительные уроки</FwbHeading>
-      <FwbP class="px-32 text-lg text-gray-700 lg:text-xl dark:text-gray-200">
+    <div class="mb-12 sm:text-center">
+      <h6 class="heading-1 mb-4 md:mb-8">Дополнительные уроки</h6>
+      <FwbP class="description">
         Улучшите свои навыки английского языка с помощью нашего специального набора дополнительных
         уроков. Здесь вы найдете разносторонние материалы, которые помогут вам углубить знания и
         развить навыки, необходимые для успешного обучения английского языка.
@@ -60,7 +60,7 @@ function onCloseToast(index) {
 
     <div
       v-if="lessons.length > 0"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:justify-center gap-x-4 gap-y-6"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:justify-center gap-x-4 gap-y-6"
     >
       <EcommerceCard
         @add-to-cart="handleAddToCart(lesson)"
@@ -70,16 +70,17 @@ function onCloseToast(index) {
         :img-alt="lesson.name"
         :title="lesson.name"
         :price="lesson.price"
+        class="place-self-stretch"
       />
     </div>
 
-    <FwbP v-else>
+    <FwbP v-else class="text-center">
       <span class="font-medium block text-lg">Поздравляем! Вы преобрели все товары</span>
       <FwbButton
         @click="router.visit(route('purchased.lesson.all'))"
         size="lg"
         type="button"
-        class="mt-3"
+        class="mt-3 w-full sm:w-auto"
       >
         Перейти в "Покупки"
       </FwbButton>

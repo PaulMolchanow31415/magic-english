@@ -7,12 +7,13 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { useWindowSize } from '@vueuse/core'
 
 defineProps({ products: Array })
 
@@ -20,6 +21,10 @@ const avatarInitials = inject('avatarInitials')
 
 const isRemoved = ref(false)
 const isError = ref(false)
+
+const { width } = useWindowSize()
+
+const isTablet = computed(() => width.value > 639)
 
 function handleRemove(product) {
   router.delete(route('cart.remove-product', product.pivot.product_id), {
@@ -54,11 +59,11 @@ function handleRemove(product) {
             v-for="product in products"
             :key="product.pivot.product_id"
             :title="product.name"
-            class="gap-2 group"
+            class="gap-4 sm:gap-2 flex-col sm:flex-row py-4 sm:py-2"
           >
             <template #prefix>
               <FwbAvatar
-                size="md"
+                :size="isTablet ? 'md' : 'xl'"
                 :img="product.poster_url"
                 :initials="avatarInitials(product.name)"
               />
@@ -73,11 +78,12 @@ function handleRemove(product) {
               <FwbButton
                 @click="handleRemove(product)"
                 pill
-                square
+                :square="isTablet"
+                :size="isTablet ? 'sm' : 'lg'"
                 color="alternative"
-                class="group-hover:opacity-100 opacity-0 transition duration-75 hover:text-red-600 active:text-red-700 w-10 h-10"
+                class="transition duration-75 hover:text-red-600 active:text-red-700 sm:w-10 sm:h-10"
               >
-                <span class="sr-only">Удалить</span>
+                <span class="sm:sr-only me-2">Удалить</span>
                 <Icon :icon="['fas', 'trash-can']" />
               </FwbButton>
             </template>
@@ -92,18 +98,18 @@ function handleRemove(product) {
           />
         </FwbP>
 
-        <div class="mt-12 flex justify-center gap-4">
+        <div class="mt-12 flex flex-wrap justify-center gap-4">
           <FwbButton
             type="button"
             color="alternative"
             @click="router.delete(route('cart.clear'))"
-            class="px-12"
+            class="px-12 w-full sm:w-auto"
           >
             Очистить все
           </FwbButton>
 
           <FwbButton
-            class="px-12"
+            class="px-12 w-full sm:w-auto"
             size="xl"
             type="button"
             gradient="green"

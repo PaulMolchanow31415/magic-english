@@ -27,9 +27,9 @@ provide('shuffle', (array = []) => {
     <BaseHeader />
 
     <!-- Page Content -->
-    <main class="flex-grow relative">
+    <div class="flex-grow relative px-4">
       <slot />
-    </main>
+    </div>
 
     <CookiePopup />
 

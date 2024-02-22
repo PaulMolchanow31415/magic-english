@@ -218,7 +218,7 @@ export default defineComponent({
             size="xl"
             color="purple"
             type="button"
-            class="px-32"
+            class="px-24 sm:px-32"
           >
             Завершить
           </FwbButton>

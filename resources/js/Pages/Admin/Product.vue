@@ -160,7 +160,7 @@ watchEffect(() => (form.price = price.value))
         <FwbTableCell v-text="product.name" />
         <FwbTableCell v-text="product.price" />
         <FwbTableCell v-text="product.stripe_price_id" />
-        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
+        <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6 justify-end pe-4">
             <TableActionButton @click="handleEdit(product)">Редактировать</TableActionButton>
             <TableActionButton theme="red" @click="productForRemoval = product">

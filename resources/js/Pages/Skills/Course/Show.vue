@@ -39,7 +39,7 @@ if (!props.isCompleted) {
 
   <article
     ref="article"
-    class="container px-6 py-6 rounded-3xl bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700"
+    class="container px-4 sm:px-6 py-6 rounded-3xl bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700"
   >
     <div>
       <FwbProgress size="sm" :progress="progress" />
@@ -49,7 +49,7 @@ if (!props.isCompleted) {
     <Translatable>
       <FwbHeading tag="h2" class="mt-6 mb-4" v-text="grammar.title" />
 
-      <div class="px-2.5 text-lg no-tailwindcss" v-html="grammar.content" />
+      <div class="text-lg no-tailwindcss" v-html="grammar.content" />
     </Translatable>
 
     <blockquote class="blockquote-bordered">

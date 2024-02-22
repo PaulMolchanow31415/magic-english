@@ -54,7 +54,7 @@ watch(selectedFilter, (learnable) => {
   />
 
   <section
-    class="group flex items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
+    class="group flex flex-wrap items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="grow">
       <SuggestComboBox
@@ -65,14 +65,14 @@ watch(selectedFilter, (learnable) => {
         :results="results"
         @add="add"
       />
-      <div class="mt-3 flex gap-2.5">
-        <FilterSelect v-model="selectedFilter" />
+      <div class="mt-3 flex flex-wrap gap-2.5">
+        <FilterSelect class="max-w-none w-full sm:w-auto grow sm:grow-0" v-model="selectedFilter" />
         <FwbButton
           @click="router.delete(route('student.flush-vocabularies'), { preserveScroll: true })"
           size="sm"
           color="alternative"
           type="button"
-          class="py-2"
+          class="py-2 whitespace-nowrap w-full sm:w-auto grow sm:grow-0"
         >
           <Icon :icon="['far', 'trash-can']" class="me-1" />
           Удалить весь словарь
@@ -85,7 +85,7 @@ watch(selectedFilter, (learnable) => {
       size="lg"
       gradient="green-blue"
       type="button"
-      class="md:px-36 md:py-3 font-bold px-12 me-4"
+      class="md:px-26 lg:px-36 md:py-3 font-bold px-12 me-4"
     >
       Тренировать
     </FwbButton>

@@ -29,7 +29,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <FwbBadge :type="theme || 'default'" :size="size" class="gap-1.5 items-center">
+  <FwbBadge :type="theme || 'default'" :size="size" class="gap-1.5 whitespace-nowrap items-center">
     <template v-if="icon" #icon>
       <Icon :icon="['fas', icon]" size="sm" />
     </template>

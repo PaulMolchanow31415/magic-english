@@ -1,3 +1,7 @@
+## English dom
+
+https://www.englishdom.com/skills/glossary/
+
 https://laravel-docs.com/ru/docs/10.x/billing#configuration:~:text=%2D%3EasStripeCustomer()%3B-,%D0%9C%D0%B5%D1%82%D0%BE%D0%B4,-createOrGetStripeCustomer
 
 https://laravel-docs.com/ru/docs/10.x/billing#syncing-customer-data-with-stripe

@@ -45,7 +45,10 @@ const { allItems } = useInfiniteScrollLoader(list, dictionaries)
 
   <FilterPane :filters="filters" />
 
-  <div ref="list" class="grid grid-cols-5 gap-x-3 gap-y-4">
+  <div
+    ref="list"
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-4"
+  >
     <FwbCard
       @click.stop="router.visit(route('skills.dictionary.show', { category: dictionary.category }))"
       v-for="dictionary in allItems"

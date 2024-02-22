@@ -16,7 +16,7 @@ const props = defineProps({
   <AutoHead />
 
   <section
-    class="group flex items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
+    class="group flex flex-wrap items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="grow">
       <FwbButton
@@ -24,7 +24,7 @@ const props = defineProps({
         size="sm"
         color="alternative"
         type="button"
-        class="py-2"
+        class="py-2 whitespace-nowrap"
       >
         <Icon :icon="['far', 'trash-can']" class="me-1" />
         Удалить все уроки
@@ -36,7 +36,7 @@ const props = defineProps({
       size="lg"
       gradient="cyan-blue"
       type="button"
-      class="md:px-36 md:py-3 font-bold px-12 me-4"
+      class="px-4 w-full sm:w-auto md:px-36 md:py-3 sm:me-4 font-bold"
     >
       Перейти к последнему
     </FwbButton>

@@ -55,11 +55,15 @@ useEventListener(document, 'keydown', onKeyDown)
           </form>
         </div>
         <div
-          class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3"
+          class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-3 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3"
         >
           <Tooltip>
             <template #trigger>
-              <FwbButton v-if="addable" @click="$emit('add')" class="justify-center">
+              <FwbButton
+                v-if="addable"
+                @click="$emit('add')"
+                class="justify-center w-full md:w-auto"
+              >
                 <template #prefix>
                   <Icon :icon="['fas', 'plus']" size="sm" />
                 </template>
@@ -93,7 +97,8 @@ useEventListener(document, 'keydown', onKeyDown)
               </ul>
             </div>
           </template>
-          <Link :href="route('profile.show')">
+
+          <Link :href="route('profile.show')" class="mx-auto md:mx-0">
             <FwbAvatar
               bordered
               :alt="$page.props.auth.user.name"

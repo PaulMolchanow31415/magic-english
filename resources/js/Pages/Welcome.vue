@@ -6,7 +6,6 @@ import {
   FwbAccordionHeader,
   FwbAccordionPanel,
   FwbButton,
-  FwbHeading,
 } from 'flowbite-vue'
 import EmailSubscribe from '@/Shared/EmailSubscribe.vue'
 import { ref } from 'vue'
@@ -19,12 +18,10 @@ const subscribeSection = ref(null)
 <template>
   <Head title="Главная" />
 
-  <div class="mx-auto max-w-screen-md">
-    <section class="py-10 px-4 lg:py-32 text-center">
-      <FwbHeading tag="h1" class="mb-8">
-        Эстетичный подход к изучению английского языка
-      </FwbHeading>
-      <p class="px-14 mb-14 text-lg text-gray-700 lg:text-xl dark:text-gray-200">
+  <main class="mx-auto max-w-screen-md">
+    <section class="py-10 lg:py-32 sm:text-center">
+      <h1 class="heading-1 mb-4 sm:mb-8">Эстетичный подход к изучению английского языка</h1>
+      <p class="mb-8 description">
         Онлайн-самоучитель позволит поднять английский на нормальный уровень. Уже через месяц вы
         сможете с легкостью выражать свои мысли, понимать собеседников, понимать фильмы в оригинале,
         зарубежные форумы, переводить текст песен. <br />
@@ -51,8 +48,8 @@ const subscribeSection = ref(null)
       </div>
     </section>
 
-    <section v-if="faqs.length > 0" class="px-4 py-14 md:py-24 lg:py-32">
-      <FwbHeading tag="h2" class="mb-6">Ответы на вопросы</FwbHeading>
+    <section v-if="faqs.length > 0" class="py-14 md:py-24 lg:py-32">
+      <h2 class="heading-2 mb-6">Ответы на вопросы</h2>
       <FwbAccordion
         class="border-b border-gray-200 dark:border-gray-700 shadow-md rounded-t-lg"
         :open-first-item="false"
@@ -66,9 +63,9 @@ const subscribeSection = ref(null)
       </FwbAccordion>
     </section>
 
-    <section ref="subscribeSection" class="px-4 pt-12 mb-28">
-      <FwbHeading tag="h2" class="mb-6"> Оформление подписки</FwbHeading>
+    <section ref="subscribeSection" class="pt-12 mb-28">
+      <h2 class="heading-2 mb-6">Оформление подписки</h2>
       <EmailSubscribe />
     </section>
-  </div>
+  </main>
 </template>

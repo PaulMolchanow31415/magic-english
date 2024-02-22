@@ -26,13 +26,13 @@ router.post(route('student.add-lesson', { id: props.lesson.id }))
   <AutoHead />
 
   <article
-    class="container px-6 py-6 rounded-3xl bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700"
+    class="container px-1.5 py-4 md:p-6 rounded-3xl bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700"
   >
     <Translatable>
       <div class="px-2.5 no-tailwindcss" v-html="lesson.content" />
     </Translatable>
 
-    <div class="mt-10 flex items-center gap-2.5">
+    <div class="mt-10 flex flex-wrap items-center gap-2.5">
       <FwbButton
         v-if="prevPageUrl"
         @click="router.visit(prevPageUrl)"

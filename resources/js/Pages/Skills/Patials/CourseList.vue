@@ -6,7 +6,9 @@ defineProps({ courses: Array })
 </script>
 
 <template>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-4">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-4"
+  >
     <FwbCard
       @click.stop="router.visit(route('skills.course.show', { name: course.name }))"
       v-for="course in courses"

@@ -70,11 +70,11 @@ function confirmDelete() {
           <FwbBadge
             :type="subscriber.is_enabled ? 'green' : 'red'"
             v-text="subscriber.is_enabled ? 'Подписан' : 'Не подписан'"
-            class="!mr-0 !rounded-md"
+            class="!mr-0 !rounded-md whitespace-nowrap"
           />
         </FwbTableCell>
         <FwbTableCell v-text="subscriber.created_at" />
-        <FwbTableCell class="opacity-0 group-hover:opacity-100 transition duration-75">
+        <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="subscriberForRemoval = subscriber" theme="red">
             Удалить
           </TableActionButton>

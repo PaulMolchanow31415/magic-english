@@ -32,9 +32,9 @@ watchEffect(() => {
 
 <template>
   <form
-    class="flex gap-4 justify-between mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg dark:border-gray-700"
+    class="flex flex-wrap gap-6 justify-between mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg dark:border-gray-700"
   >
-    <div v-if="filters.complexity" class="flex gap-4">
+    <div v-if="filters.complexity" class="flex flex-wrap gap-4">
       <Radio
         v-for="complexity in $page.props.complexities"
         :label="capitalize(complexity)"

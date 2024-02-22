@@ -2,10 +2,11 @@
 import { FwbA, FwbButton, FwbInput } from 'flowbite-vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { useChallengeV3 } from 'vue-recaptcha'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { useWindowSize } from '@vueuse/core'
 
 const page = usePage()
 const isSuccess = ref(false)
@@ -15,6 +16,7 @@ const form = useForm({
   recaptcha_token: null,
 })
 const { execute } = useChallengeV3('subscribeNotifications')
+const { width } = useWindowSize()
 
 async function submit() {
   form.recaptcha_token = await execute()
@@ -29,6 +31,8 @@ async function submit() {
     preserveScroll: true,
   })
 }
+
+const isMobile = computed(() => width.value <= 460)
 </script>
 
 <template>
@@ -49,8 +53,8 @@ async function submit() {
       Подпишитесь на рассылку новых курсов и нопоминаний об учебе
     </p>
     <form @submit.prevent="submit" method="post">
-      <div class="flex items-end mb-3">
-        <div class="flex items-center gap-3 w-full md:max-w-lg mb-3">
+      <div class="flex items-end mb-2">
+        <div class="flex items-center gap-3 w-full md:max-w-lg">
           <FwbInput
             @focus="form.email = page.props.auth.user?.email || ''"
             v-model="form.email"
@@ -68,8 +72,8 @@ async function submit() {
                 class="text-gray-500 dark:text-gray-400"
               />
             </template>
-            <template #suffix>
-              <FwbButton :loading="form.processing" class="flex flex-nowrap" type="submit">
+            <template #suffix v-if="!isMobile">
+              <FwbButton :loading="form.processing" class="fwb-btn" type="submit">
                 Подписаться
               </FwbButton>
             </template>
@@ -77,6 +81,16 @@ async function submit() {
           </FwbInput>
         </div>
       </div>
+      <!--  Mobile button  -->
+      <FwbButton
+        v-if="isMobile"
+        :loading="form.processing"
+        size="lg"
+        class="fwb-btn justify-center w-full mb-3"
+        type="submit"
+      >
+        Подписаться
+      </FwbButton>
     </form>
     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
       Подписываясь, вы соглашаетесь с нашей
