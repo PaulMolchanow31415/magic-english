@@ -30,7 +30,7 @@ function add(event) {
 }
 
 function train() {
-  if (props.vocabularies.length) {
+  if (props.vocabularies.length > 3) {
     router.visit(route('student.vocabularies.challenge'))
     return
   }
@@ -50,9 +50,7 @@ watch(selectedFilter, (learnable) => {
   <AutoHead />
 
   <Toaster
-    :tosts="[
-      new Toast({ type: 'info', isShow: isEmpty, value: 'У вас не добалены слова к изучению' }),
-    ]"
+    :tosts="[new Toast({ type: 'info', isShow: isEmpty, value: 'Слишком мало добавленных слов' })]"
   />
 
   <section
