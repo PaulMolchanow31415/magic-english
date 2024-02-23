@@ -23,6 +23,18 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
             <SidebarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
           </li>
           <li>
+            <SidebarCollapsed text="Продажа">
+              <li>
+                <SidebarLink
+                  :to="route('admin.product.index')"
+                  icon="person-chalkboard"
+                  text="Продукты"
+                  class="pl-6 w-full"
+                />
+              </li>
+            </SidebarCollapsed>
+          </li>
+          <li>
             <SidebarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
           </li>
           <li>
@@ -41,13 +53,29 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
         </ul>
         <ul class="collapsed-list">
           <li>
-            <SidebarCollapsed text="Продажа">
+            <SidebarCollapsed text="Музыка">
               <li>
                 <SidebarLink
-                  :to="route('admin.product.index')"
-                  icon="person-chalkboard"
-                  text="Продукты"
                   class="pl-6 w-full"
+                  icon="podcast"
+                  text="Авторы"
+                  :to="route('admin.author.index')"
+                />
+              </li>
+              <li>
+                <SidebarLink
+                  class="pl-6 w-full"
+                  icon="music"
+                  text="Песни"
+                  :to="route('admin.author.index')"
+                />
+              </li>
+              <li>
+                <SidebarLink
+                  class="pl-6 w-full"
+                  icon="compact-disc"
+                  text="Альбомы"
+                  :to="route('admin.author.index')"
                 />
               </li>
             </SidebarCollapsed>
@@ -57,7 +85,7 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
           <li>
             <SidebarCollapsed text="">
               <li>
-                <SidebarLink class="pl-6 w-full" text="" :to="route('')" />
+                <SidebarLink class="pl-6 w-full" icon="" text="" :to="route('')" />
               </li>
             </SidebarCollapsed>
           </li>

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AuthorSong extends Model {
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -20,5 +22,5 @@ class AuthorSong extends Model {
     public function albums(): HasMany {
         return $this->hasMany(Album::class);
     }
-    
+
 }
