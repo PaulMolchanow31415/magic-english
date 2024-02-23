@@ -21,7 +21,7 @@ export default defineComponent({
     :title="title"
   >
     <img
-      class="aspect-video object-cover pb-4 sm:pb-8 w-full rounded-t-lg"
+      class="aspect-video min-h-56 object-cover pb-4 sm:pb-8 w-full rounded-t-lg"
       :src="imgSrc"
       :alt="imgAlt"
     />

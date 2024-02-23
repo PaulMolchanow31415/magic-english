@@ -1,22 +1,14 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import { FwbButton, FwbCard, FwbHeading, FwbP } from 'flowbite-vue'
-import useInfiniteScrollLoader from '@/Composables/useInfiniteScrollLoader.js'
-import { ref, toRef } from 'vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
-const props = defineProps({
-  dictionaries: Object,
+defineProps({
+  dictionaries: Array,
   learnableVocabulariesCount: Number,
   filters: Object,
 })
-
-const dictionaries = toRef(props, 'dictionaries')
-
-const list = ref(null)
-
-const { allItems } = useInfiniteScrollLoader(list, dictionaries)
 </script>
 
 <template>
@@ -45,14 +37,10 @@ const { allItems } = useInfiniteScrollLoader(list, dictionaries)
 
   <FilterPane :filters="filters" />
 
-  <div
-    ref="list"
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-4"
-  >
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-4">
     <FwbCard
       @click.stop="router.visit(route('skills.dictionary.show', { category: dictionary.category }))"
-      v-for="dictionary in allItems"
-      :key="dictionary.id"
+      v-for="dictionary in dictionaries"
       :img-alt="dictionary.category"
       :img-src="dictionary.poster_url"
       class="group card min-h-44"

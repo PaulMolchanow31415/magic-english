@@ -2,22 +2,14 @@
 import AutoHead from '@/Shared/AutoHead.vue'
 import { router } from '@inertiajs/vue3'
 import { FwbButton, FwbHeading, FwbP } from 'flowbite-vue'
-import { ref, toRef } from 'vue'
-import useInfiniteScrollLoader from '@/Composables/useInfiniteScrollLoader.js'
 import CourseList from '@/Pages/Skills/Patials/CourseList.vue'
 import FilterPane from '@/Pages/Skills/Patials/FilterPane.vue'
 
-const props = defineProps({
-  courses: Object,
+defineProps({
+  courses: Array,
   learnableCoursesCount: Number,
   filters: Object,
 })
-
-const courses = toRef(props, 'courses')
-
-const element = ref(null)
-
-const { allItems } = useInfiniteScrollLoader(element, courses)
 </script>
 
 <template>
@@ -46,9 +38,7 @@ const { allItems } = useInfiniteScrollLoader(element, courses)
 
   <FilterPane :filters="filters" />
 
-  <div ref="element">
-    <CourseList :courses="allItems" />
-  </div>
+  <CourseList :courses="courses" />
 </template>
 
 <style scoped></style>

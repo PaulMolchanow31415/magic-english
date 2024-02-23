@@ -34,7 +34,8 @@ defineEmits(['update:modelValue', 'update:externalPath', 'deletePhoto'])
         <FwbInput
           :model-value="externalPath"
           @input="$emit('update:externalPath', $event.target.value)"
-          name="url"
+          name="poster-url"
+          type="url"
           size="sm"
           placeholder="https://example.image.png"
         />

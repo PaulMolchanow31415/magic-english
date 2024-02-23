@@ -48,7 +48,8 @@ class CourseController extends Controller {
         $complexity = ComplexityFilter::extract();
 
         return inertia('Skills/Course/Index', [
-            'courses' => Course::whereComplexity($complexity)->paginate(4),
+            'courses' => Course::whereComplexity($complexity)
+                ->select(['name', 'description', 'poster_url'])->get(),
 
             'learnableCoursesCount' => auth()->user()->courses()->count(),
 

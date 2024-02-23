@@ -12,7 +12,6 @@ defineProps({ courses: Array })
     <FwbCard
       @click.stop="router.visit(route('skills.course.show', { name: course.name }))"
       v-for="course in courses"
-      :key="course.id"
       :img-alt="course.name"
       :img-src="course.poster_url"
       class="card min-h-44"

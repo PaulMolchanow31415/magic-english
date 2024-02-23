@@ -55,8 +55,9 @@ class DictionaryController extends Controller {
         $complexity = ComplexityFilter::extract();
 
         return inertia('Skills/Dictionary/Index', [
-            'dictionaries' => Dictionary::whereComplexity($complexity)->paginate(4),
-
+            'dictionaries' => Dictionary::whereComplexity($complexity)
+                ->select(['category', 'poster_url'])->get(),
+            
             'learnableVocabulariesCount' => auth()->user()->vocabularies()->count(),
 
             'filters' => ['complexity' => $complexity],
