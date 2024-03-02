@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Album;
 use App\Models\AuthorSong;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,12 +16,6 @@ return new class extends Migration {
             $table->string('name', 2048);
 
             $table->foreignIdFor(AuthorSong::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreignIdFor(Album::class)
-                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

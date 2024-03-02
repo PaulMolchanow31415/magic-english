@@ -11,7 +11,6 @@ class Music extends Model {
 
     protected $fillable = [
         'author_song_id',
-        'album_id',
         'name',
         'lyrics',
         'audio_url',
@@ -21,10 +20,6 @@ class Music extends Model {
 
     public function authorSong(): BelongsTo {
         return $this->belongsTo(AuthorSong::class);
-    }
-
-    public function album(): BelongsTo {
-        return $this->belongsTo(Album::class);
     }
 
 }

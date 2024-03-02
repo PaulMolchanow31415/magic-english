@@ -17,7 +17,6 @@ import {
   faCircleInfo,
   faCommentDots,
   faComments,
-  faCompactDisc,
   faCookieBite,
   faDatabase,
   faDesktop,
@@ -104,5 +103,4 @@ library.add(
   faStore,
   faPodcast,
   faMusic,
-  faCompactDisc,
 )

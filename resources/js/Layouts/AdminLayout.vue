@@ -14,25 +14,17 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
             <SidebarLink :to="route('admin.user.index')" icon="users" text="Пользователи" />
           </li>
           <li>
-            <SidebarLink :to="route('admin.faq.index')" icon="person-circle-question" text="FAQ" />
+            <SidebarLink
+              :to="route('admin.faq.index')"
+              icon="person-circle-question"
+              text="Ответы на вопросы"
+            />
           </li>
           <li>
             <SidebarLink :to="route('admin.subscriber.index')" icon="bell" text="Подписчики" />
           </li>
           <li>
             <SidebarLink :to="route('admin.discussion.index')" icon="comments" text="Обсуждения" />
-          </li>
-          <li>
-            <SidebarCollapsed text="Продажа">
-              <li>
-                <SidebarLink
-                  :to="route('admin.product.index')"
-                  icon="person-chalkboard"
-                  text="Продукты"
-                  class="pl-6 w-full"
-                />
-              </li>
-            </SidebarCollapsed>
           </li>
           <li>
             <SidebarLink :to="route('admin.vocabulary.index')" icon="language" text="Лексика" />
@@ -48,6 +40,13 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
               :to="route('admin.lesson.index')"
               icon="graduation-cap"
               text="Самоучитель"
+            />
+          </li>
+          <li>
+            <SidebarLink
+              :to="route('admin.product.index')"
+              icon="person-chalkboard"
+              text="Продукты"
             />
           </li>
         </ul>
@@ -68,14 +67,6 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
                   icon="music"
                   text="Песни"
                   :to="route('admin.music.index')"
-                />
-              </li>
-              <li>
-                <SidebarLink
-                  class="pl-6 w-full"
-                  icon="compact-disc"
-                  text="Альбомы"
-                  :to="route('admin.author.index')"
                 />
               </li>
             </SidebarCollapsed>
@@ -170,12 +161,6 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
               <span class="dropdown-line">
                 <Icon :icon="['fas', 'music']" class="w-4" />
                 Песни
-              </span>
-            </DropdownLink>
-            <DropdownLink :href="route('admin.author.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'compact-disc']" class="w-4" />
-                Альбомы
               </span>
             </DropdownLink>
           </template>
