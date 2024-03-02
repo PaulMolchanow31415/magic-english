@@ -1,7 +1,7 @@
 <script setup>
 import { inject, reactive, ref } from 'vue'
 import { useSearch } from '@/Composables/useSearch.js'
-import { router, useForm } from '@inertiajs/vue3'
+import { Head, router, useForm } from '@inertiajs/vue3'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import { set } from '@vueuse/core'
 import Toast from '@/Classes/Toast.js'
@@ -9,7 +9,6 @@ import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
-  FwbInput,
   FwbTable,
   FwbTableBody,
   FwbTableCell,
@@ -19,11 +18,11 @@ import {
 } from 'flowbite-vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import Pagination from '@/Shared/Pagination.vue'
-import InputLabel from '@/Shared/InputLabel.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
+import NameInput from '@/Shared/NameInput.vue'
 
 const props = defineProps({
   authors: Object,
@@ -167,13 +166,7 @@ function deletePoster() {
     @close="editable.isShowModal = false"
   >
     <div class="space-y-6">
-      <InputLabel value="Полное имя">
-        <FwbInput v-model="form.name" :validation-status="form.errors.name ? 'error' : ''">
-          <template #validationMessage>
-            {{ form.errors.name }}
-          </template>
-        </FwbInput>
-      </InputLabel>
+      <NameInput v-model="form.name" label="Полное имя" :error-message="form.errors.name" />
 
       <TextRedactor
         toolbar-style="full"

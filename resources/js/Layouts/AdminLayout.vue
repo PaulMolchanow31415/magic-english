@@ -58,7 +58,7 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
                 <SidebarLink
                   class="pl-6 w-full"
                   icon="podcast"
-                  text="Авторы"
+                  text="Исполнители"
                   :to="route('admin.author.index')"
                 />
               </li>
@@ -67,7 +67,7 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
                   class="pl-6 w-full"
                   icon="music"
                   text="Песни"
-                  :to="route('admin.author.index')"
+                  :to="route('admin.music.index')"
                 />
               </li>
               <li>
@@ -158,6 +158,24 @@ import DropdownLink from '@/Shared/DropdownLink.vue'
               <span class="dropdown-line">
                 <Icon :icon="['fas', 'person-chalkboard']" class="w-4" />
                 Продукты
+              </span>
+            </DropdownLink>
+            <DropdownLink :href="route('admin.author.index')">
+              <span class="dropdown-line">
+                <Icon :icon="['fas', 'podcast']" class="w-4" />
+                Исполнители
+              </span>
+            </DropdownLink>
+            <DropdownLink :href="route('admin.music.index')">
+              <span class="dropdown-line">
+                <Icon :icon="['fas', 'music']" class="w-4" />
+                Песни
+              </span>
+            </DropdownLink>
+            <DropdownLink :href="route('admin.author.index')">
+              <span class="dropdown-line">
+                <Icon :icon="['fas', 'compact-disc']" class="w-4" />
+                Альбомы
               </span>
             </DropdownLink>
           </template>

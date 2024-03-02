@@ -20,7 +20,7 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            
+
             $table->foreignIdFor(Album::class)
                 ->nullable()
                 ->constrained()
@@ -28,7 +28,7 @@ return new class extends Migration {
                 ->cascadeOnDelete();
 
             $table->string('audio_url', 2048)->nullable();
-            $table->json('lyrics');
+            $table->text('lyrics');
 
             $table->timestamps();
         });

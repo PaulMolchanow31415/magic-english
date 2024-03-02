@@ -2,23 +2,22 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Music extends Model {
+    use Searchable;
 
     protected $fillable = [
         'author_song_id',
         'album_id',
         'name',
-        'audio_url',
         'lyrics',
+        'audio_url',
     ];
 
-    protected $casts = [
-        'lyrics' => AsArrayObject::class,
-    ];
+    protected $with = ['authorSong'];
 
     public function authorSong(): BelongsTo {
         return $this->belongsTo(AuthorSong::class);

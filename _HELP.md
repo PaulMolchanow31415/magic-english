@@ -147,6 +147,8 @@ _data casting laravel eloquent_
 
 ## Diploma docs helpers
 
+<https://timeweb.cloud/blog/monolity-mikroservisy-besservernaya-arhitektura>
+
 <https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html>
 
 ## Continuous upgrade
