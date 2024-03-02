@@ -19,9 +19,10 @@ const props = defineProps({
     type: String,
     default: 'default',
     validator(v) {
-      return v === 'full' || v === 'minimal' || v === 'default'
+      return v === 'full' || v === 'minimal' || v === 'default' || v === 'none'
     },
   },
+  disabled: Boolean,
 })
 
 defineEmits(['update:modelValue'])
@@ -29,19 +30,23 @@ defineEmits(['update:modelValue'])
 const editor = ref()
 let toolbar = ref({})
 
-if (props.toolbarStyle === 'default') {
-  // prettier-ignore
-  set(toolbar, [
-    'undo', 'redo',
-    '|', 'heading',
-    '|', 'bold', 'italic',
-    // '|', 'link', 'uploadImage', 'blockQuote',
-    // '|', 'bulletedList', 'numberedList', 'outdent', 'indent',
-  ])
-}
-
-if (props.toolbarStyle === 'minimal') {
-  set(toolbar, ['undo', 'redo', '|', 'bold', 'italic'])
+switch (props.toolbarStyle) {
+  case 'default':
+    // prettier-ignore
+    set(toolbar, [
+      'undo', 'redo',
+      '|', 'heading',
+      '|', 'bold', 'italic',
+      // '|', 'link', 'uploadImage', 'blockQuote',
+      // '|', 'bulletedList', 'numberedList', 'outdent', 'indent',
+    ])
+    break
+  case 'minimal':
+    set(toolbar, ['undo', 'redo', '|', 'bold', 'italic'])
+    break
+  case 'none':
+    set(toolbar, ['undo', 'redo'])
+    break
 }
 
 function onReady(readyEditor) {
@@ -59,6 +64,7 @@ function onReady(readyEditor) {
       :editor="ClassicEditor"
       :config="{ placeholder, toolbar }"
       tag-name="textarea"
+      :disabled="disabled"
     />
     <InputError :message="errorMessage" />
   </div>
