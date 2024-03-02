@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthorSong;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class AuthorSongController extends Controller {
     use PhotoUploadable;
@@ -13,6 +14,12 @@ class AuthorSongController extends Controller {
             'authors' => AuthorSong::search(request('search'))->paginate(5),
             'filters' => request()->only(['search']),
         ]);
+    }
+
+    public function list(string $search): JsonResponse {
+        return response()->json(
+            AuthorSong::search($search)->paginate(15),
+        );
     }
 
     public function store(Request $request) {
@@ -39,7 +46,7 @@ class AuthorSongController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $this->handleDeletePoster();
+        $this->handleDeleteFile();
         AuthorSong::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
