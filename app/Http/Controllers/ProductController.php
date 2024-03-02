@@ -43,7 +43,7 @@ class ProductController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $this->handleDeletePoster();
+        $this->handleDeleteFile();
         Product::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 

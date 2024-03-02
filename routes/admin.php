@@ -3,6 +3,7 @@
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\MusicController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
@@ -74,4 +75,9 @@ Route::middleware([
 
     Route::put('/author/poster', [AuthorSongController::class, 'deletePoster'])
         ->name('author-song.delete-poster');
+
+    Route::resource('/music', MusicController::class)->only(['index', 'store', 'destroy']);
+
+    Route::put('/music/delete-audio', [MusicController::class, 'deleteAudio'])
+        ->name('music.delete-audio');
 });

@@ -57,7 +57,7 @@ class DictionaryController extends Controller {
         return inertia('Skills/Dictionary/Index', [
             'dictionaries' => Dictionary::whereComplexity($complexity)
                 ->select(['category', 'poster_url'])->get(),
-            
+
             'learnableVocabulariesCount' => auth()->user()->vocabularies()->count(),
 
             'filters' => ['complexity' => $complexity],
@@ -71,7 +71,7 @@ class DictionaryController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $this->handleDeletePoster();
+        $this->handleDeleteFile();
         Dictionary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 

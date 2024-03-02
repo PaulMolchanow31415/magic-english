@@ -69,7 +69,7 @@ class CourseController extends Controller {
     }
 
     public function deletePoster(Request $request): void {
-        $this->handleDeletePoster();
+        $this->handleDeleteFile();
         Course::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
