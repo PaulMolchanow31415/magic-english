@@ -28,7 +28,7 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import PriceInput from '@/Pages/Admin/Partials/PriceInput.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import usePrice from '@/Composables/usePrice.js'
+import { usePrice } from '@/Composables/usePrice.js'
 
 const props = defineProps({
   products: Object,
