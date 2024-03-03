@@ -68,7 +68,7 @@ useEventListener('keydown', closeOnEscape)
         @click="open = false"
       >
         <!-- Overlay -->
-        <div class="absolute w-full -z-10" style="height: calc(100% + 1rem); top: -1rem" />
+        <div class="absolute w-full -z-10" style="height: calc(100% + 1rem); top: -0.5rem" />
 
         <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
           <slot name="content" />
