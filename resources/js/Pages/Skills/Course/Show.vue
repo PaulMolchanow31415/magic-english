@@ -6,7 +6,7 @@ import { computed, ref, watch } from 'vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import Translatable from '@/Shared/Translatable.vue'
 import { onKeyStroke } from '@vueuse/core'
-import useSay from '@/Composables/useSay.js'
+import { useSay } from '@/Composables/useSay.js'
 import { router } from '@inertiajs/vue3'
 
 const props = defineProps({

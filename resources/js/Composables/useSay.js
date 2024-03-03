@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { set, useSpeechSynthesis } from '@vueuse/core'
 
-export default function () {
+export function useSay() {
   const vocalizedWord = ref('')
 
   const { isSupported, stop, isPlaying, speak } = useSpeechSynthesis(vocalizedWord, {

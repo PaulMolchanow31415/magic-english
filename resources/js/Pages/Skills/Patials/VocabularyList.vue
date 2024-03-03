@@ -9,7 +9,7 @@ import {
 } from 'flowbite-vue'
 import { inject } from 'vue'
 import { router } from '@inertiajs/vue3'
-import useSay from '@/Composables/useSay.js'
+import { useSay } from '@/Composables/useSay.js'
 
 defineProps({
   vocabularies: {
