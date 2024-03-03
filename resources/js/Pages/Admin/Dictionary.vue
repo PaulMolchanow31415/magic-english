@@ -26,7 +26,7 @@ import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
-import useSuggest from '@/Composables/useSuggest.js'
+import { useSuggest } from '@/Composables/useSuggest.js'
 
 const props = defineProps({
   filters: Object,

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { watchThrottled } from '@vueuse/core'
 import SuggestListItem from '@/Classes/SuggestListItem.js'
 
-export default function useSuggest(routeName, propName = 'en') {
+export function useSuggest(routeName, propName = 'en') {
   const searched = ref('')
   const results = ref([])
 

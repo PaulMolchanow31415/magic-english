@@ -24,7 +24,7 @@ import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationMo
 import AudioUploader from '@/Pages/Admin/Partials/AudioUploader.vue'
 import LyricsEditor from '@/Pages/Admin/Partials/LyricsEditor.vue'
 import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
-import useSuggest from '@/Composables/useSuggest.js'
+import { useSuggest } from '@/Composables/useSuggest.js'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
 
