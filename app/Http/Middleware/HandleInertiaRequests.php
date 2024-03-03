@@ -42,10 +42,11 @@ class HandleInertiaRequests extends Middleware {
         $user = auth()->user();
 
         return array_merge(parent::share($request), [
-            'complexities'     => Complexity::cases(),
-            'learnableFilters' => LearnableFilter::cases(),
-            'isAcceptCookies'  => session('is_accept_cookies', $user?->is_accept_cookies),
-            'cartItemsAmount'  => $user ? $user->cart->products->count() : 0,
+            'complexities'            => Complexity::cases(),
+            'learnableFilters'        => LearnableFilter::cases(),
+            'isAcceptCookies'         => session('is_accept_cookies', $user?->is_accept_cookies),
+            'cartItemsAmount'         => $user ? $user->cart->products->count() : 0,
+            'purchasedProductsAmount' => $user ? $user->products()->count() : 0,
         ]);
     }
 }

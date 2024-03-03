@@ -18,11 +18,11 @@ const searched = ref('')
           <ApplicationMark class="block h-9 w-auto" />
         </Link>
 
-        <!--<div class="ms-5 flex-grow pe-[5%] lg:pe-[25%] xl:pe-[40%] 2xl:pe-[50%]">
+        <!--<div class="ms-5 me-auto flex-grow md:max-w-28 lg:max-w-xs">
           <FwbInput
             v-model.lazy="searched"
             type="search"
-            placeholder="Поиск..."
+            placeholder="Поиск"
             class="text-gray-700 dark:text-gray-300"
             size="sm"
           >
@@ -36,8 +36,7 @@ const searched = ref('')
       <template #default="{ isShowMenu }">
         <FwbNavbarCollapse :is-show-menu="isShowMenu">
           <!--<li>
-            &lt;!&ndash; :class="{ selected: route().current() }" &ndash;&gt;
-            <Link class="nav-item" href="/"> Музыка </Link>
+            <Link class="nav-item" :href="route('music.listing')">Музыка</Link>
           </li>-->
           <li>
             <Dropdown :align="isShowMenu ? 'left' : 'right'">
@@ -59,7 +58,10 @@ const searched = ref('')
                     Корзина ({{ $page.props.cartItemsAmount }})
                   </span>
                 </DropdownLink>
-                <DropdownLink :href="route('purchased.lesson.all')">
+                <DropdownLink
+                  v-if="$page.props.purchasedProductsAmount > 0"
+                  :href="route('purchased.lesson.all')"
+                >
                   <span class="dropdown-line">
                     <Icon :icon="['fas', 'bag-shopping']" class="w-4" />
                     Покупки
