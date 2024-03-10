@@ -2,11 +2,13 @@
 import { useGlobalState } from '@/Composables/useGlobalState.js'
 import Tooltip from '@/Shared/Tooltip.vue'
 import { Link } from '@inertiajs/vue3'
-import { ref, watch } from 'vue'
-import { set, usePerformanceObserver } from '@vueuse/core'
+import { computed, onMounted, ref, watch } from 'vue'
+import { get, set } from '@vueuse/core'
 import { FwbP, FwbRange } from 'flowbite-vue'
 
 const state = useGlobalState()
+
+const volume = computed(() => state.value.volume)
 
 const player = ref()
 const isPlaying = ref(false)
@@ -14,7 +16,6 @@ const duration = ref(0)
 const currentTime = ref(0)
 const isShowVolumePopover = ref(false)
 const isShowCapture = ref(false)
-
 const isLoadingError = ref(false)
 
 let timer
@@ -27,6 +28,14 @@ function formatTime(seconds = 0) {
   minutes = Math.floor((seconds - hours * 3600) / 60)
   sec = Math.floor(seconds - hours * 3600 - minutes * 60)
   return minutes.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0')
+}
+
+function initPlayer() {
+  set(isPlaying, false)
+  set(isShowCapture, true)
+  set(isLoadingError, false)
+  set(duration, 0)
+  set(currentTime, 0)
 }
 
 function clearTimer() {
@@ -49,26 +58,23 @@ function onAudioEnded() {
 
 function onLoadMetaData() {
   if (player.value) {
-    player.value.volume = state.value.volume
+    player.value.volume = get(volume)
     set(duration, player.value.duration)
     set(currentTime, player.value.currentTime)
   }
 }
 
 function changeVolume(direction) {
-  if (
-    (direction === 'up' && state.value.volume < 1) ||
-    (direction === 'down' && state.value.volume > 0)
-  ) {
+  if ((direction === 'up' && get(volume) < 1) || (direction === 'down' && get(volume) > 0)) {
     state.value.volume =
-      direction === 'up'
-        ? Math.min(state.value.volume + 0.1, 1)
-        : Math.max(state.value.volume - 0.1, 0)
+      direction === 'up' ? Math.min(get(volume) + 0.1, 1) : Math.max(get(volume) - 0.1, 0)
   }
 }
 
-watch(isPlaying, (value) =>
-  value
+onMounted(initPlayer)
+
+watch(isPlaying, (isRun) =>
+  isRun
     ? player.value
         .play()
         .then(startTimer)
@@ -80,18 +86,9 @@ watch(isPlaying, (value) =>
     : player.value.pause(),
 )
 
-watch(
-  () => state.value.volume,
-  (vol) => (player.value.volume = vol),
-)
+watch(volume, () => (player.value.volume = get(volume)))
 
-usePerformanceObserver({ type: 'navigation', buffered: true }, (list) => {
-  list.getEntries().forEach((entry) => {
-    if (entry.type === 'reload') {
-      state.value.song = null
-    }
-  })
-})
+watch(() => state.value.song, initPlayer)
 </script>
 
 <template>
@@ -284,7 +281,7 @@ usePerformanceObserver({ type: 'navigation', buffered: true }, (list) => {
               class="p-2.5 group rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-600 dark:hover:bg-gray-600"
             >
               <svg
-                v-if="state.volume > 0"
+                v-if="volume > 0"
                 class="audio-player-icon"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
