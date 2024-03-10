@@ -10,16 +10,16 @@ class Music extends Model {
     use Searchable;
 
     protected $fillable = [
-        'author_song_id',
+        'singer_id',
         'name',
         'lyrics',
         'audio_url',
     ];
 
-    protected $with = ['authorSong'];
+    protected $with = ['singer'];
 
-    public function authorSong(): BelongsTo {
-        return $this->belongsTo(AuthorSong::class);
+    public function singer(): BelongsTo {
+        return $this->belongsTo(Singer::class);
     }
 
 }

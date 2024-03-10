@@ -13,7 +13,7 @@ use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\AuthorSongController;
+use App\Http\Controllers\SingerController;
 use App\Http\Controllers\UserAdministrationController;
 
 Route::middleware([
@@ -71,9 +71,9 @@ Route::middleware([
     Route::put('/product/poster', [ProductController::class, 'deletePoster'])
         ->name('product.delete-poster');
 
-    Route::resource('/author', AuthorSongController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('/author', SingerController::class)->only(['index', 'store', 'destroy']);
 
-    Route::put('/author/poster', [AuthorSongController::class, 'deletePoster'])
+    Route::put('/author/poster', [SingerController::class, 'deletePoster'])
         ->name('author-song.delete-poster');
 
     Route::resource('/music', MusicController::class)->only(['index', 'store', 'destroy']);

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VocabularyController;
-use App\Http\Controllers\AuthorSongController;
+use App\Http\Controllers\SingerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Route::name('api.')->group(function () {
 
     Route::get('/vocabularies/{search}', [VocabularyController::class, 'list'])
         ->name('vocabulary.list');
-    
-    Route::get('/author-song/{search}', [AuthorSongController::class, 'list'])
+
+    Route::get('/author-song/{search}', [SingerController::class, 'list'])
         ->name('author-song.list');
 });

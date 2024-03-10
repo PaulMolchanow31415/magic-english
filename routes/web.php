@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Faq;
-use App\Models\AuthorSong;
+use App\Models\Singer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
@@ -14,7 +14,7 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\AuthorSongController;
+use App\Http\Controllers\SingerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +45,9 @@ Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController
 
 // Singer and music
 Route::prefix('/singer')->name('singer.')->group(function () {
-    Route::inertia('/list', 'Music/SingerList', ['singers' => AuthorSong::all()])->name('list');
+    Route::inertia('/list', 'Music/SingerList', ['singers' => Singer::all()])->name('list');
 
-    Route::get('/{singer}', [AuthorSongController::class, 'show'])->name('show');
+    Route::get('/{singer}', [SingerController::class, 'show'])->name('show');
 });
 
 // For authenticated users

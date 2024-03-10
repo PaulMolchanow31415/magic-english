@@ -6,7 +6,7 @@ use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class AuthorSong extends Model {
+class Singer extends Model {
     use Searchable;
 
     protected $fillable = [

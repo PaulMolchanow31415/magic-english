@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuthorSong;
+use App\Models\Singer;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-class AuthorSongController extends Controller {
+class SingerController extends Controller {
     use PhotoUploadable;
 
     public function index() {
         return inertia('Admin/Author', [
-            'authors' => AuthorSong::search(request('search'))->paginate(5),
+            'authors' => Singer::search(request('search'))->paginate(5),
             'filters' => request()->only(['search']),
         ]);
     }
 
-    public function show(AuthorSong $singer) {
+    public function show(Singer $singer) {
         if ($singer->musics()->count() === 0) {
             return redirect()->back();
         }
@@ -29,23 +29,23 @@ class AuthorSongController extends Controller {
 
     public function list(string $search): JsonResponse {
         return response()->json(
-            AuthorSong::search($search)->paginate(15),
+            Singer::search($search)->paginate(15),
         );
     }
 
     public function store(Request $request) {
         $request->validate([
             'id'                  => 'nullable|int',
-            'name'                => 'string|required|max:1024|unique:author_songs',
+            'name'                => 'string|required|max:1024|unique:singers',
             'biography'           => 'string|required|min:5',
             'photo_external_path' => 'active_url|nullable',
         ]);
 
-        $author = AuthorSong::firstOrNew(['id' => $request['id']]);
+        $author = Singer::firstOrNew(['id' => $request['id']]);
         $oldPath = $author->poster_url;
         $updatedPath = $this->upload($oldPath);
 
-        AuthorSong::updateOrCreate(['id' => $request['id']], [
+        Singer::updateOrCreate(['id' => $request['id']], [
             'name'       => $request['name'],
             'biography'  => $request['biography'],
             'poster_url' => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
@@ -54,10 +54,10 @@ class AuthorSongController extends Controller {
 
     public function deletePoster(Request $request): void {
         $this->handleDeleteFile();
-        AuthorSong::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
+        Singer::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(AuthorSong $author): void {
+    public function destroy(Singer $author): void {
         $this->deleteFileIfExist($author->poster_url);
         $author->delete();
     }

@@ -73,7 +73,7 @@ function handleEdit(music) {
   form.name = music.name
   form.audio = null
   form.lyrics = music.lyrics
-  set(selectedSinger, music.author_song)
+  set(selectedSinger, music.singer)
   editable.isShowModal = true
   editable.audio_url = music.audio_url
 }
@@ -151,12 +151,12 @@ function deleteAudio() {
         <FwbTableCell>
           <FwbAvatar
             size="xs"
-            :alt="music.author_song.name"
-            :img="music.author_song.poster_url"
-            :initials="avatarInitials(music.author_song.name)"
+            :alt="music.singer.name"
+            :img="music.singer.poster_url"
+            :initials="avatarInitials(music.singer.name)"
           />
         </FwbTableCell>
-        <FwbTableCell v-text="music.author_song.name" />
+        <FwbTableCell v-text="music.singer.name" />
         <FwbTableCell v-text="music.name" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">

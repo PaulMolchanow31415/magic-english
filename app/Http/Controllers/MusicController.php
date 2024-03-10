@@ -28,10 +28,10 @@ class MusicController extends Controller {
         $updatedPath = $this->upload($oldUrl);
 
         Music::updateOrCreate(['id' => $request['id']], [
-            'author_song_id' => $request['singer_id'],
-            'name'           => $request['name'],
-            'lyrics'         => $request['lyrics'],
-            'audio_url'      => $updatedPath ?? $oldUrl,
+            'singer_id' => $request['singer_id'],
+            'name'      => $request['name'],
+            'lyrics'    => $request['lyrics'],
+            'audio_url' => $updatedPath ?? $oldUrl,
         ]);
     }
 
