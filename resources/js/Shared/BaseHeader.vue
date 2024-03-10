@@ -35,9 +35,9 @@ const searched = ref('')
 
       <template #default="{ isShowMenu }">
         <FwbNavbarCollapse :is-show-menu="isShowMenu">
-          <!--<li>
-            <Link class="nav-item" :href="route('music.listing')">Музыка</Link>
-          </li>-->
+          <li>
+            <Link class="nav-item" :href="route('singer.list')">Музыка</Link>
+          </li>
           <li>
             <Dropdown :align="isShowMenu ? 'left' : 'right'">
               <template #trigger>

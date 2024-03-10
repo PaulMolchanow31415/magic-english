@@ -40,7 +40,7 @@ https://vuestripe.com/stripe-plugin/getting-started/
 
 https://flowbite.com/docs/forms/number-input/#credit-card-input
 
-## 2FA Challenge completing before ordering
+## 2FA Challenge completing before ordering | Authorization
 
 https://laracasts.com/discuss/channels/laravel/laravel-fortify-2fa-middleware?page=1&replyId=902903
 
@@ -83,7 +83,7 @@ _data casting laravel eloquent_
 <https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/vuejs-v3.html#using-es6-modules>
 <https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html>
 
-## Components
+## Components Saas (software as service)
 
 - For course
 
@@ -104,7 +104,6 @@ _data casting laravel eloquent_
 
 - For music
 
-<https://vueuse.org/core/useMemory/#usememory>
 <https://github.com/vueuse/sound#examples>
 <https://flowbite.com/docs/components/bottom-navigation/#video-player-bar>
 
@@ -140,7 +139,7 @@ _data casting laravel eloquent_
 
 <https://flowbite.com/blocks/marketing/500/#default-500-page>
 
-## Localization
+## Localization?
 
 <https://dev.to/paulocastellano/how-to-work-with-laravel-inertia-js-and-vue-i18n-26ih>
 <https://kazupon.github.io/vue-i18n/guide/formatting.html#named-formatting>

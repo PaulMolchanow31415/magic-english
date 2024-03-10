@@ -12,7 +12,7 @@ import { Link } from '@inertiajs/vue3'
           class="flex flex-wrap items-center mt-4 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-x-8 gap-y-4"
         >
           <li><Link class="hover:underline" href="/">Главная</Link></li>
-          <!--<li><Link class="hover:underline" href="/">Музыка</Link></li>-->
+          <li><Link class="hover:underline" :href="route('singer.list')">Музыка</Link></li>
           <li><Link class="hover:underline" :href="route('ecommerce')">Магазин</Link></li>
           <li>
             <Link class="hover:underline" :href="route('skills.self-education')">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Faq;
+use App\Models\AuthorSong;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\DictionaryController;
+use App\Http\Controllers\AuthorSongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,7 @@ Route::inertia('/', 'Welcome', ['faqs' => Faq::all()]);
 
 Route::post('/accept-cookies', CookieController::class)->name('accept-cookies');
 
+// Subscribing
 Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController::class)
     ->group(function () {
         Route::post('/store', 'store')->name('store')->middleware(['recaptcha', 'throttle:60,1']);
@@ -40,6 +43,14 @@ Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController
             ->name('change-status');
     });
 
+// Singer and music
+Route::prefix('/singer')->name('singer.')->group(function () {
+    Route::inertia('/list', 'Music/SingerList', ['singers' => AuthorSong::all()])->name('list');
+
+    Route::get('/{singer}', [AuthorSongController::class, 'show'])->name('show');
+});
+
+// For authenticated users
 Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     // Comments
     Route::prefix('/discussion')->name('discussion.')->group(function () {
@@ -139,7 +150,7 @@ Route::prefix('/cart')->name('cart.')->controller(CartController::class)
         Route::get('/checkout/success', 'handleSuccessCheckout')->name('checkout.success');
     });
 
-// User`s purchased lessons and plans
+// Users purchased lessons
 Route::prefix('/purchased')->name('purchased.')->controller(PurchasedController::class)
     ->middleware(['auth:sanctum'])->group(function () {
         Route::prefix('/lesson')->name('lesson.')->group(function () {

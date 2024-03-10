@@ -16,6 +16,17 @@ class AuthorSongController extends Controller {
         ]);
     }
 
+    public function show(AuthorSong $singer) {
+        if ($singer->musics()->count() === 0) {
+            return redirect()->back();
+        }
+
+        return inertia('Music/Index', [
+            'singer' => $singer,
+            'musics' => $singer->musics()->select(['id', 'name', 'audio_url', 'lyrics'])->get(),
+        ]);
+    }
+
     public function list(string $search): JsonResponse {
         return response()->json(
             AuthorSong::search($search)->paginate(15),
@@ -39,10 +50,6 @@ class AuthorSongController extends Controller {
             'biography'  => $request['biography'],
             'poster_url' => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
         ]);
-    }
-
-    public function show(AuthorSong $authorSong) {
-        //
     }
 
     public function deletePoster(Request $request): void {

@@ -35,10 +35,6 @@ class MusicController extends Controller {
         ]);
     }
 
-    public function show(Music $music) {
-        //
-    }
-
     public function deleteAudio(Request $request) {
         $this->handleDeleteFile();
         Music::whereAudioUrl($request['filename'])->update(['audio_url' => null]);

@@ -33,8 +33,10 @@ import {
   faMobileScreenButton,
   faMoon,
   faMusic,
+  faPause,
   faPersonChalkboard,
   faPersonCircleQuestion,
+  faPlay,
   faPlus,
   faPodcast,
   faRightFromBracket,
@@ -103,4 +105,6 @@ library.add(
   faStore,
   faPodcast,
   faMusic,
+  faPause,
+  faPlay,
 )

@@ -3,6 +3,7 @@ import BaseHeader from '@/Shared/BaseHeader.vue'
 import BaseFooter from '@/Shared/BaseFooter.vue'
 import { provide } from 'vue'
 import CookiePopup from '@/Shared/CookiePopup.vue'
+import AudioPlayer from '@/Shared/AudioPlayer.vue'
 
 provide('avatarInitials', (name = 'default') => {
   name = name.trim().split(' ')
@@ -32,6 +33,8 @@ provide('shuffle', (array = []) => {
     </div>
 
     <CookiePopup />
+
+    <AudioPlayer />
 
     <BaseFooter />
   </div>
