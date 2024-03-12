@@ -7,10 +7,11 @@ export function useSearch(searchValue) {
 
   watchThrottled(
     searched,
-    (value) =>
+    (search) =>
+      search &&
       router.get(
         route(route().current()),
-        { search: `${value}` },
+        { search },
         {
           preserveState: true,
           preserveScroll: true,
