@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', fn() => request()->user());
 Route::name('api.')->group(function () {
     Route::get('/translate', [VocabularyController::class, 'translate'])
         ->name('translate')
-        ->middleware(['throttle:60,1', 'recaptcha']);
+        ->middleware(['throttle:60,1']);
 
     Route::get('/vocabularies/{search}', [VocabularyController::class, 'list'])
         ->name('vocabulary.list');
