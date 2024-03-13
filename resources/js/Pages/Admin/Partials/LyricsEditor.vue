@@ -3,9 +3,10 @@ import { defineComponent } from 'vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
+import OpacityTransition from '@/Animations/OpacityTransition.vue'
 
 export default defineComponent({
-  components: { TextRedactor, InputLabel, InputError },
+  components: { OpacityTransition, TextRedactor, InputLabel, InputError },
 
   props: {
     modelValue: {
@@ -77,11 +78,13 @@ export default defineComponent({
       <TextRedactor v-model="ru" toolbar-style="none" placeholder="Перевод" class="grow" />
     </div>
 
-    <blockquote
-      v-show="modelValue.length"
-      v-html="modelValue"
-      class="py-4 sm:columns-2 text-center"
-    />
+    <OpacityTransition>
+      <blockquote
+        v-show="modelValue.length"
+        v-html="modelValue"
+        class="py-4 sm:columns-2 text-center"
+      />
+    </OpacityTransition>
 
     <InputError :message="errorMessage" />
   </div>

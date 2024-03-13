@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3'
 import { FwbButton, FwbCard, FwbHeading, FwbModal, FwbP } from 'flowbite-vue'
 import { ref } from 'vue'
 import Translatable from '@/Shared/Translatable.vue'
+import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 defineProps({ lessons: Array })
 
@@ -29,19 +30,21 @@ const selected = ref()
     </div>
   </div>
 
-  <FwbModal v-if="selected" size="5xl" @close="selected = null">
-    <template #header>
-      <FwbHeading tag="h6" class="flex items-center text-lg">{{ selected.name }}</FwbHeading>
-    </template>
-    <template #body>
-      <Translatable>
-        <article v-html="selected?.content" class="no-tailwindcss" />
-      </Translatable>
-    </template>
-    <template #footer>
-      <FwbButton @click="selected = null" color="alternative" size="lg">Закрыть</FwbButton>
-    </template>
-  </FwbModal>
+  <Opacity300Transition>
+    <FwbModal v-if="selected" size="5xl" @close="selected = null">
+      <template #header>
+        <FwbHeading tag="h6" class="flex items-center text-lg">{{ selected.name }}</FwbHeading>
+      </template>
+      <template #body>
+        <Translatable>
+          <article v-html="selected?.content" class="no-tailwindcss" />
+        </Translatable>
+      </template>
+      <template #footer>
+        <FwbButton @click="selected = null" color="alternative" size="lg">Закрыть</FwbButton>
+      </template>
+    </FwbModal>
+  </Opacity300Transition>
 </template>
 
 <style scoped></style>

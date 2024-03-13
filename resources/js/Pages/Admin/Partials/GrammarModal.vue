@@ -17,6 +17,7 @@ import { computed, ref, watch } from 'vue'
 import { set } from '@vueuse/core'
 import Sorter from '@/Shared/Sorter.vue'
 import SortableItem from '@/Classes/SortableItem.js'
+import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 const props = defineProps({
   courseId: {
@@ -120,107 +121,114 @@ watch(
 </script>
 
 <template>
-  <FwbModal size="4xl" v-show="Boolean(courseId)" @close="handleClose" @click:outside="handleClose">
-    <template #header>
-      <h3 class="pl-2 text-lg font-semibold text-gray-900 dark:text-white">
-        Редактирование грамматики
-      </h3>
-    </template>
-    <template #body>
-      <FwbAccordion flush open-first-item always-open>
-        <FwbAccordionPanel>
-          <FwbAccordionHeader>Добавление грамматики</FwbAccordionHeader>
-          <FwbAccordionContent>
-            <form ref="editor" @submit.prevent="confirmUpdate" method="post">
-              <div class="mb-4">
-                <InputLabel value="Заголовок">
-                  <FwbInput
-                    v-model="form.title"
-                    placeholder="Названике заголовка"
-                    :validation-status="form.errors.title ? 'error' : ''"
-                  >
-                    <template #validationMessage>
-                      {{ form.errors.title }}
-                    </template>
-                  </FwbInput>
-                </InputLabel>
+  <Opacity300Transition>
+    <FwbModal
+      size="4xl"
+      v-show="Boolean(courseId)"
+      @close="handleClose"
+      @click:outside="handleClose"
+    >
+      <template #header>
+        <h3 class="pl-2 text-lg font-semibold text-gray-900 dark:text-white">
+          Редактирование грамматики
+        </h3>
+      </template>
+      <template #body>
+        <FwbAccordion flush open-first-item always-open>
+          <FwbAccordionPanel>
+            <FwbAccordionHeader>Добавление грамматики</FwbAccordionHeader>
+            <FwbAccordionContent>
+              <form ref="editor" @submit.prevent="confirmUpdate" method="post">
+                <div class="mb-4">
+                  <InputLabel value="Заголовок">
+                    <FwbInput
+                      v-model="form.title"
+                      placeholder="Названике заголовка"
+                      :validation-status="form.errors.title ? 'error' : ''"
+                    >
+                      <template #validationMessage>
+                        {{ form.errors.title }}
+                      </template>
+                    </FwbInput>
+                  </InputLabel>
+                </div>
+                <TextRedactor
+                  v-model="form.content"
+                  toolbar-style="full"
+                  placeholder="Грамматика"
+                  :error-message="form.errors.content"
+                />
+                <PhoneticsEditor
+                  class="my-6"
+                  v-model="form.phonetics"
+                  :error-message="form.errors.phonetics"
+                />
+                <FwbButton
+                  type="submit"
+                  color="green"
+                  pill
+                  class="mt-4 flex flex-nowrap"
+                  :loading="form.processing"
+                >
+                  Сохранить
+                </FwbButton>
+              </form>
+            </FwbAccordionContent>
+          </FwbAccordionPanel>
+
+          <FwbAccordionPanel v-for="grammar in grammarRules" :key="grammar.id">
+            <FwbAccordionHeader>{{ grammar.title }}</FwbAccordionHeader>
+            <FwbAccordionContent>
+              <article class="no-tailwindcss" v-html="grammar.content" />
+              <ul class="my-2 list-disc list-inside space-y-1.5">
+                <li v-for="phonetic in grammar.phonetics" :key="grammar.source">
+                  <span class="italic dark:text-white" v-text="phonetic.source" />
+                  —
+                  {{ phonetic.translation }}
+                </li>
+              </ul>
+              <div class="accordion-button-group">
+                <button @click="remove(grammar)" type="button" class="hover:text-red-600">
+                  Удалить
+                </button>
+                <button @click="handleEdit(grammar)" type="button" class="hover:text-blue-600">
+                  Редактировать
+                </button>
               </div>
-              <TextRedactor
-                v-model="form.content"
-                toolbar-style="full"
-                placeholder="Грамматика"
-                :error-message="form.errors.content"
-              />
-              <PhoneticsEditor
-                class="my-6"
-                v-model="form.phonetics"
-                :error-message="form.errors.phonetics"
-              />
-              <FwbButton
-                type="submit"
-                color="green"
-                pill
-                class="mt-4 flex flex-nowrap"
-                :loading="form.processing"
-              >
-                Сохранить
-              </FwbButton>
-            </form>
-          </FwbAccordionContent>
-        </FwbAccordionPanel>
+            </FwbAccordionContent>
+          </FwbAccordionPanel>
+        </FwbAccordion>
 
-        <FwbAccordionPanel v-for="grammar in grammarRules" :key="grammar.id">
-          <FwbAccordionHeader>{{ grammar.title }}</FwbAccordionHeader>
-          <FwbAccordionContent>
-            <article class="no-tailwindcss" v-html="grammar.content" />
-            <ul class="my-2 list-disc list-inside space-y-1.5">
-              <li v-for="phonetic in grammar.phonetics" :key="grammar.source">
-                <span class="italic dark:text-white" v-text="phonetic.source" />
-                —
-                {{ phonetic.translation }}
-              </li>
-            </ul>
-            <div class="accordion-button-group">
-              <button @click="remove(grammar)" type="button" class="hover:text-red-600">
-                Удалить
-              </button>
-              <button @click="handleEdit(grammar)" type="button" class="hover:text-blue-600">
-                Редактировать
-              </button>
-            </div>
-          </FwbAccordionContent>
-        </FwbAccordionPanel>
-      </FwbAccordion>
-
-      <form
-        @submit.prevent="handleChangeOrder"
-        v-if="sortableGrammars.length > 0"
-        method="post"
-        class="px-4 mt-4"
-      >
-        <FwbHeading tag="h6">Изменение порядка</FwbHeading>
-        <Sorter
-          class="mt-4"
-          :list="sortableGrammars"
-          @change-order="grammarOrdersForm.items = $event"
-        />
-        <FwbButton
-          type="submit"
-          color="alternative"
-          pill
-          class="mt-4 flex flex-nowrap ms-2"
-          :loading="grammarOrdersForm.processing"
+        <form
+          @submit.prevent="handleChangeOrder"
+          v-if="sortableGrammars.length > 0"
+          method="post"
+          class="px-4 mt-4"
         >
-          Изменить
-        </FwbButton>
-      </form>
-    </template>
-    <template #footer>
-      <div class="flex items-center gap-4">
-        <FwbButton type="button" @click="handleClose" color="alternative"> Закрыть </FwbButton>
-      </div>
-    </template>
-  </FwbModal>
+          <FwbHeading tag="h6">Изменение порядка</FwbHeading>
+          <Sorter
+            class="mt-4"
+            :list="sortableGrammars"
+            @change-order="grammarOrdersForm.items = $event"
+          />
+          <FwbButton
+            type="submit"
+            color="alternative"
+            pill
+            class="mt-4 flex flex-nowrap ms-2"
+            :loading="grammarOrdersForm.processing"
+          >
+            Изменить
+          </FwbButton>
+        </form>
+      </template>
+      <template #footer>
+        <div class="flex items-center gap-4">
+          <FwbButton type="button" @click="handleClose" color="alternative"> Закрыть </FwbButton>
+        </div>
+      </template>
+    </FwbModal>
+  </Opacity300Transition>
 </template>
 
 <style scoped></style>

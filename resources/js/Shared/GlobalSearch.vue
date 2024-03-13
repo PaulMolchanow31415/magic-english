@@ -3,7 +3,8 @@ import { FwbInput } from 'flowbite-vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import { get, onClickOutside, set, watchThrottled } from '@vueuse/core'
-import { useOverflowHidden } from '@/Composables/useOverflowHidden.js'
+import { useScrollLock } from '@/Composables/useScrollLock.js'
+import DropdownTransition from '@/Animations/ComboboxTransition.vue'
 
 const searched = ref('')
 const results = ref([])
@@ -32,7 +33,7 @@ watchThrottled(
   { throttle: 900 },
 )
 
-useOverflowHidden(isComboboxVisible)
+useScrollLock(isComboboxVisible)
 </script>
 
 <template>
@@ -52,28 +53,30 @@ useOverflowHidden(isComboboxVisible)
       </template>
     </FwbInput>
 
-    <div v-show="isComboboxVisible" ref="comboBox" role="combobox" class="relative">
-      <div class="z-50 pt-1.5 absolute w-full">
-        <aside class="relative bg-white rounded-lg shadow w-full dark:bg-gray-700">
-          <ul
-            class="max-h-[75vh] space-y-2 p-4 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
-            role="listbox"
-          >
-            <li v-for="result in results">
-              <Link
-                v-text="result.name"
-                :href="result.url"
-                @click="clear"
-                class="block text-slate-700 hover:text-violet-700 dark:hover:text-violet-400 dark:text-slate-200 rounded-lg p-4 ring-1 ring-slate-100 dark:ring-slate-500 hover:ring-violet-700 dark:hover:ring-violet-400 select-none cursor-pointer"
-              />
-            </li>
-          </ul>
-          <div
-            class="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-700 h-3 rounded-b-lg"
-          />
-        </aside>
+    <DropdownTransition>
+      <div v-show="isComboboxVisible" ref="comboBox" role="combobox" class="relative">
+        <div class="z-50 pt-1.5 absolute w-full">
+          <aside class="relative bg-white rounded-lg shadow w-full dark:bg-gray-700">
+            <ul
+              class="max-h-[75vh] space-y-2 p-4 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+              role="listbox"
+            >
+              <li v-for="result in results">
+                <Link
+                  v-text="result.name"
+                  :href="result.url"
+                  @click="clear"
+                  class="block text-slate-700 hover:text-violet-700 dark:hover:text-violet-400 dark:text-slate-200 rounded-lg p-4 ring-1 ring-slate-100 dark:ring-slate-500 hover:ring-violet-700 dark:hover:ring-violet-400 select-none cursor-pointer"
+                />
+              </li>
+            </ul>
+            <div
+              class="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-700 h-3 rounded-b-lg"
+            />
+          </aside>
+        </div>
       </div>
-    </div>
+    </DropdownTransition>
   </form>
 </template>
 

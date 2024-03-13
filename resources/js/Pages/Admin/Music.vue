@@ -27,6 +27,7 @@ import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
 import { useSuggest } from '@/Composables/useSuggest.js'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
+import OpacityTransition from '@/Animations/OpacityTransition.vue'
 
 const props = defineProps({
   musics: Object,
@@ -184,7 +185,9 @@ function deleteAudio() {
     <div class="space-y-6">
       <NameInput v-model="form.name" :error-message="form.errors.name" />
 
-      <FwbP v-show="selectedSinger" class="font-medium">{{ selectedSinger?.name }}</FwbP>
+      <OpacityTransition>
+        <FwbP v-show="selectedSinger" class="font-medium">{{ selectedSinger?.name }}</FwbP>
+      </OpacityTransition>
 
       <SuggestComboBox
         v-model="searchedSinger"
@@ -197,7 +200,13 @@ function deleteAudio() {
 
       <AudioUploader v-model="form.audio" :error-message="form.errors.audio" />
 
-      <SecondaryButton v-show="editable.audio_url" @click="deleteAudio" v-text="'Удалить аудио'" />
+      <OpacityTransition>
+        <SecondaryButton
+          v-show="editable.audio_url"
+          @click="deleteAudio"
+          v-text="'Удалить аудио'"
+        />
+      </OpacityTransition>
     </div>
   </UpdateModal>
 

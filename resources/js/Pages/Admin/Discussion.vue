@@ -26,6 +26,7 @@ import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import DiscussionComment from '@/Shared/DiscussionComment.vue'
+import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 defineProps({
   discussions: Array,
@@ -190,26 +191,30 @@ const formatDate = (timestamp) =>
     </FwbAccordion>
   </template>
 
-  <!-- Show comments modal -->
-  <FwbModal v-if="discussionForShow" size="5xl" @close="discussionForShow = null">
-    <template #header>
-      <FwbHeading tag="h6" class="flex items-center text-lg">Список комментариев</FwbHeading>
-    </template>
-    <template #body>
-      <!--  Comments  -->
-      <div class="space-y-6 mt-6">
-        <DiscussionComment
-          v-for="comment in discussionForShow?.comments"
-          :key="comment.id"
-          :comment="comment"
-          class="bg-gray-100 dark:bg-gray-800"
-        />
-      </div>
-    </template>
-    <template #footer>
-      <FwbButton @click="discussionForShow = null" color="alternative" size="lg">Закрыть</FwbButton>
-    </template>
-  </FwbModal>
+  <Opacity300Transition>
+    <!-- Show comments modal -->
+    <FwbModal v-if="discussionForShow" size="5xl" @close="discussionForShow = null">
+      <template #header>
+        <FwbHeading tag="h6" class="flex items-center text-lg">Список комментариев</FwbHeading>
+      </template>
+      <template #body>
+        <!--  Comments  -->
+        <div class="space-y-6 mt-6">
+          <DiscussionComment
+            v-for="comment in discussionForShow?.comments"
+            :key="comment.id"
+            :comment="comment"
+            class="bg-gray-100 dark:bg-gray-800"
+          />
+        </div>
+      </template>
+      <template #footer>
+        <FwbButton @click="discussionForShow = null" color="alternative" size="lg"
+          >Закрыть</FwbButton
+        >
+      </template>
+    </FwbModal>
+  </Opacity300Transition>
 
   <!-- Delete modal -->
   <DeleteConfirmationModal

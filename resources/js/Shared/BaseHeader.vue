@@ -163,11 +163,7 @@ import GlobalSearch from '@/Shared/GlobalSearch.vue'
               </template>
             </Dropdown>
           </li>
-          <li
-            v-show="isShowMenu"
-            :class="{ 'flex w-full justify-center': isShowMenu }"
-            class="pt-3"
-          >
+          <li v-if="isShowMenu" :class="{ 'flex w-full justify-center': isShowMenu }" class="pt-3">
             <ToggleThemeButton class="w-full">Сменить тему</ToggleThemeButton>
           </li>
         </FwbNavbarCollapse>

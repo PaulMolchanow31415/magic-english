@@ -1,5 +1,6 @@
 <script setup>
 import { FwbSpinner } from 'flowbite-vue'
+import OpacitySmallTransition from '@/Animations/OpacitySmallTransition.vue'
 
 defineProps({
   type: {
@@ -20,7 +21,9 @@ defineProps({
     :class="{ 'opacity-25': processing }"
     :disabled="processing"
   >
-    <FwbSpinner v-show="processing" />
+    <OpacitySmallTransition>
+      <FwbSpinner v-show="processing" />
+    </OpacitySmallTransition>
     <slot />
   </button>
 </template>

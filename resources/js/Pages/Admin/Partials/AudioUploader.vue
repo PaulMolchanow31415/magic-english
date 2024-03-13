@@ -3,9 +3,10 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import InputError from '@/Shared/InputError.vue'
 import { FwbButton, FwbInput } from 'flowbite-vue'
 import { defineComponent } from 'vue'
+import OpacityTransition from '@/Animations/OpacityTransition.vue'
 
 export default defineComponent({
-  components: { FwbButton, FwbInput, InputError, InputLabel },
+  components: { OpacityTransition, FwbButton, FwbInput, InputError, InputLabel },
 
   props: {
     modelValue: Blob,
@@ -40,21 +41,23 @@ export default defineComponent({
         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
       />
     </InputLabel>
-    <div v-show="src" class="flex flex-wrap gap-2.5 mt-4">
-      <!--  Play audio file  -->
-      <audio :src="src" controls class="grow" />
-      <!--  Clear button  -->
-      <FwbButton
-        @click="onReset"
-        type="button"
-        pill
-        color="alternative"
-        size="lg"
-        class="px-12 w-full sm:w-auto"
-      >
-        Очистить
-      </FwbButton>
-    </div>
+    <OpacityTransition>
+      <div v-show="src" class="flex flex-wrap gap-2.5 mt-4">
+        <!--  Play audio file  -->
+        <audio :src="src" controls class="grow" />
+        <!--  Clear button  -->
+        <FwbButton
+          @click="onReset"
+          type="button"
+          pill
+          color="alternative"
+          size="lg"
+          class="px-12 w-full sm:w-auto"
+        >
+          Очистить
+        </FwbButton>
+      </div>
+    </OpacityTransition>
     <InputError :message="errorMessage" />
   </div>
 </template>

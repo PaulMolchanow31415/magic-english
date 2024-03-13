@@ -27,6 +27,7 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import { useSuggest } from '@/Composables/useSuggest.js'
+import OpacityTransition from '@/Animations/OpacityTransition.vue'
 
 const props = defineProps({
   filters: Object,
@@ -196,19 +197,21 @@ function deletePoster() {
         </InputLabel>
       </div>
 
-      <div
-        v-show="selectedVocabularies.size > 0"
-        class="col-span-2 flex items-start flex-wrap gap-y-2 place-self-start"
-      >
-        <Badge
-          v-for="vocabulary in selectedVocabularies"
-          :key="vocabulary[0]"
-          closable
-          @close="selectedVocabularies.delete(vocabulary[0])"
+      <OpacityTransition>
+        <div
+          v-show="selectedVocabularies.size > 0"
+          class="col-span-2 flex items-start flex-wrap gap-y-2 place-self-start"
         >
-          {{ vocabulary[1] }}
-        </Badge>
-      </div>
+          <Badge
+            v-for="vocabulary in selectedVocabularies"
+            :key="vocabulary[0]"
+            closable
+            @close="selectedVocabularies.delete(vocabulary[0])"
+          >
+            {{ vocabulary[1] }}
+          </Badge>
+        </div>
+      </OpacityTransition>
 
       <SuggestComboBox
         v-model="searchedVocabulary"

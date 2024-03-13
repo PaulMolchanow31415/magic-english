@@ -1,6 +1,7 @@
 <script setup>
 import { FwbButton, FwbModal } from 'flowbite-vue'
 import { onKeyPressed, useEventListener } from '@vueuse/core'
+import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 defineProps({
   show: {
@@ -55,30 +56,34 @@ useEventListener(document, 'keypress', onKeyPress)
 
 <template>
   <form @submit.prevent="$emit('confirm')" method="post">
-    <FwbModal :size="size" v-show="show" @close="$emit('close')" @click:outside="$emit('close')">
-      <template #header>
-        <h3 class="pl-2 text-lg font-semibold text-gray-900 dark:text-white">
-          {{ title }}
-        </h3>
-      </template>
-      <template #body>
-        <slot />
-      </template>
-      <template #footer>
-        <div class="flex items-center gap-4">
-          <FwbButton @click="$emit('close')" type="button" color="alternative"> Отмена </FwbButton>
-          <FwbButton type="submit" class="flex flex-nowrap" :loading="loading">
-            Сохранить
-          </FwbButton>
-          <p
-            class="text-gray-500 dark:text-gray-400 leading-[2.5] line-clamp-1"
-            :class="{ 'text-xs': size === 'md' }"
-          >
-            или <kbd class="ms-1">Shift</kbd> + <kbd>Enter</kbd>
-          </p>
-        </div>
-      </template>
-    </FwbModal>
+    <Opacity300Transition>
+      <FwbModal :size="size" v-show="show" @close="$emit('close')" @click:outside="$emit('close')">
+        <template #header>
+          <h3 class="pl-2 text-lg font-semibold text-gray-900 dark:text-white">
+            {{ title }}
+          </h3>
+        </template>
+        <template #body>
+          <slot />
+        </template>
+        <template #footer>
+          <div class="flex items-center gap-4">
+            <FwbButton @click="$emit('close')" type="button" color="alternative">
+              Отмена
+            </FwbButton>
+            <FwbButton type="submit" class="flex flex-nowrap" :loading="loading">
+              Сохранить
+            </FwbButton>
+            <p
+              class="text-gray-500 dark:text-gray-400 leading-[2.5] line-clamp-1"
+              :class="{ 'text-xs': size === 'md' }"
+            >
+              или <kbd class="ms-1">Shift</kbd> + <kbd>Enter</kbd>
+            </p>
+          </div>
+        </template>
+      </FwbModal>
+    </Opacity300Transition>
   </form>
 </template>
 

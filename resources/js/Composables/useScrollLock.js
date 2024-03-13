@@ -1,7 +1,7 @@
 import { isRef, warn, watchEffect } from 'vue'
 
 /** @param condRef {{ value: boolean }} */
-export function useOverflowHidden(condRef) {
+export function useScrollLock(condRef) {
   if (!isRef(condRef)) {
     warn('Первый аргумент функции useOverflowHidden - ref<boolean>')
   }
