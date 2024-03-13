@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -21,9 +22,9 @@ Breadcrumbs::for('student.vocabularies.challenge', fn(BreadcrumbTrail $trail) =>
 Breadcrumbs::for('skills.courses', fn(BreadcrumbTrail $trail) => $trail
     ->push('Курсы', route('skills.courses')));
 
-Breadcrumbs::for('skills.course.show', fn(BreadcrumbTrail $trail, $name) => $trail
+Breadcrumbs::for('skills.course.show', fn(BreadcrumbTrail $trail, Course $course) => $trail
     ->parent('skills.courses')
-    ->push($name, route('skills.course.show', ['name' => $name])));
+    ->push($course->name, route('skills.course.show', $course)));
 
 Breadcrumbs::for('student.courses.dashboard', fn(BreadcrumbTrail $trail) => $trail
     ->parent('skills.courses')

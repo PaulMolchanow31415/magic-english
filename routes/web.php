@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CookieController;
+use App\Http\Controllers\SingerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EcommerceController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\SingerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
         Route::prefix('/courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'courses')->name('courses');
 
-            Route::get('/{name}', 'show')->name('course.show');
+            Route::get('/{course}', 'show')->name('course.show');
         });
 
         Route::prefix('/self-education')->controller(LessonController::class)->group(function () {

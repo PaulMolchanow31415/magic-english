@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\SingerController;
+use App\Http\Controllers\VocabularyController;
+use App\Http\Controllers\GlobalSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,6 @@ Route::name('api.')->group(function () {
 
     Route::get('/author-song/{search}', [SingerController::class, 'list'])
         ->name('author-song.list');
+
+    Route::get('/search', GlobalSearchController::class)->name('global-search');
 });

@@ -49,7 +49,7 @@ class CourseController extends Controller {
 
         return inertia('Skills/Course/Index', [
             'courses' => Course::whereComplexity($complexity)
-                ->select(['name', 'description', 'poster_url'])->get(),
+                ->select(['id', 'name', 'description', 'poster_url'])->get(),
 
             'learnableCoursesCount' => auth()->user()->courses()->count(),
 
@@ -57,8 +57,8 @@ class CourseController extends Controller {
         ]);
     }
 
-    public function show(string $name): Response|ResponseFactory {
-        $course = Course::whereName($name)->with('grammarRules')->firstOrFail();
+    public function show(Course $course): Response|ResponseFactory {
+        $course = $course->with('grammarRules')->firstOrFail();
 
         return inertia('Skills/Course/Show', [
             'course'      => $course,

@@ -154,6 +154,10 @@ _data casting laravel eloquent_
 
 <https://vueuse.org/integrations/useFocusTrap/#usefocustrap>
 
+1. https://inertiajs.com/redirects#:~:text=to%20303%20redirects.-,External%20redirects,-Sometimes%20it%27s%20necessary
+2. Вместо использования onError, завести переменную в сессии для tooltip и отслеживать состояние глобально
+3. Реализовать двухфакторную авторизацию для оформления покупки
+
 ## Short keys in program
 
 - Ctrl + C - создание нового объекта, файл (TableHeader)

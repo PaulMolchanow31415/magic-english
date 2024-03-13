@@ -2,12 +2,10 @@
 import { Link, router } from '@inertiajs/vue3'
 import ApplicationMark from '@/Shared/ApplicationMark.vue'
 import DropdownLink from '@/Shared/DropdownLink.vue'
-import { ref } from 'vue'
 import { FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
 import ToggleThemeButton from '@/Shared/ToggleThemeButton.vue'
 import Dropdown from './Dropdown.vue'
-
-const searched = ref('')
+import GlobalSearch from '@/Shared/GlobalSearch.vue'
 </script>
 
 <template>
@@ -18,19 +16,9 @@ const searched = ref('')
           <ApplicationMark class="block h-9 w-auto" />
         </Link>
 
-        <!--<div class="ms-5 me-auto flex-grow md:max-w-28 lg:max-w-xs">
-          <FwbInput
-            v-model.lazy="searched"
-            type="search"
-            placeholder="Поиск"
-            class="text-gray-700 dark:text-gray-300"
-            size="sm"
-          >
-            <template #prefix>
-              <Icon class="text-gray-700 dark:text-gray-300" :icon="['fas', 'magnifying-glass']" />
-            </template>
-          </FwbInput>
-        </div>-->
+        <div class="hidden lg:block ms-5 me-auto flex-grow max-w-xs">
+          <GlobalSearch />
+        </div>
       </template>
 
       <template #default="{ isShowMenu }">
@@ -186,7 +174,7 @@ const searched = ref('')
       </template>
 
       <template #right-side>
-        <ToggleThemeButton />
+        <ToggleThemeButton class="md:ms-3" />
       </template>
 
       <template #menu-icon>
