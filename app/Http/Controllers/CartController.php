@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
@@ -49,14 +50,13 @@ class CartController extends Controller {
             'status'    => OrderStatus::INCOMPLETE,
         ]);
 
-        // Стэк разработки не позволяет настроить cors...
-        return inertia('Ecommerce/StripePayment', [
-            'payload' => request()->user()->checkout($order->price_ids, [
-                'success_url' => route('cart.checkout.success').'?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url'  => route('cart.show'),
-                'metadata'    => ['order_id' => $order->id],
-            ]),
-        ]);
+        $url = auth()->user()->checkout($order->price_ids, [
+            'success_url' => route('cart.checkout.success').'?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url'  => route('cart.show'),
+            'metadata'    => ['order_id' => $order->id],
+        ])->url;
+
+        return Inertia::location($url);
     }
 
     /**

@@ -136,7 +136,7 @@ Route::get('/ecommerce', EcommerceController::class)->name('ecommerce');
 
 // Cart
 Route::prefix('/cart')->name('cart.')->controller(CartController::class)
-    ->middleware(['auth:sanctum'])->group(function () {
+    ->middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/add-product/{product}', 'addProduct')->name('add-product');
 
         Route::get('/', 'show')->name('show');
