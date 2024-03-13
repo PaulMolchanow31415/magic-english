@@ -36,7 +36,7 @@ useOverflowHidden(isComboboxVisible)
 </script>
 
 <template>
-  <div role="searchbox">
+  <form role="search" autocomplete="off">
     <FwbInput
       ref="searchInput"
       v-model.lazy="searched"
@@ -45,13 +45,14 @@ useOverflowHidden(isComboboxVisible)
       placeholder="Поиск"
       class="text-gray-700 dark:text-gray-300"
       size="sm"
+      autocomplete="off"
     >
       <template #prefix>
         <Icon class="text-gray-700 dark:text-gray-300" :icon="['fas', 'magnifying-glass']" />
       </template>
     </FwbInput>
 
-    <div v-show="isComboboxVisible" ref="comboBox" class="relative">
+    <div v-show="isComboboxVisible" ref="comboBox" role="combobox" class="relative">
       <div class="z-50 pt-1.5 absolute w-full">
         <aside class="relative bg-white rounded-lg shadow w-full dark:bg-gray-700">
           <ul
@@ -73,7 +74,7 @@ useOverflowHidden(isComboboxVisible)
         </aside>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <style scoped></style>
