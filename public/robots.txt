@@ -1,2 +1,27 @@
 User-agent: *
-Disallow:
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /cart/
+Disallow: /comment
+Disallow: /discussion/
+Disallow: /email/
+Disallow: /forgot-password
+Disallow: /login
+Disallow: /logout
+Disallow: /privacy-policy
+Disallow: /purchased/
+Disallow: /register
+Disallow: /reset-password
+Disallow: /sanctum/
+Disallow: /singer/
+Disallow: /skills/
+Disallow: /stripe/
+Disallow: /student/
+Disallow: /subscribe/
+Disallow: /terms-of-service
+Disallow: /two-factor-challenge
+Disallow: /user/
+
+Allow: /
