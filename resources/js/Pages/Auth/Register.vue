@@ -5,7 +5,7 @@ import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import Checkbox from '@/Shared/Checkbox.vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { useChallengeV3 } from 'vue-recaptcha'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbA, FwbInput } from 'flowbite-vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
@@ -21,10 +21,12 @@ const form = useForm({
   recaptcha_token: null,
 })
 
-const { execute } = useChallengeV3('register')
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 
 async function submit() {
-  form.recaptcha_token = await execute()
+  await recaptchaLoaded()
+
+  form.recaptcha_token = await executeRecaptcha('register')
 
   form.post(route('register'), {
     onFinish: () => form.reset('password', 'password_confirmation'),

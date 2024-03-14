@@ -1,12 +1,12 @@
 <script setup>
 import { FwbA, FwbButton, FwbInput } from 'flowbite-vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { useChallengeV3 } from 'vue-recaptcha'
 import { computed, ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import { useWindowSize } from '@vueuse/core'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 const page = usePage()
 const isSuccess = ref(false)
@@ -15,11 +15,14 @@ const form = useForm({
   email: '',
   recaptcha_token: null,
 })
-const { execute } = useChallengeV3('subscribeNotifications')
+
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 const { width } = useWindowSize()
 
 async function submit() {
-  form.recaptcha_token = await execute()
+  await recaptchaLoaded()
+
+  form.recaptcha_token = await executeRecaptcha('subscribeNotifications')
 
   form.post(route('subscribe.store'), {
     onSuccess: () => useQuickEnableRef(isSuccess, 3000),

@@ -5,8 +5,8 @@ import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
-import { useChallengeV3 } from 'vue-recaptcha'
 import { FwbInput } from 'flowbite-vue'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 defineOptions({ layout: StubLayout })
 
@@ -19,10 +19,12 @@ const form = useForm({
   recaptcha_token: null,
 })
 
-const { execute } = useChallengeV3('forgotPassword')
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 
 async function submit() {
-  form.recaptcha_token = await execute()
+  await recaptchaLoaded()
+
+  form.recaptcha_token = await executeRecaptcha('forgotPassword')
 
   form.post(route('password.email'))
 }

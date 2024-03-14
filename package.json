@@ -25,7 +25,6 @@
     "@vue/server-renderer": "^3.4.21",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.1",
-    "dotenv": "^16.4.5",
     "flowbite": "^2.2.1",
     "flowbite-datepicker": "^1.2.6",
     "flowbite-vue": "^0.1.2",
@@ -35,6 +34,6 @@
     "sortablejs-vue3": "^1.2.11",
     "tailwindcss": "^3.4.0",
     "vue": "^3.4.21",
-    "vue-recaptcha": "^3.0.0-alpha.6"
+    "vue-recaptcha-v3": "^2.0.1"
   }
 }

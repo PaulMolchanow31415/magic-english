@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Inertia\Middleware;
 use App\Models\Complexity;
+use Tightenco\Ziggy\Ziggy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LearnableFilter;
 
@@ -47,6 +48,12 @@ class HandleInertiaRequests extends Middleware {
             'isAcceptCookies'         => session('is_accept_cookies', $user?->is_accept_cookies),
             'cartItemsAmount'         => $user ? $user->cart->products->count() : 0,
             'purchasedProductsAmount' => $user ? $user->products()->count() : 0,
+
+            'ziggy' => function () use ($request) {
+                return array_merge((new Ziggy())->toArray(), [
+                    'location' => $request->url(),
+                ]);
+            },
         ]);
     }
 }
