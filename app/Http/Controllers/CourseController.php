@@ -58,7 +58,7 @@ class CourseController extends Controller {
     }
 
     public function show(Course $course): Response|ResponseFactory {
-        $course = $course->with('grammarRules')->firstOrFail();
+        $course = Course::whereId($course->id)->with('grammarRules')->firstOrFail();
 
         return inertia('Skills/Course/Show', [
             'course'      => $course,
