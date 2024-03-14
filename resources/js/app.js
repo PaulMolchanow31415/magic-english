@@ -3,7 +3,7 @@ import './Libraries/font-awesome'
 
 import '../pcss/globals.pcss'
 
-import { createSSRApp, h } from 'vue'
+import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
@@ -22,7 +22,7 @@ createInertiaApp({
   progress: { color: '#1c64f2' },
 
   setup: ({ el, App, props, plugin }) =>
-    createSSRApp({ render: () => h(App, props) })
+    createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
       .use(VueReCaptcha, {
