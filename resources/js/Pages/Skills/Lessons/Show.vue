@@ -71,5 +71,3 @@ router.post(route('student.add-lesson', { id: props.lesson.id }))
 
   <DiscussionSection :discussion-id="lesson.discussion.id" />
 </template>
-
-<style scoped></style>

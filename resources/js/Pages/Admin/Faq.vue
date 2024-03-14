@@ -166,5 +166,3 @@ function handleDelete(faq) {
     />
   </UpdateModal>
 </template>
-
-<style lang="postcss"></style>

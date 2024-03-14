@@ -38,5 +38,3 @@ const isMobile = computed(() => width.value <= 400)
     <Icon :icon="['fas', 'shopping-cart']" :size="isMobile ? 'sm' : 'lg'" />
   </Link>
 </template>
-
-<style scoped></style>

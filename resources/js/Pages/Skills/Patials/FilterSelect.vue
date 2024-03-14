@@ -17,5 +17,3 @@ defineEmits(['update:modelValue'])
     class="max-w-fit"
   />
 </template>
-
-<style scoped></style>

@@ -179,5 +179,3 @@ function confirmDelete() {
     </template>
   </DeleteConfirmationModal>
 </template>
-
-<style scoped></style>

@@ -40,5 +40,3 @@ const breadcrumbs = computed(() => usePage().props.breadcrumbs || [])
     </ol>
   </nav>
 </template>
-
-<style scoped></style>

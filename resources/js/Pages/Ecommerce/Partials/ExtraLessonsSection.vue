@@ -87,5 +87,3 @@ function onCloseToast(index) {
     </FwbP>
   </section>
 </template>
-
-<style scoped></style>

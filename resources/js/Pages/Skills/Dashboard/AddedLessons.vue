@@ -46,5 +46,3 @@ const props = defineProps({
 
   <LessonList removable :lessons="lessons" />
 </template>
-
-<style scoped></style>

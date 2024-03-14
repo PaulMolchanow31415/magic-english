@@ -72,25 +72,3 @@ export default defineComponent({
     </div>
   </article>
 </template>
-
-<!--
-[
-{
-  "id": 1,
-  "message": "qwer",
-  "creator_id": 21,
-  "reply_to_id": null,
-  "discussion_id": 1,
-  "created_at": "2024-01-16T13:03:51.000000Z",
-  "updated_at": "2024-01-16T13:03:51.000000Z",
-  "creator": {
-    "name": "Paul",
-    "role": "Администратор",
-    "profile_photo_path": null,
-    "profile_photo_url": "https://ui-avatars.com/api/?name=P&color=7F9CF5&background=EBF4FF"
-  }
-}
-]
--->
-
-<style scoped></style>

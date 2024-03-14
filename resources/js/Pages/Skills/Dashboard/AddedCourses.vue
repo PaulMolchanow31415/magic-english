@@ -21,5 +21,3 @@ const props = defineProps({
     <CourseList :courses="courses" />
   </section>
 </template>
-
-<style scoped></style>

@@ -102,5 +102,3 @@ defineEmits(['update:modelValue'])
     </div>
   </InputLabel>
 </template>
-
-<style scoped></style>

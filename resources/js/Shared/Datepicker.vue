@@ -40,5 +40,3 @@ defineExpose({ focus: () => datepicker.value.focus() })
     />
   </div>
 </template>
-
-<style scoped></style>

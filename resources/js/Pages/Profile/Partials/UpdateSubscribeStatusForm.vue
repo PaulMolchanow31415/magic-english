@@ -52,5 +52,3 @@ loadStatus()
     </template>
   </ActionSection>
 </template>
-
-<style scoped></style>

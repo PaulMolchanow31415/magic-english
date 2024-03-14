@@ -49,5 +49,3 @@ watchEffect(() => {
     <FilterSelect v-if="filters.learnable" v-model="selectedLearnableFilter" />
   </form>
 </template>
-
-<style scoped></style>

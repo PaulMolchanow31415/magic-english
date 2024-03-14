@@ -53,5 +53,3 @@ const description = computed(() => {
     </div>
   </section>
 </template>
-
-<style scoped></style>

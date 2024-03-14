@@ -13,5 +13,3 @@ const toggleDark = useToggle(isDark)
     <slot />
   </button>
 </template>
-
-<style scoped></style>

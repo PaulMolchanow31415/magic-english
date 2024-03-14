@@ -34,5 +34,3 @@ const uuid = crypto.randomUUID()
     <slot />
   </ul>
 </template>
-
-<style scoped></style>

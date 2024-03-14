@@ -50,5 +50,3 @@ export default defineComponent({
     </template>
   </FwbDropdown>
 </template>
-
-<style scoped></style>

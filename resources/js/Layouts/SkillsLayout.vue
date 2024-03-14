@@ -11,5 +11,3 @@ import Breadcrumbs from '@/Shared/Breadcrumbs.vue'
     </div>
   </div>
 </template>
-
-<style scoped></style>

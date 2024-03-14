@@ -54,5 +54,3 @@ const uuid = crypto.randomUUID()
     </div>
   </div>
 </template>
-
-<style scoped></style>

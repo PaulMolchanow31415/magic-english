@@ -34,5 +34,3 @@ function onReplace(event) {
     </template>
   </Sortable>
 </template>
-
-<style scoped></style>

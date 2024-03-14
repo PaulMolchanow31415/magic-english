@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
 
-await createInertiaApp({
+createInertiaApp({
   title: (title) => `${title} | ${appName}`,
 
   resolve(name) {
@@ -70,4 +70,4 @@ await createInertiaApp({
   progress: {
     color: '#1c64f2',
   },
-})
+}).then((result) => console.info(result))

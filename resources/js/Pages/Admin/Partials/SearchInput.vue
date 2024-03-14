@@ -55,5 +55,3 @@ useEventListener(document, 'keydown', onKeyDown)
     </div>
   </div>
 </template>
-
-<style scoped></style>

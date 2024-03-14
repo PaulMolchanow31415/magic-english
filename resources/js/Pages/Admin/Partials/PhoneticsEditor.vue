@@ -109,5 +109,3 @@ export default defineComponent({
     <InputError :message="errorMessage" />
   </div>
 </template>
-
-<style scoped></style>

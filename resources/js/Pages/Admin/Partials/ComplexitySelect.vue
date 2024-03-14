@@ -40,5 +40,3 @@ const options = usePage().props.complexities.map((c) => new SelectOption({ value
     </InputLabel>
   </div>
 </template>
-
-<style scoped></style>

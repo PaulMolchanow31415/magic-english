@@ -37,5 +37,3 @@ defineProps({
 
   <LessonList :lessons="lessons" />
 </template>
-
-<style scoped></style>

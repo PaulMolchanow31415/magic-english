@@ -137,5 +137,3 @@ function handleRemove(product) {
     </section>
   </div>
 </template>
-
-<style scoped></style>

@@ -17,5 +17,3 @@ defineProps({
     {{ mail }}
   </FwbA>
 </template>
-
-<style scoped></style>
