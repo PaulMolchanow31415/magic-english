@@ -20,10 +20,15 @@ function remove(lesson) {
     <template v-if="removable">
       <div
         v-for="lesson in lessons"
+        v-wave
         :key="lesson.number"
         class="lesson-list-item !py-1 !flex items-center justify-between gap-2.5"
       >
-        <Link :href="route('skills.lesson.show', { number: lesson.number })" class="grow py-2">
+        <Link
+          v-wave-trigger
+          :href="route('skills.lesson.show', { number: lesson.number })"
+          class="grow py-2"
+        >
           Урок {{ lesson.number }}
         </Link>
         <FwbButton
@@ -41,6 +46,7 @@ function remove(lesson) {
     <template v-else>
       <Link
         v-for="lesson in lessons"
+        v-wave
         :key="lesson.number"
         class="lesson-list-item"
         :href="route('skills.lesson.show', { number: lesson.number })"

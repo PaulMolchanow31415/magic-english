@@ -32,7 +32,7 @@ defineProps({
         {{ learnableVocabulariesCount }} слов
       </FwbP>
     </div>
-    <FwbButton size="lg" gradient="purple" class="dashboard-cta-button"> Повторить </FwbButton>
+    <FwbButton class="dashboard-cta-button" gradient="purple" size="lg">Повторить</FwbButton>
   </section>
 
   <FilterPane :filters="filters" />
@@ -41,6 +41,7 @@ defineProps({
     <FwbCard
       @click.stop="router.visit(route('skills.dictionary.show', { category: dictionary.category }))"
       v-for="dictionary in dictionaries"
+      v-wave
       :img-alt="dictionary.category"
       :img-src="dictionary.poster_url"
       class="group card min-h-44"

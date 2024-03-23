@@ -44,6 +44,7 @@ const icon = computed(() => {
 
 <template>
   <label
+    v-wave
     :class="labelClasses"
     class="text-slate-700 dark:text-slate-200 grid grid-cols-[24px_1fr_auto] items-center gap-6 rounded-lg p-4 ring-1 ring-slate-100 dark:ring-slate-500 hover:bg-slate-100 dark:hover:bg-slate-900 select-none cursor-pointer"
   >

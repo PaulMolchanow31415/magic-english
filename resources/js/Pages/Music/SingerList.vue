@@ -13,6 +13,10 @@ defineProps({ singers: Array })
     <div class="columns-3 sm:columns-4 gap-4 lg:gap-8">
       <Link
         v-for="singer in singers"
+        v-wave="{
+          color: 'white',
+          duration: 0.2,
+        }"
         :key="singer.id"
         :href="route('singer.show', singer.id)"
         class="relative group cursor-pointer mb-6 block active:opacity-80 transition"

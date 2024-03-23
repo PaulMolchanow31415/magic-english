@@ -9,6 +9,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 import CKEditor from '@ckeditor/ckeditor5-vue'
+import VWave from 'v-wave'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { resolveLayout } from '@/resolveLayout.js'
@@ -30,6 +31,7 @@ createInertiaApp({
         loaderOptions: { autoHideBadge: true },
       })
       .use(CKEditor)
+      .use(VWave)
       .component('Icon', FontAwesomeIcon)
       .mount(el),
 }).catch(console.error)

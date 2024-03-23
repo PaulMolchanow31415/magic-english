@@ -157,6 +157,7 @@ _data casting laravel eloquent_
 1. https://inertiajs.com/redirects#:~:text=to%20303%20redirects.-,External%20redirects,-Sometimes%20it%27s%20necessary
 2. Вместо использования onError, завести переменную в сессии для tooltip и отслеживать состояние глобально
 3. Реализовать двухфакторную авторизацию для оформления покупки
+4. https://auto-animate.formkit.com/ or https://motion.vueuse.org/ or https://www.npmjs.com/package/v-wave
 
 ## Short keys in program
 

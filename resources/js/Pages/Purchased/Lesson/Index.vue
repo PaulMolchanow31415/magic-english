@@ -1,6 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import { FwbButton, FwbCard, FwbHeading, FwbModal, FwbP } from 'flowbite-vue'
+import { FwbButton, FwbCard, FwbHeading, FwbModal } from 'flowbite-vue'
 import { ref } from 'vue'
 import Translatable from '@/Shared/Translatable.vue'
 import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
@@ -25,7 +25,7 @@ const selected = ref()
         @click="selected = lesson"
         class="cursor-pointer"
       >
-        <FwbP class="mx-4 my-6 font-medium">{{ lesson.name }}</FwbP>
+        <p class="dark:text-white mx-4 my-6 font-medium">{{ lesson.name }}</p>
       </FwbCard>
     </div>
   </div>

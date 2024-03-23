@@ -17,6 +17,7 @@ export default defineComponent({
 
 <template>
   <div
+    v-wave
     class="lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     :title="title"
   >
@@ -38,6 +39,7 @@ export default defineComponent({
           {{ price }}₽
         </span>
         <FwbButton
+          v-wave-trigger
           @click="$emit('addToCart')"
           outline
           type="button"

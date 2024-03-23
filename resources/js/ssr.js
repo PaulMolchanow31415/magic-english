@@ -13,6 +13,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { resolveLayout } from '@/resolveLayout.js'
+import VWave from 'v-wave'
 
 const appName = import.meta.env.VITE_APP_NAME
 const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
@@ -37,6 +38,7 @@ createServer((page) =>
           loaderOptions: { autoHideBadge: true },
         })
         .use(CKEditor)
+        .use(VWave)
         .component('Icon', FontAwesomeIcon),
   }),
 )
