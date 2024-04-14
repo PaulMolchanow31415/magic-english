@@ -70,7 +70,7 @@ function handleRemove(product) {
             </template>
 
             <div class="grow flex justify-between gap-4 font-semibold text-lg">
-              <FwbP v-text="product.name" class="line-clamp-1" />
+              <FwbP v-text="product.name" class="line-clamp-1 mb-0" />
               <Badge>{{ product.price }}₽</Badge>
             </div>
 

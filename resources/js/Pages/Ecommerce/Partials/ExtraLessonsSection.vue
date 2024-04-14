@@ -48,7 +48,7 @@ function onCloseToast(index) {
     ]"
   />
 
-  <section>
+  <section class="max-w-screen-md mx-auto">
     <div class="mb-12 sm:text-center">
       <h6 class="heading-1 mb-4 md:mb-8">Дополнительные уроки</h6>
       <FwbP class="description">
@@ -60,7 +60,7 @@ function onCloseToast(index) {
 
     <div
       v-if="lessons.length > 0"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:justify-center gap-x-4 gap-y-6"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6"
     >
       <EcommerceCard
         @add-to-cart="handleAddToCart(lesson)"
