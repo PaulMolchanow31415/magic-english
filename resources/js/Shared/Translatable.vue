@@ -1,12 +1,13 @@
 <script setup>
 import { onClickOutside, set } from '@vueuse/core'
-import { ref } from 'vue'
-import { FwbButton } from 'flowbite-vue'
+import { reactive, ref } from 'vue'
+import { FwbButton, FwbSpinner } from 'flowbite-vue'
 import Toast from '@/Classes/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import { router } from '@inertiajs/vue3'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
+import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 const wrapper = ref(null)
 const srcWord = ref('')
@@ -14,6 +15,8 @@ const translations = ref([])
 const popover = ref(null)
 const isAdded = ref(false)
 const isError = ref(false)
+const isLoading = ref(false)
+const spinnerStyles = reactive({ left: `0px`, top: `0px`, position: 'fixed' })
 
 async function translateOrHide(event) {
   const selection = getSelection()
@@ -26,7 +29,15 @@ async function translateOrHide(event) {
 
   hide()
 
-  while (typeof startIndex !== 'number') {
+  if (currentIndex === text.length) {
+    return
+  }
+
+  isLoading.value = true
+  spinnerStyles.top = event.pageY + 'px'
+  spinnerStyles.left = event.pageX + 'px'
+
+  while (!startIndex && typeof startIndex !== 'number') {
     if (text[currentIndex] === ' ') {
       startIndex = currentIndex - 1
     } else if (currentIndex === -1) {
@@ -54,9 +65,11 @@ async function translateOrHide(event) {
     return
   }
 
-  const res = await axios.get(route('api.translate', { word }))
+  const { data } = await axios.get(route('api.translate', { word }))
 
-  if (res.data.length === 0) {
+  isLoading.value = false
+
+  if (data.length === 0) {
     return
   }
 
@@ -64,7 +77,7 @@ async function translateOrHide(event) {
   popover.value.style.left = event.pageX + 'px'
 
   set(srcWord, word)
-  set(translations, res.data.length > 4 ? res.data.slice(0, 5) : res.data.slice(0, res.data.length))
+  set(translations, data.length > 4 ? data.slice(0, 5) : data.slice(0, data.length))
 }
 
 function learn() {
@@ -100,6 +113,10 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
     </div>
 
     <Teleport to="body">
+      <Opacity300Transition>
+        <FwbSpinner :style="spinnerStyles" v-show="isLoading" size="10" />
+      </Opacity300Transition>
+
       <OpacitySlideTopTransition>
         <div
           v-show="srcWord"
