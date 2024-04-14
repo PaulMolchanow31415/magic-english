@@ -15,7 +15,7 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import { set, useDateFormat } from '@vueuse/core'
+import { set } from '@vueuse/core'
 import { Head, router } from '@inertiajs/vue3'
 import HorizontalLine from '@/Shared/HorizontalLine.vue'
 import { inject, ref } from 'vue'
@@ -90,8 +90,7 @@ function handleShowComments(discussion) {
     : useQuickEnableRef(isEmptyComments)
 }
 
-const formatDate = (timestamp) =>
-  useDateFormat(timestamp, 'DD MMM YYYY | HH:mm').value.replace(/"/g, '')
+const formatDate = inject('formatDate')
 </script>
 
 <template>

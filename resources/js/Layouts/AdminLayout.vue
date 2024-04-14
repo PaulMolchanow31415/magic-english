@@ -3,6 +3,12 @@ import SidebarLink from './Partials/SidebarLink.vue'
 import SidebarCollapsed from '@/Layouts/Partials/SidebarCollapsed.vue'
 import Dropdown from '@/Shared/Dropdown.vue'
 import DropdownLink from '@/Shared/DropdownLink.vue'
+import { provide } from 'vue'
+import { useDateFormat } from '@vueuse/core'
+
+provide('formatDate', (timestamp) =>
+  useDateFormat(timestamp, 'DD MMM YYYY | HH:mm').value.replace(/"/g, ''),
+)
 </script>
 
 <template>

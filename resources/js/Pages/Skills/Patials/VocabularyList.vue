@@ -44,18 +44,18 @@ function handleRemove(vocabulary) {
       <div class="grow">
         <FwbP v-text="vocabulary.en" class="font-semibold text-lg" />
 
-        <div class="flex gap-1.5">
+        <div class="flex flex-wrap gap-x-1.5">
           <FwbP
             v-for="(translation, index) in vocabulary.translations"
             :key="translation"
             v-text="index > 0 ? ' — ' + translation : translation"
-            class="font-extralight"
+            class="font-extralight mb-0"
           />
         </div>
       </div>
 
       <template #suffix>
-        <div class="flex gap-3 me-2 transition duration-75 opacity-0 group-hover:opacity-100">
+        <div class="flex gap-3 me-2 transition duration-75 lg:opacity-0 lg:group-hover:opacity-100">
           <FwbButton
             v-if="isSupported"
             @click="isPlaying ? stop() : say(vocabulary.en)"

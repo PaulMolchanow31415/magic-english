@@ -35,6 +35,7 @@ const props = defineProps({
 })
 
 const avatarInitials = inject('avatarInitials')
+const formatDate = inject('formatDate')
 
 const searchedDictionary = useSearch(props.filters.search)
 const { searched: searchedVocabulary, results: vocabularies } = useSuggest('api.vocabulary.list')
@@ -159,7 +160,7 @@ function deletePoster() {
         </FwbTableCell>
         <FwbTableCell v-text="dictionary.category" />
         <FwbTableCell v-text="dictionary.complexity" />
-        <FwbTableCell v-text="dictionary.updated_at" />
+        <FwbTableCell v-text="formatDate(dictionary.updated_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>

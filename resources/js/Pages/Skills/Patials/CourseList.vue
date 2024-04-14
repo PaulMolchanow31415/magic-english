@@ -26,7 +26,7 @@ defineProps({ courses: Array })
         <FwbP
           v-text="course.description"
           :title="course.description"
-          class="leading-tight hyphens-auto line-clamp-2"
+          class="leading-tight hyphens-auto line-clamp-1"
         />
         <FwbButton type="button" color="alternative" size="sm" class="w-full mt-3">
           Изучить

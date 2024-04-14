@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Classes/Toast.js'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
@@ -25,6 +25,8 @@ const props = defineProps({
   subscribers: Object,
   filters: Object,
 })
+
+const formatDate = inject('formatDate')
 
 const searchedSubscriber = useSearch(props.filters.search)
 const isDeleted = ref(false)
@@ -73,7 +75,7 @@ function confirmDelete() {
             class="!mr-0 !rounded-md whitespace-nowrap"
           />
         </FwbTableCell>
-        <FwbTableCell v-text="subscriber.created_at" />
+        <FwbTableCell v-text="formatDate(subscriber.created_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="subscriberForRemoval = subscriber" theme="red">
             Удалить
