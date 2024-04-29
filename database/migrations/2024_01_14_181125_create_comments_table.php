@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-use App\Models\Comment;
 use App\Models\Discussion;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;

@@ -6,10 +6,7 @@ import Radio from '@/Shared/Radio.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import { useForm } from '@inertiajs/vue3'
 
-const makeAnswer = (obj, isRight) => ({
-  ...obj,
-  isRightAnswer: isRight,
-})
+const makeAnswer = (obj, isRightAnswer) => ({ ...obj, isRightAnswer })
 
 const rememberPositions = new Set()
 let i, position

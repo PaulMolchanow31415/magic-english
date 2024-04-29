@@ -33,6 +33,8 @@ class CartController extends Controller {
         if ($this->cartItems()->count() < 1) {
             return to_route('ecommerce');
         }
+
+        return back();
     }
 
     public function clearCart(): RedirectResponse {

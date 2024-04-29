@@ -4,7 +4,7 @@ import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
 import { useSuggest } from '@/Composables/useSuggest.js'
-import { router, usePage } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 import { ref, toRef, watch } from 'vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import Toaster from '@/Shared/Toaster.vue'
@@ -17,7 +17,6 @@ const props = defineProps({
 })
 
 const { searched, results } = useSuggest('api.vocabulary.list')
-const page = usePage()
 
 const filters = toRef(props, 'filters')
 const selectedFilter = ref(filters.learnable)

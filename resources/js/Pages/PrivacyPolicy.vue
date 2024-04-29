@@ -5,9 +5,7 @@ import StubLayout from '@/Layouts/StubLayout.vue'
 
 defineOptions({ layout: StubLayout })
 
-defineProps({
-  policy: String,
-})
+defineProps({ policy: String })
 </script>
 
 <template>

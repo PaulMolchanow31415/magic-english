@@ -33,7 +33,7 @@ async function translateOrHide(event) {
     return
   }
 
-  isLoading.value = true
+  set(isLoading, true)
   spinnerStyles.top = event.pageY + 'px'
   spinnerStyles.left = event.pageX + 'px'
 
@@ -67,7 +67,7 @@ async function translateOrHide(event) {
 
   const { data } = await axios.get(route('api.translate', { word }))
 
-  isLoading.value = false
+  set(isLoading, false)
 
   if (data.length === 0) {
     return
