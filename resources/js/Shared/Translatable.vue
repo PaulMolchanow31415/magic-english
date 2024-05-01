@@ -16,7 +16,7 @@ const popover = ref(null)
 const isAdded = ref(false)
 const isError = ref(false)
 const isLoading = ref(false)
-const spinnerStyles = reactive({ left: `0px`, top: `0px`, position: 'fixed' })
+const spinnerStyles = reactive({ left: `0px`, top: `0px`, position: 'absolute' })
 
 async function translateOrHide(event) {
   const selection = getSelection()
@@ -62,6 +62,7 @@ async function translateOrHide(event) {
   word = text.slice(startIndex, endIndex).replaceAll(/[^a-zA-Z\s]+/g, '')
 
   if (!word || word.match(/^[А-я]+$/)) {
+    set(isLoading, false)
     return
   }
 
