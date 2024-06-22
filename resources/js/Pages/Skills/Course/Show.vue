@@ -1,6 +1,6 @@
 <script setup>
 import AutoHead from '@/Shared/AutoHead.vue'
-import DiscussionSection from '@/Shared/DiscussionSection.vue'
+import DiscussionSection from '@/Widgets/DiscussionSection.vue'
 import { FwbButton, FwbHeading, FwbP, FwbProgress } from 'flowbite-vue'
 import { computed, ref, watch } from 'vue'
 import Tooltip from '@/Shared/Tooltip.vue'

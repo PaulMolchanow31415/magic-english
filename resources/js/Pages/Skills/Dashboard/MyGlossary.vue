@@ -2,13 +2,13 @@
 import { FwbButton } from 'flowbite-vue'
 import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
-import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
+import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import { useSuggest } from '@/Composables/useSuggest.js'
 import { router } from '@inertiajs/vue3'
 import { ref, toRef, watch } from 'vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
 
 const props = defineProps({

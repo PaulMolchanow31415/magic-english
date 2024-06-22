@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Team;
+use App\Role;
 use App\Models\User;
-use App\Models\Role;
+use App\Models\Team;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Illuminate\Database\Eloquent\Factories\Factory;

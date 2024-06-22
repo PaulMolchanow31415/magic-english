@@ -7,9 +7,9 @@ use App\Models\Vocabulary;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Collection;
 
 class VocabularyController extends Controller {
     use PhotoUploadable;

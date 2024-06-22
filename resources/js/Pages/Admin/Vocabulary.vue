@@ -1,5 +1,5 @@
 <script setup>
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import { computed, inject, nextTick, reactive, ref } from 'vue'
@@ -55,18 +55,18 @@ const editableTranslation = computed({
   get: () => editable.item,
   set(str) {
     editable.item = str
-      .trim()
-      .toLowerCase()
-      .replace(/[^А-я\s]/g, '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^А-я\s]/g, '')
   },
 })
 const editableWord = computed({
   get: () => form.en,
   set(str) {
     form.en = str
-      .trim()
-      .toLowerCase()
-      .replace(/[^A-Za-z\s]/g, '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^A-Za-z\s]/g, '')
   },
 })
 

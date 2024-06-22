@@ -3,7 +3,7 @@ import AutoHead from '@/Shared/AutoHead.vue'
 import { router } from '@inertiajs/vue3'
 import { FwbButton } from 'flowbite-vue'
 import Translatable from '@/Shared/Translatable.vue'
-import DiscussionSection from '@/Shared/DiscussionSection.vue'
+import DiscussionSection from '@/Widgets/DiscussionSection.vue'
 
 const props = defineProps({
   lesson: Object,

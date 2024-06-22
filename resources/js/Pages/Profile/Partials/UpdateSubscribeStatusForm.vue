@@ -1,5 +1,5 @@
 <script setup>
-import ActionSection from '@/Jetstream/ActionSection.vue'
+import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { useForm } from '@inertiajs/vue3'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'

@@ -8,7 +8,7 @@ import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfile
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import { set } from '@vueuse/core'
 import UpdateSubscribeStatusForm from '@/Pages/Profile/Partials/UpdateSubscribeStatusForm.vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'

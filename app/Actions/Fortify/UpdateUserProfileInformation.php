@@ -3,9 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation {
@@ -21,20 +20,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation {
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
-        if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
-        }
+        $user->updatePosterPhotoIfExist($input['photo'], 'profile-photos');
 
-        if ($input['email'] !== $user->email
-            && $user instanceof MustVerifyEmail
-        ) {
-            $this->updateVerifiedUser($user, $input);
-        } else {
-            $user->forceFill([
-                'name'  => $input['name'],
-                'email' => $input['email'],
-            ])->save();
-        }
+        $input['email'] !== $user->email
+            ? $this->updateVerifiedUser($user, $input)
+            : $user->forceFill([
+            'name'  => $input['name'],
+            'email' => $input['email'],
+        ])->save();
     }
 
     /**

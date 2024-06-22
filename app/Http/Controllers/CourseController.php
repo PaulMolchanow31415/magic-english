@@ -23,15 +23,13 @@ class CourseController extends Controller {
 
     public function store(Request $request, DiscussionService $service) {
         $request->validate([
-            'id'                  => 'int|nullable',
-            'name'                => 'string|required|max:1024|unique:courses',
-            'description'         => 'string|required|max:2048',
-            'photo_external_path' => 'active_url|nullable',
-            'complexity'          => [Rule::enum(Complexity::class)],
+            'id'          => 'int|nullable',
+            'name'        => 'string|required|max:1024|unique:courses',
+            'description' => 'string|required|max:2048',
+            'complexity'  => [Rule::enum(Complexity::class)],
         ]);
 
-        $course = Course::firstOrNew(['id' => $request['id']]);
-        $oldPath = $course->poster_url;
+        $oldPath = Course::firstOrNew(['id' => $request['id']])->poster_url;
         $updatedPath = $this->upload($oldPath);
 
         $service->createOrUpdate(
@@ -73,10 +71,8 @@ class CourseController extends Controller {
         Course::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(int $id, DiscussionService $service): void {
-        $course = Course::findOrFail($id);
+    public function destroy(Course $course, DiscussionService $service): void {
         $service->deleteFrom($course);
-        $this->deleteFileIfExist($course->poster_url);
-        $course->delete();
+        $course->deleteWithPhoto();
     }
 }

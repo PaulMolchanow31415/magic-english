@@ -15,6 +15,7 @@ class SubscriberController extends Controller {
     }
 
     public function isSubscribed(): int {
+        // todo: extract to the method
         $subscriber = Subscriber::firstOrCreate([
             'email' => auth()->user()->email,
         ], ['is_enabled' => false]);
@@ -22,6 +23,7 @@ class SubscriberController extends Controller {
         return $subscriber->is_enabled;
     }
 
+    // todo rename toggleSubscribingStatus
     public function changeSubscribeStatus(): void {
         Subscriber::whereEmail(auth()->user()->email)->update([
             'is_enabled' => request('status', false),

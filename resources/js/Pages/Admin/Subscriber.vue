@@ -2,7 +2,7 @@
 import { Head, router } from '@inertiajs/vue3'
 import { inject, ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbBadge,

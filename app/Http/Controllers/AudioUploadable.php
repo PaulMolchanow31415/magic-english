@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Validation\Rules\File;
 
+// todo: extract to the trait
 trait AudioUploadable {
     use Uploadable;
 

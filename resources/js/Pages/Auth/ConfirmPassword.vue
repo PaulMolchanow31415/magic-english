@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { FwbInput } from 'flowbite-vue'

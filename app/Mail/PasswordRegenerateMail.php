@@ -32,7 +32,7 @@ class PasswordRegenerateMail extends Mailable {
      */
     public function content(): Content {
         return new Content(
-            markdown: 'mail.oauth2-user-registered',
+            markdown: 'emails.oauth2-user-registered',
             with: [
                 'title'      => "Здравствуйте ".$this->name
                                 .', пожалуйста обновите пароль на странице вашего профиля',

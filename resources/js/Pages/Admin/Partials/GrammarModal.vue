@@ -15,8 +15,8 @@ import TextRedactor from '@/Shared/TextRedactor.vue'
 import { router, useForm } from '@inertiajs/vue3'
 import { computed, ref, watch } from 'vue'
 import { set } from '@vueuse/core'
-import Sorter from '@/Shared/Sorter.vue'
-import SortableItem from '@/Classes/SortableItem.js'
+import Sorter from '@/Widgets/Sorter.vue'
+import SortableItem from '@/Types/SortableItem.js'
 import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
 const props = defineProps({
@@ -33,8 +33,8 @@ const grammarRules = ref([])
 
 const sortableGrammars = computed(() =>
   grammarRules.value
-    .sort((a, b) => a.order - b.order)
-    .map((r) => new SortableItem({ id: r.id, name: r.title })),
+  .sort((a, b) => a.order - b.order)
+  .map((r) => new SortableItem({ id: r.id, name: r.title })),
 )
 
 const form = useForm({
@@ -65,8 +65,8 @@ function handleEdit(grammar) {
 
 function loadGrammars() {
   axios
-    .get(route('admin.grammar.show', { courseId: props.courseId }))
-    .then((res) => set(grammarRules, res.data))
+  .get(route('admin.grammar.show', { courseId: props.courseId }))
+  .then((res) => set(grammarRules, res.data))
 }
 
 function handleSuccess() {
@@ -76,30 +76,30 @@ function handleSuccess() {
 
 function confirmUpdate() {
   form
-    .transform((data) => ({
-      ...data,
-      course_id: props.courseId,
-      order:
-        grammarRules.value.length > 0
-          ? data.order || Math.max(...grammarRules.value.map((r) => r.order)) + 1
-          : 1,
-    }))
-    .post(route('admin.grammar.store'), {
-      onSuccess: handleSuccess,
-      preserveScroll: true,
-    })
+  .transform((data) => ({
+    ...data,
+    course_id: props.courseId,
+    order:
+      grammarRules.value.length > 0
+        ? data.order || Math.max(...grammarRules.value.map((r) => r.order)) + 1
+        : 1,
+  }))
+  .post(route('admin.grammar.store'), {
+    onSuccess: handleSuccess,
+    preserveScroll: true,
+  })
 }
 
 function handleChangeOrder() {
   grammarOrdersForm
-    .transform((data) => ({
-      ...data,
-      items: data.items.map((grammar, index) => ({ id: grammar.id, order: index + 1 })),
-    }))
-    .put(route('admin.grammar.change-order'), {
-      onSuccess: handleSuccess,
-      preserveScroll: true,
-    })
+  .transform((data) => ({
+    ...data,
+    items: data.items.map((grammar, index) => ({ id: grammar.id, order: index + 1 })),
+  }))
+  .put(route('admin.grammar.change-order'), {
+    onSuccess: handleSuccess,
+    preserveScroll: true,
+  })
 }
 
 function remove(grammar) {

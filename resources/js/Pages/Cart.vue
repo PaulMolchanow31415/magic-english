@@ -11,7 +11,7 @@ import { computed, inject, ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import { useWindowSize } from '@vueuse/core'
 

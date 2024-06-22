@@ -4,7 +4,7 @@ import { inject, reactive, ref, watchEffect } from 'vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { set } from '@vueuse/core'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import {

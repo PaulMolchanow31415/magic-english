@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\Models\User;
-use App\Models\Role;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
+use App\Actions\Jetstream\DeleteUser;
 
 class UserAdministrationController extends Controller {
 
     private function defineRole(?string $value): string {
         if (empty($value)) {
-            return Role::USER;
+            return Role::ADMIN;
         } elseif ($value !== Role::USER and $value !== Role::ADMIN) {
             abort(400);
         }
@@ -55,12 +56,8 @@ class UserAdministrationController extends Controller {
         $user->save();
     }
 
-    public function destroy(int $id): RedirectResponse {
-        $user = User::findOrFail($id);
-
-        $user->deleteProfilePhoto();
-        $user->tokens->each->delete();
-        $user->delete();
+    public function destroy(User $user, DeleteUser $action): RedirectResponse {
+        $action->delete($user);
 
         return to_route('admin.user.index');
     }

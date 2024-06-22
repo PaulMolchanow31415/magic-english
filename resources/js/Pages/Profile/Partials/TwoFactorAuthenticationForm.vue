@@ -1,8 +1,8 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { router, useForm, usePage } from '@inertiajs/vue3'
-import ActionSection from '@/Jetstream/ActionSection.vue'
-import ConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue'
+import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
+import ConfirmsPassword from '@/Pages/Auth/Partials/ConfirmsPassword.vue'
 import DangerButton from '@/Shared/DangerButton.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'

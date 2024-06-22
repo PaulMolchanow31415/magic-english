@@ -4,7 +4,7 @@ import { useSearch } from '@/Composables/useSearch.js'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import { set } from '@vueuse/core'
-import Toast from '@/Classes/Toast.js'
+import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
@@ -23,7 +23,7 @@ import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import AudioUploader from '@/Pages/Admin/Partials/AudioUploader.vue'
 import LyricsEditor from '@/Pages/Admin/Partials/LyricsEditor.vue'
-import SuggestComboBox from '@/Shared/SuggestComboBox.vue'
+import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import { useSuggest } from '@/Composables/useSuggest.js'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
@@ -81,21 +81,21 @@ function handleEdit(music) {
 
 function confirmUpdate() {
   form
-    .transform((data) => ({
-      ...data,
-      singer_id: selectedSinger.value.id,
-    }))
-    .post(route('admin.music.store'), {
-      onSuccess: () => {
-        editable.isShowModal = false
-        editable.audio_url = null
-        set(selectedSinger, null)
-        useQuickEnableRef(isSaved)
-        form.reset()
-      },
-      onError: () => useQuickEnableRef(isError),
-      preserveScroll: true,
-    })
+  .transform((data) => ({
+    ...data,
+    singer_id: selectedSinger.value.id,
+  }))
+  .post(route('admin.music.store'), {
+    onSuccess: () => {
+      editable.isShowModal = false
+      editable.audio_url = null
+      set(selectedSinger, null)
+      useQuickEnableRef(isSaved)
+      form.reset()
+    },
+    onError: () => useQuickEnableRef(isError),
+    preserveScroll: true,
+  })
 }
 
 function confirmDelete() {

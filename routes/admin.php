@@ -1,11 +1,12 @@
 <?php
 
-use App\Models\Role;
+use App\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\SingerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GrammarController;
 use App\Http\Controllers\ProductController;
@@ -13,7 +14,6 @@ use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\DictionaryController;
-use App\Http\Controllers\SingerController;
 use App\Http\Controllers\UserAdministrationController;
 
 Route::middleware([

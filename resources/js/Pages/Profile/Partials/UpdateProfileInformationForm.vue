@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Link, router, useForm } from '@inertiajs/vue3'
-import FormSection from '@/Jetstream/FormSection.vue'
+import FormSection from '@/Pages/Auth/Partials/FormSection.vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'

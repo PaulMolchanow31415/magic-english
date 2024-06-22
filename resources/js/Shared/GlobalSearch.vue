@@ -27,9 +27,9 @@ watchThrottled(
   (query) =>
     query &&
     axios
-      .get(route('api.global-search'), { params: { query } })
-      .then((res) => set(results, res.data))
-      .catch(() => set(results, [])),
+    .get(route('api.global-search'), { params: { query } })
+    .then((res) => set(results, res.data))
+    .catch(() => set(results, [])),
   { throttle: 900 },
 )
 

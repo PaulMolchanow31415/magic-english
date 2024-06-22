@@ -32,8 +32,8 @@ export default defineComponent({
       const lines = []
       const wrapper = document.createElement('p')
       const tags = this.$options.parser
-        .parseFromString(value, 'text/html')
-        .getElementsByTagName('p')
+      .parseFromString(value, 'text/html')
+      .getElementsByTagName('p')
 
       for (const tag of tags) {
         tag.childNodes.forEach((node) => {

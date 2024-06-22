@@ -1,11 +1,12 @@
 <?php
 
+use App\Role;
 use Inertia\Inertia;
-use App\Models\Role;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\PasswordRegenerateMail;
+use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::prefix('oauth2/google')->name('oauth2.google.')->group(function () {

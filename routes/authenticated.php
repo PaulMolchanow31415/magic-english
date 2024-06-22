@@ -1,10 +1,11 @@
 <?php
-use App\Http\Controllers\CourseController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DictionaryController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\DictionaryController;
 
 // For authenticated users
 Route::middleware(config('auth.authenticated_permissions'))->group(function () {
@@ -14,12 +15,12 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
             ->name('show');
 
         Route::patch('/report', [CommentController::class, 'report'])
-            ->middleware(['allowed', 'throttle:10,1'])
+            ->middleware(['unlocked', 'throttle:10,1'])
             ->name('report');
     });
 
     Route::resource('comment', CommentController::class)
-        ->middleware(['allowed', 'throttle:20,1'])
+        ->middleware(['unlocked', 'throttle:20,1'])
         ->only(['store', 'destroy']);
 
     // Student

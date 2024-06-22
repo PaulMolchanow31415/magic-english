@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import FormSection from '@/Jetstream/FormSection.vue'
+import FormSection from '@/Pages/Auth/Partials/FormSection.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { FwbInput } from 'flowbite-vue'

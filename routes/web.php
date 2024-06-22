@@ -75,4 +75,3 @@ require_once __DIR__.'/oauth2.php';
 require_once __DIR__.'/authenticated.php';
 require_once __DIR__."/admin.php";
 require_once __DIR__."/fortify.php";
-require_once __DIR__."/jetstream.php";

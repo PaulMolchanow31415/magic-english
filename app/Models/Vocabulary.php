@@ -23,18 +23,18 @@ class Vocabulary extends Model {
         'translations' => AsCollection::class,
     ];
 
-    public function toSearchableArray(): array {
-        return [
-            'en'           => $this->en,
-            'translations' => $this->translations,
-        ];
-    }
-
     public function dictionaries(): BelongsToMany {
         return $this->belongsToMany(Dictionary::class);
     }
 
     public function students(): MorphToMany {
         return $this->morphToMany(User::class, User::LEARNABLE);
+    }
+
+    public function toSearchableArray(): array {
+        return [
+            'en'           => $this->en,
+            'translations' => $this->translations,
+        ];
     }
 }

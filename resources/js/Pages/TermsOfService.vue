@@ -1,6 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
 
 defineOptions({ layout: StubLayout })

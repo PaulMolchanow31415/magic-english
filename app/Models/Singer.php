@@ -19,4 +19,11 @@ class Singer extends Model {
         return $this->hasMany(Music::class);
     }
 
+    public function toSearchableArray(): array {
+        return [
+            'name'      => $this->name,
+            'biography' => $this->biography,
+        ];
+    }
+
 }

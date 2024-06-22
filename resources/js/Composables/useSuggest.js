@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { watchThrottled } from '@vueuse/core'
-import SuggestListItem from '@/Classes/SuggestListItem.js'
+import SuggestListItem from '@/Types/SuggestListItem.js'
 
 export function useSuggest(routeName, propName = 'en') {
   const searched = ref('')

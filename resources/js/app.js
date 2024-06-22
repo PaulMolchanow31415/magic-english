@@ -1,37 +1,34 @@
 import './bootstrap'
-import './Libraries/font-awesome'
+import './Config/FontAwesome.js'
 
 import '../pcss/globals.pcss'
 
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import VWave from 'v-wave'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { resolveLayout } from '@/resolveLayout.js'
-
-const appName = import.meta.env.VITE_APP_NAME
-const captchaKey = import.meta.env.VITE_RECAPTCHA_KEY
+import layoutResolver from '@/Helpers/layoutResolver.js'
+import appTitle from '@/Helpers/appTitle.js'
+import VueReCaptchaSettings from '@/Config/VueReCaptchaSettings.js'
+import InertiaProgress from '@/Config/InertiaProgress.js'
 
 createInertiaApp({
-  title: (title) => `${title} | ${appName}`,
-  resolve: resolveLayout,
-  progress: { color: '#1c64f2' },
+  title: appTitle,
+  resolve: layoutResolver,
+  progress: InertiaProgress,
 
   setup: ({ el, App, props, plugin }) =>
     createApp({ render: () => h(App, props) })
-      .use(plugin)
-      .use(ZiggyVue)
-      .use(VueReCaptcha, {
-        siteKey: captchaKey,
-        loaderOptions: { autoHideBadge: true },
-      })
-      .use(CKEditor)
-      .use(VWave)
-      .component('Icon', FontAwesomeIcon)
-      .mount(el),
-}).catch(console.error)
+    .use(plugin)
+    .use(ZiggyVue)
+    .use(VueReCaptcha, VueReCaptchaSettings)
+    .use(CKEditor)
+    .use(VWave)
+    .component('Icon', FontAwesomeIcon)
+    .mount(el),
+})

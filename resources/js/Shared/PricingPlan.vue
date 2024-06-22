@@ -1,6 +1,6 @@
 <script>
 import { defineComponent } from 'vue'
-import PricingCardItem from '@/Classes/PricingPlanItem.js'
+import PricingCardItem from '@/Types/PricingPlanItem.js'
 import { FwbButton } from 'flowbite-vue'
 
 export default defineComponent({

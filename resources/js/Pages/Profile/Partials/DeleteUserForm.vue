@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import ActionSection from '@/Jetstream/ActionSection.vue'
+import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
 import DangerButton from '@/Shared/DangerButton.vue'
-import DialogModal from '@/Shared/DialogModal.vue'
+import DialogModal from '@/Pages/Auth/Partials/DialogModal.vue'
 import InputError from '@/Shared/InputError.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'

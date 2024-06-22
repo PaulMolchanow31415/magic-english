@@ -1,5 +1,5 @@
 <script setup>
-import SelectOption from '@/Classes/SelectOption.js'
+import SelectOption from '@/Types/SelectOption.js'
 import { FwbSelect } from 'flowbite-vue'
 
 defineProps({ modelValue: String })

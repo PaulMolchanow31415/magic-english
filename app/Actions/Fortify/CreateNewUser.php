@@ -2,8 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Role;
 use App\Models\User;
-use App\Models\Role;
 use App\Models\Cart;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
@@ -34,9 +34,7 @@ class CreateNewUser implements CreatesNewUsers {
             'role'     => Role::USER,
         ]);
 
-        $user->cart()->save(
-            Cart::create(['user_id' => $user->id]),
-        );
+        $user->cart()->save(Cart::create(['user_id' => $user->id]));
 
         return $user;
     }

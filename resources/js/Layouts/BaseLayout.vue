@@ -1,26 +1,18 @@
 <script setup>
-import BaseHeader from '@/Shared/BaseHeader.vue'
-import BaseFooter from '@/Shared/BaseFooter.vue'
+import BaseHeader from '@/Widgets/BaseHeader.vue'
+import BaseFooter from '@/Widgets/BaseFooter.vue'
 import { provide } from 'vue'
-import CookiePopup from '@/Shared/CookiePopup.vue'
-import AudioPlayer from '@/Shared/AudioPlayer.vue'
+import CookiePopup from '@/Widgets/CookiePopup.vue'
+import AudioPlayer from '@/Widgets/AudioPlayer.vue'
+import avatarInitials from '@/Helpers/avatarInitials.js'
+import randomInt from '@/Helpers/randomInt.js'
+import shuffle from '@/Helpers/shuffle.js'
 
-provide('avatarInitials', (name = 'default') => {
-  name = name.trim().split(' ')
-  return (
-    name.length > 1 ? name[0].charAt(0).concat(name[1].charAt(0)) : name[0].charAt(0)
-  ).toUpperCase()
-})
+provide('avatarInitials', avatarInitials)
 
-provide('randomInt', (min, max) => {
-  const minCeiled = Math.ceil(min)
-  const maxFloored = Math.floor(max)
-  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled)
-})
+provide('randomInt', randomInt)
 
-provide('shuffle', (array = []) => {
-  return array.sort(() => Math.random() - 0.5)
-})
+provide('shuffle', shuffle)
 </script>
 
 <template>

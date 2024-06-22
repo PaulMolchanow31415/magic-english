@@ -20,6 +20,7 @@ class EcommerceController extends Controller {
             $hasCartProducts = $cartGoods->count() > 0;
         }
 
+        // todo: fix empty cart
         return inertia('Ecommerce/Index', [
             'lessons'         => $products ?? Product::all(),
             'hasCartProducts' => $hasCartProducts,

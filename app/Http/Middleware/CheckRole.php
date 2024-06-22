@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\Role;
+use App\Role;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,10 +15,10 @@ class CheckRole {
      */
     public function handle(Request $request, Closure $next, string $role): Response {
         if ($role === Role::ADMIN && auth()->user()->role !== Role::ADMIN) {
-            abort(403);
+            abort(Response::HTTP_FORBIDDEN);
         }
         if ($role === Role::USER && auth()->user()->role !== Role::USER) {
-            abort(403);
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);

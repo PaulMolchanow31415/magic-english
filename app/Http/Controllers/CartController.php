@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\OrderStatus;
 use App\Models\Product;
-use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use Illuminate\Http\RedirectResponse;

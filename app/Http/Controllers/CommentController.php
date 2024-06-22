@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller {
 
@@ -40,7 +41,7 @@ class CommentController extends Controller {
 
     public function destroy(Comment $comment): void {
         if ($comment->creator_id !== auth()->id()) {
-            abort(403);
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         $comment->delete();

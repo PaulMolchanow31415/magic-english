@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+// todo: extract to the trait
 trait FilteredLearnable {
 
     protected LearnableFilter $learnableFilter;

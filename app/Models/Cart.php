@@ -25,10 +25,4 @@ class Cart extends Model {
     public function clear(): void {
         $this->products()->detach();
     }
-
-    public function price_ids() {
-        return $this->products()->select('stripe_price_id')->get()
-            ->map(fn($product) => $product->stripe_price_id);
-    }
-
 }

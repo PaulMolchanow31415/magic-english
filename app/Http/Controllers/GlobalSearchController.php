@@ -11,31 +11,33 @@ use Illuminate\Http\Request;
 
 class GlobalSearchController extends Controller {
 
+    private function toObj(string $name, string $route) {
+        return (object)[
+            'name' => $name,
+            'url'  => $route,
+        ];
+    }
+
     public function __invoke(Request $request) {
         $request->validate(['query' => 'string|required|min:1']);
         $perPage = 4;
         $maxAmount = 20;
         $result = collect();
+        $query = $request->get('query', '');
 
         // Singers
         $result->push(
             ...Arr::map(
-            Singer::search($request['query'])->paginate($perPage)->items(),
-            fn(Singer $singer) => (object)[
-                'name' => $singer->name,
-                'url'  => route('singer.show', $singer),
-            ],
+            Singer::search($query)->paginate($perPage)->items(),
+            fn($singer) => $this->toObj($singer->name, route('singer.show', $singer)),
         ),
         );
         // Courses
         if (count($result) < $maxAmount) {
             $result->push(
                 ...Arr::map(
-                Course::search($request['query'])->paginate($perPage)->items(),
-                fn(Course $course) => (object)[
-                    'name' => $course->name,
-                    'url'  => route('skills.course.show', $course),
-                ],
+                Course::search($query)->paginate($perPage)->items(),
+                fn($course) => $this->toObj($course->name, route('skills.course.show', $course)),
             ),
             );
         }
@@ -43,11 +45,9 @@ class GlobalSearchController extends Controller {
         if (count($result) < $maxAmount) {
             $result->push(
                 ...Arr::map(
-                Lesson::search($request['query'])->paginate($perPage)->items(),
-                fn(Lesson $lesson) => (object)[
-                    'name' => $lesson->number.' Урок',
-                    'url'  => route('skills.lesson.show', $lesson->number),
-                ],
+                Lesson::search($query)->paginate($perPage)->items(),
+                fn($lesson) => $this
+                    ->toObj($lesson->number.' Урок', route('skills.lesson.show', $lesson->number)),
             ),
             );
         }
@@ -55,14 +55,11 @@ class GlobalSearchController extends Controller {
         if (count($result) < $maxAmount) {
             $result->push(
                 ...Arr::map(
-                Dictionary::search($request['query'])->paginate($perPage)->items(),
-                fn(Dictionary $dictionary) => (object)[
-                    'name' => $dictionary->category,
-                    'url'  => route(
-                        'skills.dictionary.show',
-                        $dictionary->category,
-                    ),
-                ],
+                Dictionary::search($query)->paginate($perPage)->items(),
+                fn($dictionary) => $this->toObj(
+                    $dictionary->category,
+                    route('skills.dictionary.show', $dictionary->category),
+                ),
             ),
             );
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 
+// todo: extract to the trait
 trait Uploadable {
 
     public static function getPrefix() {

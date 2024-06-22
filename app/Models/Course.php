@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Course extends Model {
-    use Searchable;
+    use Searchable, CustomHasProfilePhoto;
+
+    protected $appends = ['profile_photo_url'];
 
     protected $fillable = [
         'name',
@@ -39,5 +41,10 @@ class Course extends Model {
 
     public function students(): MorphToMany {
         return $this->morphToMany(User::class, User::LEARNABLE);
+    }
+
+    public function deleteWithPhoto(): void {
+        $this->deleteProfilePhoto();
+        $this->delete();
     }
 }

@@ -7,7 +7,7 @@ import {
   FwbAccordionPanel,
   FwbButton,
 } from 'flowbite-vue'
-import EmailSubscribe from '@/Shared/EmailSubscribe.vue'
+import EmailSubscribeSection from '@/Widgets/EmailSubscribeSection.vue'
 import { ref } from 'vue'
 
 defineProps({ faqs: Array })
@@ -65,7 +65,7 @@ const subscribeSection = ref(null)
 
     <section ref="subscribeSection" class="pt-12 mb-28">
       <h2 class="heading-2 mb-6">Оформление подписки</h2>
-      <EmailSubscribe />
+      <EmailSubscribeSection />
     </section>
   </main>
 </template>

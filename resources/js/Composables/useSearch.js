@@ -18,7 +18,7 @@ export function useSearch(searchValue) {
           replace: true,
         },
       ),
-    { throttle: 500 },
+    { throttle: 1000 },
   )
   return searched
 }

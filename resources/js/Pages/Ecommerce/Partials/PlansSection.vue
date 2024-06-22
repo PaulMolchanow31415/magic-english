@@ -1,5 +1,5 @@
 <script setup>
-import PricingPlanItem from '@/Classes/PricingPlanItem.js'
+import PricingPlanItem from '@/Types/PricingPlanItem.js'
 import PricingPlan from '@/Shared/PricingPlan.vue'
 import { FwbHeading, FwbP } from 'flowbite-vue'
 

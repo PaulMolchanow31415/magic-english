@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
@@ -31,10 +31,10 @@ async function submit() {
   form.recaptcha_token = await executeRecaptcha('login')
 
   form
-    .transform((data) => ({ ...data, remember: form.remember ? 'on' : '' }))
-    .post(route('login'), {
-      onFinish: () => form.reset('password'),
-    })
+  .transform((data) => ({ ...data, remember: form.remember ? 'on' : '' }))
+  .post(route('login'), {
+    onFinish: () => form.reset('password'),
+  })
 }
 </script>
 

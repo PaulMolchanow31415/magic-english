@@ -72,6 +72,4 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
-
-    'upload_prefix' => env('UPLOAD_PREFIX', '/storage/'),
 ];
