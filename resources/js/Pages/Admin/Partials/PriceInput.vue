@@ -12,10 +12,9 @@ defineProps({
     default: 10000,
   },
   errorMessage: String,
-  modelValue: Number,
 })
 
-defineEmits(['update:modelValue'])
+const model = defineModel({ type: Number })
 </script>
 
 <template>
@@ -86,8 +85,7 @@ defineEmits(['update:modelValue'])
       </div>
       <div class="relative w-full">
         <FwbInput
-          :model-value="modelValue"
-          @update:model-value="$emit('update:modelValue', $event)"
+          v-model="model"
           type="number"
           id="currency-input"
           class="rounded-s-none border-s-0"

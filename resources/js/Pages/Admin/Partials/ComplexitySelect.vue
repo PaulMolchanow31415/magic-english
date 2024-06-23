@@ -5,20 +5,17 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import { usePage } from '@inertiajs/vue3'
 
 defineProps({
-  modelValue: {
-    type: [null, String],
-    required: true,
-  },
   label: {
     type: String,
     default: 'Сложность набора',
   },
-  errorMessage: {
-    type: String,
-  },
+  errorMessage: { type: String },
 })
 
-defineEmits(['update:modelValue'])
+const selected = defineModel({
+  type: [null, String],
+  required: true,
+})
 
 const options = usePage().props.complexities.map((c) => new SelectOption({ value: c, name: c }))
 </script>
@@ -27,8 +24,7 @@ const options = usePage().props.complexities.map((c) => new SelectOption({ value
   <div>
     <InputLabel :value="label">
       <FwbSelect
-        :model-value="modelValue"
-        @update:model-value="$emit('update:modelValue', $event)"
+        v-model="selected"
         placeholder="Выберите сложность"
         size="sm"
         :options="options"

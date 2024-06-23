@@ -4,8 +4,6 @@ import { Link } from '@inertiajs/vue3'
 
 import { onMounted } from 'vue'
 import { initDropdowns } from 'flowbite'
-import { useEventListener } from '@vueuse/core'
-import Tooltip from '@/Shared/Tooltip.vue'
 import SearchInput from '@/Pages/Admin/Partials/SearchInput.vue'
 
 const props = defineProps({
@@ -13,30 +11,20 @@ const props = defineProps({
     type: String,
     default: 'Найти',
   },
-  searchedValue: {
-    type: String,
-    required: true,
-  },
   addable: {
     type: Boolean,
     default: false,
   },
 })
 
-onMounted(() => {
-  initDropdowns()
+defineEmits(['add'])
+
+const search = defineModel('searchedValue', {
+  type: String,
+  required: true,
 })
 
-const emit = defineEmits(['update:searchedValue', 'add'])
-
-function onKeyDown(e) {
-  if (e.ctrlKey && e.code === 'KeyC' && props.addable) {
-    e.preventDefault()
-    emit('add')
-  }
-}
-
-useEventListener(document, 'keydown', onKeyDown)
+onMounted(initDropdowns)
 </script>
 
 <template>
@@ -47,33 +35,18 @@ useEventListener(document, 'keydown', onKeyDown)
       >
         <div class="w-full md:w-1/2">
           <form class="flex items-center">
-            <SearchInput
-              :model-value="searchedValue"
-              @input="$emit('update:searchedValue', $event)"
-              :placeholder="searchPlaceholder"
-            />
+            <SearchInput v-model="search" :placeholder="searchPlaceholder" />
           </form>
         </div>
         <div
           class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-3 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3"
         >
-          <Tooltip>
-            <template #trigger>
-              <FwbButton
-                v-if="addable"
-                @click="$emit('add')"
-                class="justify-center w-full md:w-auto"
-              >
-                <template #prefix>
-                  <Icon :icon="['fas', 'plus']" size="sm" />
-                </template>
-                Добавить
-              </FwbButton>
+          <FwbButton v-if="addable" @click="$emit('add')" class="justify-center w-full md:w-auto">
+            <template #prefix>
+              <Icon :icon="['fas', 'plus']" size="sm" />
             </template>
-            <template #content>
-              <p class="leading-loose"><kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>C</kbd></p>
-            </template>
-          </Tooltip>
+            Добавить
+          </FwbButton>
 
           <template v-if="$slots.filters">
             <button

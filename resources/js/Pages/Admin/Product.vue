@@ -142,7 +142,6 @@ watchEffect(() => (form.price = price.value))
       <FwbTableHeadCell v-text="'Фото'" />
       <FwbTableHeadCell v-text="'Название'" />
       <FwbTableHeadCell>Цена&nbsp;₽</FwbTableHeadCell>
-      <FwbTableHeadCell v-text="'Stripe id'" />
       <FwbTableHeadCell>
         <span class="sr-only">Действия</span>
       </FwbTableHeadCell>
@@ -159,7 +158,6 @@ watchEffect(() => (form.price = price.value))
         </FwbTableCell>
         <FwbTableCell v-text="product.name" />
         <FwbTableCell v-text="product.price" />
-        <FwbTableCell v-text="product.stripe_price_id" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6 justify-end pe-4">
             <TableActionButton @click="handleEdit(product)">Редактировать</TableActionButton>

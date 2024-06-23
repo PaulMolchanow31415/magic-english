@@ -1,33 +1,15 @@
-<script>
+<script setup>
 import InputLabel from '@/Shared/InputLabel.vue'
 import InputError from '@/Shared/InputError.vue'
-import { FwbButton, FwbInput } from 'flowbite-vue'
-import { defineComponent } from 'vue'
+import { FwbButton } from 'flowbite-vue'
+import { computed } from 'vue'
 import OpacityTransition from '@/Animations/OpacityTransition.vue'
 
-export default defineComponent({
-  components: { OpacityTransition, FwbButton, FwbInput, InputError, InputLabel },
+defineProps({ errorMessage: String })
 
-  props: {
-    modelValue: Blob,
-    errorMessage: String,
-  },
+const blob = defineModel({ type: Blob })
 
-  emits: ['update:modelValue'],
-
-  methods: {
-    onReset() {
-      this.$refs.input.value = null
-      this.$emit('update:modelValue', null)
-    },
-  },
-
-  computed: {
-    src() {
-      return this.modelValue ? URL.createObjectURL(this.modelValue) : null
-    },
-  },
-})
+const src = computed(() => (blob.value ? URL.createObjectURL(blob.value) : null))
 </script>
 
 <template>
@@ -47,7 +29,12 @@ export default defineComponent({
         <audio :src="src" controls class="grow" />
         <!--  Clear button  -->
         <FwbButton
-          @click="onReset"
+          @click="
+            () => {
+              blob = null
+              $refs.input.value = null
+            }
+          "
           type="button"
           pill
           color="alternative"

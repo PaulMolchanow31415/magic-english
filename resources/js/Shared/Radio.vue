@@ -4,7 +4,6 @@ import { computed } from 'vue'
 const props = defineProps({
   value: [String, Object],
   name: String,
-  modelValue: [String, Object],
   label: String,
   disabled: Boolean,
   status: {
@@ -13,12 +12,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
-
-const proxyChecked = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-})
+const checked = defineModel({ type: [String, Object] })
 
 const labelClasses = computed(() => {
   if (props.status === 'success') {
@@ -53,7 +47,7 @@ const icon = computed(() => {
     {{ label }}
 
     <input
-      v-model="proxyChecked"
+      v-model="checked"
       type="radio"
       :value="value"
       :name="name"

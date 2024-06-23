@@ -14,10 +14,6 @@ defineProps({
       return values.every((r) => r instanceof SuggestListItem)
     },
   },
-  modelValue: {
-    type: String,
-    required: true,
-  },
   className: {
     type: String,
     default: 'w-full',
@@ -29,7 +25,9 @@ defineProps({
   },
 })
 
-defineEmits(['update:modelValue', 'add'])
+defineEmits(['add'])
+
+const model = defineModel({ type: String, required: true })
 
 const isFocused = ref(false)
 const comboBox = ref(null)
@@ -46,9 +44,8 @@ onClickOutside(comboBox, () => set(isFocused, false), {
       <InputLabel :value="label">
         <FwbInput
           ref="searchInput"
+          v-model="model"
           @focus="isFocused = true"
-          @input="$emit('update:modelValue', $event.target.value)"
-          :model-value="modelValue"
           size="sm"
           :placeholder="placeholder"
           :class="className"

@@ -4,36 +4,33 @@ import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 
 defineProps({
-  modelValue: {
-    type: [null, File],
-    required: true,
-  },
-  externalPath: {
-    type: [null, String],
-    required: true,
-    default: '',
-  },
   hasPhoto: {
     type: Boolean,
     default: false,
   },
 })
 
-defineEmits(['update:modelValue', 'update:externalPath', 'deletePhoto'])
+const file = defineModel({
+  type: [null, File],
+  required: true,
+})
+
+const externalPath = defineModel('externalPath', {
+  type: [null, String],
+  required: true,
+  default: '',
+})
+
+defineEmits(['deletePhoto'])
 </script>
 
 <template>
   <div>
-    <FwbFileInput
-      :model-value="modelValue"
-      @update:model-value="$emit('update:modelValue', $event)"
-      dropzone
-    />
+    <FwbFileInput v-model="file" dropzone />
     <div class="flex flex-wrap gap-4 justify-stretch items-end mt-4">
       <InputLabel value="Или введите ссылку на изображение" class="flex-grow">
         <FwbInput
-          :model-value="externalPath"
-          @input="$emit('update:externalPath', $event.target.value)"
+          v-model="externalPath"
           name="poster-url"
           type="url"
           size="sm"

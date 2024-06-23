@@ -1,46 +1,46 @@
 <script setup>
-import { computed } from 'vue'
+import InputLabel from '@/Shared/InputLabel.vue'
+import InputError from '@/Shared/InputError.vue'
 
-const props = defineProps({
-  modelValue: Number,
+defineProps({
   placeholder: String,
+  label: String,
+  error: String,
   min: {
     type: Number,
     default: 1,
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
-
-const proxyValue = computed({
-  get: () => props.modelValue,
-  set(value) {
-    emit('update:modelValue', value)
-  },
-})
+const model = defineModel({ type: Number })
 </script>
 
 <template>
-  <div class="flex items-center">
-    <button
-      @click="proxyValue--"
-      :disabled="proxyValue <= min"
-      type="button"
-      class="number-input-button rounded-s-lg"
-    >
-      <Icon :icon="['fas', 'minus']" class="number-input-icon" />
-    </button>
-    <input
-      v-model="proxyValue"
-      type="number"
-      aria-describedby="helper-text-explanation"
-      class="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      :placeholder="placeholder"
-      :min="min"
-    />
-    <button @click="proxyValue++" type="button" class="number-input-button rounded-e-lg">
-      <Icon :icon="['fas', 'plus']" class="number-input-icon" />
-    </button>
+  <div>
+    <InputLabel :value="label">
+      <div class="flex items-center">
+        <button
+          @click="model--"
+          :disabled="model <= min"
+          type="button"
+          class="number-input-button rounded-s-lg"
+        >
+          <Icon :icon="['fas', 'minus']" class="number-input-icon" />
+        </button>
+        <input
+          v-model="model"
+          type="number"
+          aria-describedby="helper-text-explanation"
+          class="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          :placeholder="placeholder"
+          :min="min"
+        />
+        <button @click="model++" type="button" class="number-input-button rounded-e-lg">
+          <Icon :icon="['fas', 'plus']" class="number-input-icon" />
+        </button>
+      </div>
+    </InputLabel>
+    <InputError :message="error" />
   </div>
 </template>
 

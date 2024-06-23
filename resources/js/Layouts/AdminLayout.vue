@@ -45,7 +45,7 @@ provide('formatDate', (timestamp) =>
             <SidebarLink
               :to="route('admin.lesson.index')"
               icon="graduation-cap"
-              text="Самоучитель"
+              text="Самоучители"
             />
           </li>
           <li>

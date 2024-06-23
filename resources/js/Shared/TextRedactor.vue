@@ -5,14 +5,13 @@ import { set } from '@vueuse/core'
 import InputError from '@/Shared/InputError.vue'
 
 const props = defineProps({
-  modelValue: String,
   placeholder: {
     type: String,
     default: 'Start typing here...',
   },
   breakLineKeyBinding: {
     type: String,
-    default: 'Enter', // Shift+Enter
+    default: 'Enter', // instead Shift+Enter
   },
   errorMessage: String,
   toolbarStyle: {
@@ -25,8 +24,7 @@ const props = defineProps({
   disabled: Boolean,
 })
 
-defineEmits(['update:modelValue'])
-
+const model = defineModel({ type: String })
 const editor = ref()
 let toolbar = ref({})
 
@@ -59,8 +57,7 @@ function onReady(readyEditor) {
   <div class="no-tailwindcss">
     <Ckeditor
       @ready="onReady"
-      @update:modelValue="$emit('update:modelValue', $event)"
-      :model-value="modelValue"
+      v-model="model"
       :editor="ClassicEditor"
       :config="{ placeholder, toolbar }"
       tag-name="textarea"

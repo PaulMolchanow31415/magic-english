@@ -26,17 +26,20 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Response $response) {
-            $status = $response->getStatusCode();
+        if (!app()->environment(['local', 'testing'])) {
+            $exceptions->respond(function (Response $response) {
+                $status = $response->getStatusCode();
 
-            if (!app()->environment(['local', 'testing'])
-                && in_array($status, [500, 503, 404, 403])
-            ) {
-                return inertia('Error', ['status' => $status])
-                    ->toResponse(request())
-                    ->setStatusCode($status);
-            } elseif ($status === 419) {
-                return back()->with(['message' => 'Страница устарела, попробуйте перезагрузить.']);
-            }
-        });
+                if (in_array($status, [500, 503, 404, 403])) {
+                    return inertia('Error', ['status' => $status])
+                        ->toResponse(request())
+                        ->setStatusCode($status);
+                } elseif ($status === 419) {
+                    return back()->with([
+                        // todo flush message object
+                        'message' => 'Страница устарела, попробуйте перезагрузить.',
+                    ]);
+                }
+            });
+        }
     })->create();

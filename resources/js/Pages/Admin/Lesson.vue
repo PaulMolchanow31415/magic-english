@@ -17,11 +17,9 @@ import {
 } from 'flowbite-vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import { set } from '@vueuse/core'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
-import InputError from '@/Shared/InputError.vue'
 import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 
@@ -31,7 +29,6 @@ const props = defineProps({
   prevLessonNumber: Number,
 })
 
-const avatarInitials = inject('avatarInitials')
 const formatDate = inject('formatDate')
 
 const page = usePage()
@@ -146,12 +143,13 @@ function confirmDelete() {
     @confirm="confirmUpdate"
     @close="isShowEditModal = false"
   >
-    <div class="mb-4">
-      <InputLabel value="Номер урока">
-        <NumberInput v-model="form.number" class="max-w-[10rem]" placeholder="999" />
-      </InputLabel>
-      <InputError :message="form.errors.number" />
-    </div>
+    <NumberInput
+      v-model="form.number"
+      label="Номер урока"
+      placeholder="999"
+      class="mb-4 max-w-[10rem]"
+      :error="form.errors.number"
+    />
 
     <ComplexitySelect
       class="mb-6"

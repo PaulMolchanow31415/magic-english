@@ -2,27 +2,20 @@
 import { ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 
+const model = defineModel({
+  type: String,
+  required: true,
+})
+const input = ref(null)
+
 defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
   placeholder: {
     type: String,
     default: 'Поиск...',
   },
 })
 
-const emit = defineEmits(['update:modelValue', 'input'])
-
-const input = ref(null)
-
-function handleInput(e) {
-  emit('update:modelValue', e.target.value)
-  emit('input', e.target.value)
-}
-
-function onKeyDown(e) {
+useEventListener(document, 'keydown', (e) => {
   const code = e.which || e.keyCode
 
   // click ctrl + k
@@ -30,9 +23,7 @@ function onKeyDown(e) {
     e.preventDefault()
     input.value.focus()
   }
-}
-
-useEventListener(document, 'keydown', onKeyDown)
+})
 </script>
 
 <template>
@@ -44,8 +35,7 @@ useEventListener(document, 'keydown', onKeyDown)
     </div>
     <input
       ref="input"
-      :value="modelValue"
-      @input="handleInput"
+      v-model="model"
       class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 p-2 text-sm pl-10"
       :placeholder="placeholder"
       type="text"
