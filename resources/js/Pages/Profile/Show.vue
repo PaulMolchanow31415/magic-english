@@ -11,7 +11,7 @@ import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
 import { set } from '@vueuse/core'
 import UpdateSubscribeStatusForm from '@/Pages/Profile/Partials/UpdateSubscribeStatusForm.vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 
 defineProps({
   confirmsTwoFactorAuthentication: Boolean,
@@ -22,9 +22,9 @@ const profileInfoSaved = ref(false)
 const passwordSaved = ref(false)
 const sessionClosed = ref(false)
 
-const showProfileInfo = () => useQuickEnableRef(profileInfoSaved)
-const showPasswordInfo = () => useQuickEnableRef(passwordSaved)
-const showSessionCloseInfo = () => useQuickEnableRef(sessionClosed)
+const showProfileInfo = () => quickEnableRef(profileInfoSaved)
+const showPasswordInfo = () => quickEnableRef(passwordSaved)
+const showSessionCloseInfo = () => quickEnableRef(sessionClosed)
 
 function closeToast(index) {
   switch (index) {

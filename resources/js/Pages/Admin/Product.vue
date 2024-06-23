@@ -1,9 +1,9 @@
 <script setup>
-import { Head, router, useForm, usePage } from '@inertiajs/vue3'
-import { inject, reactive, ref, watchEffect } from 'vue'
+import { Head, router, useForm } from '@inertiajs/vue3'
+import { reactive, ref, watchEffect } from 'vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { set } from '@vueuse/core'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import Toast from '@/Types/Toast.js'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import Toaster from '@/Shared/Toaster.vue'
@@ -28,16 +28,14 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import PriceInput from '@/Pages/Admin/Partials/PriceInput.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import { usePrice } from '@/Composables/usePrice.js'
+import usePrice from '@/Composables/usePrice'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   products: Object,
   filters: Object,
 })
 
-const avatarInitials = inject('avatarInitials')
-
-const page = usePage()
 const searchedProduct = useSearch(props.filters.search)
 const isSaved = ref(false)
 const isDeleted = ref(false)
@@ -83,19 +81,19 @@ function confirmUpdate() {
   form.post(route('admin.product.store'), {
     preserveScroll: true,
     onSuccess() {
-      useQuickEnableRef(isSaved)
+      quickEnableRef(isSaved)
       editable.isShowModal = false
       editable.poster_url = null
       form.reset()
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.product.destroy', productForRemoval.value.id), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(productForRemoval, null),
     preserveScroll: true,
     preserveState: true,

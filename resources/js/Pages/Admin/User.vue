@@ -11,7 +11,7 @@ import {
   FwbToggle,
 } from 'flowbite-vue'
 import TableHeader from './Partials/TableHeader.vue'
-import { inject, ref } from 'vue'
+import { ref } from 'vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
@@ -23,15 +23,14 @@ import UpdateModal from './Partials/UpdateModal.vue'
 import TableActionButton from './Partials/TableActionButton.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { useSearch } from '@/Composables/useSearch.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   users: Object,
   roles: Array,
   filters: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const searchedUser = useSearch(props.filters.search)
 const isShowEditModal = ref(false)
@@ -50,16 +49,16 @@ function handleEdit(user) {
 
 function confirmDelete() {
   router.delete(route('admin.user.destroy', { id: userForRemoval.value.id }), {
-    onSuccess: () => useQuickEnableRef(userDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(userDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(userForRemoval, null),
   })
 }
 
 function confirmEdit() {
   form.post(route('admin.user.store'), {
-    onSuccess: () => useQuickEnableRef(userSaved),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(userSaved),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(isShowEditModal, false),
   })
 }

@@ -8,11 +8,13 @@ import {
   FwbHeading,
 } from 'flowbite-vue'
 import { Head, router } from '@inertiajs/vue3'
-import { inject, ref } from 'vue'
+import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import avatarInitials from '@/Helpers/avatarInitials'
+import formatTimestamp from '../../Helpers/formatTimestamp.js'
 
 defineProps({
   discussions: Array,
@@ -23,8 +25,6 @@ const isEmptyComments = ref(false)
 const userBlocked = ref(false)
 const commentMarkAsRead = ref(false)
 const isError = ref(false)
-const avatarInitials = inject('avatarInitials')
-const formatDate = inject('formatDate')
 
 function markAsRead(comment) {
   router.patch(
@@ -34,8 +34,8 @@ function markAsRead(comment) {
       isReported: false,
     },
     {
-      onSuccess: () => useQuickEnableRef(commentMarkAsRead),
-      onError: () => useQuickEnableRef(isError),
+      onSuccess: () => quickEnableRef(commentMarkAsRead),
+      onError: () => quickEnableRef(isError),
       preserveScroll: true,
     },
   )
@@ -50,10 +50,10 @@ function handleBlock(comment) {
     },
     {
       onSuccess: () => {
-        useQuickEnableRef(userBlocked)
+        quickEnableRef(userBlocked)
         markAsRead(comment)
       },
-      onError: () => useQuickEnableRef(isError),
+      onError: () => quickEnableRef(isError),
       preserveScroll: true,
     },
   )
@@ -99,7 +99,7 @@ function handleBlock(comment) {
             />
             <span class="ms-2" v-text="comment.creator.name" />
             <Badge class="ms-4">{{ comment.creator.role }}</Badge>
-            <time class="ms-auto me-4">{{ formatDate(comment.updated_at) }}</time>
+            <time class="ms-auto me-4">{{ formatTimestamp(comment.updated_at) }}</time>
           </div>
         </FwbAccordionHeader>
         <FwbAccordionContent>
@@ -125,8 +125,7 @@ function handleBlock(comment) {
       </FwbAccordionPanel>
     </FwbAccordion>
   </template>
-  <FwbHeading class="m-4" v-else tag="h6">Жалоб пользователей пока не было</FwbHeading>
-
+  <FwbHeading class="m-4 text-center" v-else tag="h6">Жалоб пользователей пока не было</FwbHeading>
 </template>
 
 <style scoped></style>

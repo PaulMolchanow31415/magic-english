@@ -7,17 +7,16 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { computed, inject, ref } from 'vue'
+import { computed, ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { useWindowSize } from '@vueuse/core'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 defineProps({ products: Array })
-
-const avatarInitials = inject('avatarInitials')
 
 const isRemoved = ref(false)
 const isError = ref(false)
@@ -30,8 +29,8 @@ function handleRemove(product) {
   router.delete(route('cart.remove-product', product.pivot.product_id), {
     preserveState: true,
     preserveScroll: true,
-    onSuccess: () => useQuickEnableRef(isRemoved),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isRemoved),
+    onError: () => quickEnableRef(isError),
   })
 }
 </script>

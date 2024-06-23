@@ -1,6 +1,6 @@
 <script setup>
 import { useSearch } from '@/Composables/useSearch.js'
-import { inject, ref } from 'vue'
+import { ref } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
@@ -20,16 +20,15 @@ import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import { set } from '@vueuse/core'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
+import formatTimestamp from '@/Helpers/formatTimestamp.js'
 
 const props = defineProps({
   lessons: Object,
   filters: Object,
   prevLessonNumber: Number,
 })
-
-const formatDate = inject('formatDate')
 
 const page = usePage()
 const searchedLesson = useSearch(props.filters.search)
@@ -67,12 +66,12 @@ function confirmUpdate() {
   form.post(route('admin.lesson.store'), {
     preserveScroll: true,
     onSuccess() {
-      useQuickEnableRef(isSaved)
+      quickEnableRef(isSaved)
       set(isShowEditModal, false)
       form.reset()
       number.value++
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
   })
 }
 
@@ -80,9 +79,9 @@ function confirmDelete() {
   form.delete(route('admin.lesson.destroy', { id: lessonForRemoval.value.id }), {
     onSuccess: () => {
       set(lessonForRemoval, null)
-      useQuickEnableRef(isDeleted)
+      quickEnableRef(isDeleted)
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
     preserveScroll: true,
     preserveState: true,
   })
@@ -119,7 +118,7 @@ function confirmDelete() {
     <FwbTableBody>
       <FwbTableRow v-for="lesson in lessons.data" :key="lesson.id" class="group">
         <FwbTableCell v-text="lesson.number" />
-        <FwbTableCell v-text="formatDate(lesson.created_at)" />
+        <FwbTableCell v-text="formatTimestamp(lesson.created_at)" />
         <FwbTableCell v-text="lesson.complexity" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6 justify-end pe-4">

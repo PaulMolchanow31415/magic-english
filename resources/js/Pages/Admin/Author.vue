@@ -1,8 +1,8 @@
 <script setup>
-import { inject, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { set } from '@vueuse/core'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
@@ -23,13 +23,12 @@ import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import NameInput from '@/Shared/NameInput.vue'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   authors: Object,
   filters: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const searchedAuthor = useSearch(props.filters.search)
 
@@ -72,18 +71,18 @@ function confirmUpdate() {
     onSuccess: () => {
       editable.isShowModal = false
       editable.poster_url = null
-      useQuickEnableRef(isSaved)
+      quickEnableRef(isSaved)
       form.reset()
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
     preserveScroll: true,
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.author.destroy', authorForRemoval.value.id), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(authorForRemoval, null),
     preserveScroll: true,
     preserveState: true,

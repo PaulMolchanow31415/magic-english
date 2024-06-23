@@ -6,7 +6,7 @@ import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import { useSuggest } from '@/Composables/useSuggest.js'
 import { router } from '@inertiajs/vue3'
 import { ref, toRef, watch } from 'vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
 import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
@@ -34,7 +34,7 @@ function train() {
     return
   }
 
-  useQuickEnableRef(isEmpty)
+  quickEnableRef(isEmpty)
 }
 
 watch(selectedFilter, (learnable) => {

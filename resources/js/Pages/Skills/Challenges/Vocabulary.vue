@@ -15,7 +15,6 @@ let code
 export default defineComponent({
   name: 'Vocabulary',
   components: { Tooltip, FwbHeading, Radio, FwbProgress, AutoHead, FwbButton },
-  inject: ['randomInt', 'shuffle'],
   props: { vocabularies: Array },
   setup: () => ({ completed: useForm({ vocabulary_ids: [] }) }),
   data() {
@@ -95,7 +94,7 @@ export default defineComponent({
     },
     generateQuestion() {
       rememberPositions.clear()
-      position = this.randomInt(0, this.availableQuestions.length - 1)
+      position = Math.randomInt(0, this.availableQuestions.length - 1)
       i = 1
 
       this.rightAnswer = makeAnswer(this.availableQuestions[position], true)
@@ -104,7 +103,7 @@ export default defineComponent({
       this.questions.push(this.rightAnswer)
 
       while (i < 3) {
-        position = this.randomInt(0, this.vocabularies.length - 1)
+        position = Math.randomInt(0, this.vocabularies.length - 1)
 
         if (rememberPositions.has(position)) {
           continue
@@ -115,7 +114,7 @@ export default defineComponent({
         ++i
       }
 
-      this.shuffle(this.questions)
+      this.questions.shuffle()
     },
     selectionStatus(question) {
       if (!this.picked || this.picked?.id !== question.id) {

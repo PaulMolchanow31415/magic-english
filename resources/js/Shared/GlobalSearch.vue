@@ -3,7 +3,7 @@ import { FwbInput } from 'flowbite-vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import { get, onClickOutside, set, watchThrottled } from '@vueuse/core'
-import { useScrollLock } from '@/Composables/useScrollLock.js'
+import { useScrollLock } from '@/Composables/useScrollLock.ts'
 import DropdownTransition from '@/Animations/ComboboxTransition.vue'
 
 const searched = ref('')

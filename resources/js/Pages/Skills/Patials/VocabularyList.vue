@@ -7,9 +7,9 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { inject } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { useSay } from '@/Composables/useSay.js'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 defineProps({
   vocabularies: {
@@ -18,8 +18,6 @@ defineProps({
   },
   removable: Boolean,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const { isSupported, stop, isPlaying, say } = useSay()
 

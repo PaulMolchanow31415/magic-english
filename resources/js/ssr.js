@@ -1,4 +1,5 @@
-import './Config/FontAwesome.js'
+import './Config/FontAwesome'
+import '@/Helpers/Extensions'
 
 import createServer from '@inertiajs/vue3/server'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -12,10 +13,10 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VWave from 'v-wave'
 
-import layoutResolver from '@/Helpers/layoutResolver.js'
-import appTitle from '@/Helpers/appTitle.js'
-import VueReCaptchaSettings from '@/Config/VueReCaptchaSettings.js'
-import InertiaProgress from '@/Config/InertiaProgress.js'
+import layoutResolver from '@/Helpers/layoutResolver'
+import appTitle from '@/Helpers/appTitle'
+import VueReCaptchaSettings from '@/Config/VueReCaptchaSettings'
+import InertiaProgress from '@/Config/InertiaProgress'
 
 createServer((page) =>
   createInertiaApp({
@@ -27,14 +28,14 @@ createServer((page) =>
 
     setup: ({ App, props, plugin }) =>
       createSSRApp({ render: () => h(App, props) })
-      .use(plugin)
-      .use(ZiggyVue, {
-        ...page.props.ziggy,
-        location: new URL(page.props.ziggy.location),
-      })
-      .use(VueReCaptcha, VueReCaptchaSettings)
-      .use(CKEditor)
-      .use(VWave)
-      .component('Icon', FontAwesomeIcon),
+        .use(plugin)
+        .use(ZiggyVue, {
+          ...page.props.ziggy,
+          location: new URL(page.props.ziggy.location),
+        })
+        .use(VueReCaptcha, VueReCaptchaSettings)
+        .use(CKEditor)
+        .use(VWave)
+        .component('Icon', FontAwesomeIcon),
   }),
 )

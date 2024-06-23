@@ -3,16 +3,17 @@ import { capitalize, defineComponent } from 'vue'
 import { FwbAvatar } from 'flowbite-vue'
 import { useDateFormat } from '@vueuse/core'
 import CommentActionDropdown from '@/Widgets/CommentActionDropdown.vue'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 export default defineComponent({
   name: 'DiscussionComment',
+  methods: { avatarInitials },
   components: { CommentActionDropdown, FwbAvatar },
   setup(props) {
     return {
       dateUpdate: capitalize(useDateFormat(props.comment.updated_at, 'MMM DD, YYYY').value),
     }
   },
-  inject: ['avatarInitials'],
   props: {
     comment: {
       type: Object,

@@ -1,8 +1,8 @@
 <script setup>
-import { inject, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useSearch } from '@/Composables/useSearch.js'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { set } from '@vueuse/core'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
@@ -28,13 +28,12 @@ import { useSuggest } from '@/Composables/useSuggest.js'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
 import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   musics: Object,
   filters: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const searchedMusic = useSearch(props.filters.search)
 // prettier-ignore
@@ -81,27 +80,27 @@ function handleEdit(music) {
 
 function confirmUpdate() {
   form
-  .transform((data) => ({
-    ...data,
-    singer_id: selectedSinger.value.id,
-  }))
-  .post(route('admin.music.store'), {
-    onSuccess: () => {
-      editable.isShowModal = false
-      editable.audio_url = null
-      set(selectedSinger, null)
-      useQuickEnableRef(isSaved)
-      form.reset()
-    },
-    onError: () => useQuickEnableRef(isError),
-    preserveScroll: true,
-  })
+    .transform((data) => ({
+      ...data,
+      singer_id: selectedSinger.value.id,
+    }))
+    .post(route('admin.music.store'), {
+      onSuccess: () => {
+        editable.isShowModal = false
+        editable.audio_url = null
+        set(selectedSinger, null)
+        quickEnableRef(isSaved)
+        form.reset()
+      },
+      onError: () => quickEnableRef(isError),
+      preserveScroll: true,
+    })
 }
 
 function confirmDelete() {
   form.delete(route('admin.music.destroy', musicForRemoval.value.id), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(musicForRemoval, null),
     preserveScroll: true,
     preserveState: true,

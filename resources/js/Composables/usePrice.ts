@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue'
 import { set } from '@vueuse/core'
 
-export function usePrice(price, min, max) {
+export default function (price: number, min?: number, max?: number) {
   const highest = ref(max || price > 1000 ? price : 1000)
   const lowest = ref(min || 10)
   const watchable = ref(price)

@@ -1,5 +1,6 @@
 import './bootstrap'
-import './Config/FontAwesome.js'
+import './Config/FontAwesome'
+import '@/Helpers/Extensions'
 
 import '../pcss/globals.pcss'
 
@@ -12,10 +13,10 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import VWave from 'v-wave'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import layoutResolver from '@/Helpers/layoutResolver.js'
-import appTitle from '@/Helpers/appTitle.js'
-import VueReCaptchaSettings from '@/Config/VueReCaptchaSettings.js'
-import InertiaProgress from '@/Config/InertiaProgress.js'
+import layoutResolver from '@/Helpers/layoutResolver'
+import appTitle from '@/Helpers/appTitle'
+import VueReCaptchaSettings from '@/Config/VueReCaptchaSettings'
+import InertiaProgress from '@/Config/InertiaProgress'
 
 createInertiaApp({
   title: appTitle,
@@ -24,11 +25,11 @@ createInertiaApp({
 
   setup: ({ el, App, props, plugin }) =>
     createApp({ render: () => h(App, props) })
-    .use(plugin)
-    .use(ZiggyVue)
-    .use(VueReCaptcha, VueReCaptchaSettings)
-    .use(CKEditor)
-    .use(VWave)
-    .component('Icon', FontAwesomeIcon)
-    .mount(el),
+      .use(plugin)
+      .use(ZiggyVue)
+      .use(VueReCaptcha, VueReCaptchaSettings)
+      .use(CKEditor)
+      .use(VWave)
+      .component('Icon', FontAwesomeIcon)
+      .mount(el),
 })

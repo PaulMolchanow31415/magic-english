@@ -15,7 +15,7 @@ import Toast from '@/Types/Toast.js'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import { set } from '@vueuse/core'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 
 defineProps({ faqs: Array })
@@ -29,8 +29,8 @@ const form = useForm({ id: null, heading: '', content: '' })
 
 function saveFaq() {
   form.post(route('admin.faq.store'), {
-    onSuccess: () => useQuickEnableRef(isSaved),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isSaved),
+    onError: () => quickEnableRef(isError),
     onFinish: () => {
       set(isShowEditModal, false)
       clearForm()
@@ -41,8 +41,8 @@ function saveFaq() {
 
 function deleteFaq() {
   form.delete(route('admin.faq.destroy', { id: form.id }), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => {
       set(isShowDeleteModal, false)
       clearForm()

@@ -4,7 +4,7 @@ import { useForm } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { useWindowSize } from '@vueuse/core'
 import { useReCaptcha } from 'vue-recaptcha-v3'
 
@@ -24,8 +24,8 @@ async function submit() {
   form.recaptcha_token = await executeRecaptcha('subscribeNotifications')
 
   form.post(route('subscribe.store'), {
-    onSuccess: () => useQuickEnableRef(isSuccess, 3000),
-    onError: () => useQuickEnableRef(isError, 3000),
+    onSuccess: () => quickEnableRef(isSuccess, 3000),
+    onError: () => quickEnableRef(isError, 3000),
     onFinish: () => {
       form.email = ''
       form.recaptcha_token = null

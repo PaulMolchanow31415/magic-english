@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { inject, ref } from 'vue'
+import { ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
@@ -19,14 +19,13 @@ import Pagination from '@/Shared/Pagination.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { set } from '@vueuse/core'
 import { useSearch } from '@/Composables/useSearch.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import formatTimestamp from '@/Helpers/formatTimestamp.js'
 
 const props = defineProps({
   subscribers: Object,
   filters: Object,
 })
-
-const formatDate = inject('formatDate')
 
 const searchedSubscriber = useSearch(props.filters.search)
 const isDeleted = ref(false)
@@ -35,8 +34,8 @@ const subscriberForRemoval = ref(null)
 
 function confirmDelete() {
   router.delete(route('admin.subscriber.destroy', { id: subscriberForRemoval.value.id }), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isDeleted),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isDeleted),
     onFinish: () => set(subscriberForRemoval, null),
   })
 }
@@ -75,7 +74,7 @@ function confirmDelete() {
             class="!mr-0 !rounded-md whitespace-nowrap"
           />
         </FwbTableCell>
-        <FwbTableCell v-text="formatDate(subscriber.created_at)" />
+        <FwbTableCell v-text="formatTimestamp(subscriber.created_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="subscriberForRemoval = subscriber" theme="red">
             Удалить

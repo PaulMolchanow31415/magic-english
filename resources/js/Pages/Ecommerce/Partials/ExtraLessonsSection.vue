@@ -2,7 +2,7 @@
 import { FwbButton, FwbP } from 'flowbite-vue'
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import Toast from '@/Types/Toast.js'
 import { set } from '@vueuse/core'
@@ -17,8 +17,8 @@ function handleAddToCart(selected) {
   router.post(route('cart.add-product', selected.id), null, {
     preserveScroll: true,
     preserveState: true,
-    onSuccess: () => useQuickEnableRef(isAdded),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isAdded),
+    onError: () => quickEnableRef(isError),
   })
 }
 

@@ -5,7 +5,7 @@ import { FwbButton, FwbSpinner } from 'flowbite-vue'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import { router } from '@inertiajs/vue3'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
 import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
@@ -85,9 +85,9 @@ function learn() {
   router.post(route('student.add-vocabulary', { word: srcWord.value }), null, {
     onSuccess: () => {
       hide()
-      useQuickEnableRef(isAdded, 1600)
+      quickEnableRef(isAdded, 1600)
     },
-    onError: () => useQuickEnableRef(isError, 1600),
+    onError: () => quickEnableRef(isError, 1600),
     preserveScroll: true,
   })
 }

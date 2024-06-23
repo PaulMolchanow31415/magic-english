@@ -2,7 +2,7 @@
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
-import { computed, inject, nextTick, reactive, ref } from 'vue'
+import { computed, nextTick, reactive, ref } from 'vue'
 import {
   FwbAvatar,
   FwbTable,
@@ -22,14 +22,13 @@ import Tooltip from '@/Shared/Tooltip.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import { useSearch } from '@/Composables/useSearch.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   dictionary: Object,
   filters: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const isSaved = ref(false)
 const isDeleted = ref(false)
@@ -55,18 +54,18 @@ const editableTranslation = computed({
   get: () => editable.item,
   set(str) {
     editable.item = str
-    .trim()
-    .toLowerCase()
-    .replace(/[^А-я\s]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^А-я\s]/g, '')
   },
 })
 const editableWord = computed({
   get: () => form.en,
   set(str) {
     form.en = str
-    .trim()
-    .toLowerCase()
-    .replace(/[^A-Za-z\s]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^A-Za-z\s]/g, '')
   },
 })
 
@@ -98,8 +97,8 @@ function handleAddTranslation() {
 
 function remove(vocabulary) {
   form.delete(route('admin.vocabulary.destroy', { id: vocabulary.id }), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isWordDeletionError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isWordDeletionError),
     preserveScroll: true,
     preserveState: true,
   })
@@ -137,8 +136,8 @@ function confirmEdit() {
   form.translations = Array.from(editable.translations)
 
   form.post(route('admin.vocabulary.store'), {
-    onSuccess: () => useQuickEnableRef(isSaved),
-    onError: () => useQuickEnableRef(isSavingError),
+    onSuccess: () => quickEnableRef(isSaved),
+    onError: () => quickEnableRef(isSavingError),
     onFinish: () => {
       editable.isShowModal = false
       form.id = null

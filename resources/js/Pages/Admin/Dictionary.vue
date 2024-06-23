@@ -2,7 +2,7 @@
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 import Toast from '@/Types/Toast.js'
 import Toaster from '@/Shared/Toaster.vue'
-import { inject, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
@@ -25,17 +25,16 @@ import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useSearch } from '@/Composables/useSearch.js'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { useSuggest } from '@/Composables/useSuggest.js'
 import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import avatarInitials from '@/Helpers/avatarInitials'
+import formatTimestamp from '@/Helpers/formatTimestamp.js'
 
 const props = defineProps({
   filters: Object,
   dictionaries: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
-const formatDate = inject('formatDate')
 
 const searchedDictionary = useSearch(props.filters.search)
 const { searched: searchedVocabulary, results: vocabularies } = useSuggest('api.vocabulary.list')
@@ -87,18 +86,18 @@ function confirmUpdate() {
     onSuccess: () => {
       editable.isShowModal = false
       editable.poster_url = null
-      useQuickEnableRef(isSaved)
+      quickEnableRef(isSaved)
       form.reset()
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
     preserveScroll: true,
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.dictionary.destroy', { id: dictionaryForRemoval.value.id }), {
-    onSuccess: () => useQuickEnableRef(isDeleted),
-    onError: () => useQuickEnableRef(isError),
+    onSuccess: () => quickEnableRef(isDeleted),
+    onError: () => quickEnableRef(isError),
     onFinish: () => set(dictionaryForRemoval, null),
     preserveScroll: true,
     preserveState: true,
@@ -160,7 +159,7 @@ function deletePoster() {
         </FwbTableCell>
         <FwbTableCell v-text="dictionary.category" />
         <FwbTableCell v-text="dictionary.complexity" />
-        <FwbTableCell v-text="formatDate(dictionary.updated_at)" />
+        <FwbTableCell v-text="formatTimestamp(dictionary.updated_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <div class="flex gap-6">
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>

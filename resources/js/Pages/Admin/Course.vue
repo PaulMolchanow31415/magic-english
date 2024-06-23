@@ -14,7 +14,7 @@ import {
 } from 'flowbite-vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import Toaster from '@/Shared/Toaster.vue'
-import { inject, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import { useSearch } from '@/Composables/useSearch.js'
@@ -22,16 +22,15 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import { useQuickEnableRef } from '@/Composables/useQuickEnableRef.js'
+import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { set } from '@vueuse/core'
 import GrammarModal from '@/Pages/Admin/Partials/GrammarModal.vue'
+import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   courses: Object,
   filters: Object,
 })
-
-const avatarInitials = inject('avatarInitials')
 
 const page = usePage()
 const searchedCourse = useSearch(props.filters.search)
@@ -73,12 +72,12 @@ function handleEdit(course) {
 function confirmUpdate() {
   form.post(route('admin.course.store'), {
     onSuccess: () => {
-      useQuickEnableRef(isSaved)
+      quickEnableRef(isSaved)
       editable.isShowModal = false
       editable.poster_url = null
       form.reset()
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
   })
 }
 
@@ -86,9 +85,9 @@ function confirmDelete() {
   form.delete(route('admin.course.destroy', { id: courseForRemoval.value.id }), {
     onSuccess: () => {
       set(courseForRemoval, null)
-      useQuickEnableRef(isDeleted)
+      quickEnableRef(isDeleted)
     },
-    onError: () => useQuickEnableRef(isError),
+    onError: () => quickEnableRef(isError),
     preserveState: true,
     preserveScroll: true,
   })
