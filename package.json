@@ -6,20 +6,20 @@
     "build": "vite build && vite build --ssr"
   },
   "devDependencies": {
-    "@inertiajs/vue3": "^1.1.0",
+    "@inertiajs/vue3": "^1.2.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.13",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/server-renderer": "^3.4.27",
-    "@vueuse/core": "^10.10.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/server-renderer": "^3.4.30",
+    "@vueuse/core": "^10.11.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "laravel-vite-plugin": "^1.0.4",
     "postcss": "^8.4.38",
     "postcss-nesting": "^12.1.5",
-    "tailwindcss": "^3.4.3",
-    "vite": "^5.2.11",
-    "vue": "^3.4.27"
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.3.1",
+    "vue": "^3.4.30"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
@@ -29,7 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "flowbite": "^2.3.0",
-    "flowbite-vue": "^0.1.4",
+    "flowbite-vue": "^0.1.5",
     "sortablejs-vue3": "^1.2.11",
     "v-wave": "^2.0.0",
     "vue-recaptcha-v3": "^2.0.1"
