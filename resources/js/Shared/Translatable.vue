@@ -2,7 +2,7 @@
 import { onClickOutside, set } from '@vueuse/core'
 import { reactive, ref } from 'vue'
 import { FwbButton, FwbSpinner } from 'flowbite-vue'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import { router } from '@inertiajs/vue3'
 import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'

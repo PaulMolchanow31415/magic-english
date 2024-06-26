@@ -10,7 +10,7 @@ import {
 import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import avatarInitials from '@/Helpers/avatarInitials'

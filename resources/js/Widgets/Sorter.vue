@@ -1,6 +1,6 @@
 <script setup>
 import { Sortable } from 'sortablejs-vue3'
-import SortableItem from '@/Types/SortableItem.js'
+import SortableItem from '@/Types/SortableItem.ts'
 import { computed } from 'vue'
 
 const props = defineProps({

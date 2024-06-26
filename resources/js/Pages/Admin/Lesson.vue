@@ -2,7 +2,7 @@
 import { useSearch } from '@/Composables/useSearch.js'
 import { ref } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'

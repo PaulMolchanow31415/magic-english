@@ -8,7 +8,7 @@ import {
   FwbP,
 } from 'flowbite-vue'
 import { router } from '@inertiajs/vue3'
-import { useSay } from '@/Composables/useSay.js'
+import { useSay } from '@/Composables/useSay.ts'
 import avatarInitials from '@/Helpers/avatarInitials'
 
 defineProps({

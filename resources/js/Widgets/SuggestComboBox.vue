@@ -1,5 +1,5 @@
 <script setup>
-import SuggestListItem from '@/Types/SuggestListItem.js'
+import SuggestListItem from '@/Types/SuggestListItem.ts'
 import { FwbInput } from 'flowbite-vue'
 import { ref } from 'vue'
 import { onClickOutside, set } from '@vueuse/core'

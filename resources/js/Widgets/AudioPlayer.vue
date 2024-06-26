@@ -1,19 +1,18 @@
-<script setup>
-import { useGlobalState } from '@/Composables/useGlobalState.js'
-import Tooltip from '@/Shared/Tooltip.vue'
+<script setup lang="ts">
+import { useGlobalState } from '../Composables/useGlobalState.js'
+import Tooltip from '../Shared/Tooltip.vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, onMounted, ref, watch } from 'vue'
-import { get, set } from '@vueuse/core'
 import { FwbP, FwbRange } from 'flowbite-vue'
-import OpacitySmallTransition from '@/Animations/OpacitySmallTransition.vue'
-import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
-import FadeHeightTransition from '@/Animations/FadeHeightTransition.vue'
+import OpacitySmallTransition from '../Animations/OpacitySmallTransition.vue'
+import OpacitySlideTopTransition from '../Animations/OpacitySlideTopTransition.vue'
+import FadeHeightTransition from '../Animations/FadeHeightTransition.vue'
 
 const state = useGlobalState()
 
 const volume = computed(() => state.value.volume)
 
-const player = ref()
+const player = ref<HTMLAudioElement>()
 const isPlaying = ref(false)
 const duration = ref(0)
 const currentTime = ref(0)
@@ -21,10 +20,10 @@ const isShowVolumePopover = ref(false)
 const isShowCapture = ref(false)
 const isLoadingError = ref(false)
 
-let timer
-let hours
-let minutes
-let sec
+let timer: NodeJS.Timer
+let hours: number
+let minutes: number
+let sec: number
 
 function formatTime(seconds = 0) {
   hours = Math.floor(seconds / 3600)
@@ -34,11 +33,11 @@ function formatTime(seconds = 0) {
 }
 
 function initPlayer() {
-  set(isPlaying, false)
-  set(isShowCapture, true)
-  set(isLoadingError, false)
-  set(duration, 0)
-  set(currentTime, 0)
+  isPlaying.value = false
+  isShowCapture.value = true
+  isLoadingError.value = false
+  duration.value = 0
+  currentTime.value = 0
 }
 
 function clearTimer() {
@@ -50,27 +49,27 @@ function clearTimer() {
 
 function startTimer() {
   clearTimer()
-  timer = setInterval(() => set(currentTime, player.value.currentTime), 1000)
+  timer = setInterval(() => (currentTime.value = player.value.currentTime), 1000)
 }
 
 function onAudioEnded() {
-  set(isPlaying, false)
+  isPlaying.value = false
   clearTimer()
   state.value.song = null
 }
 
 function onLoadMetaData() {
   if (player.value) {
-    player.value.volume = get(volume)
-    set(duration, player.value.duration)
-    set(currentTime, player.value.currentTime)
+    player.value.volume = volume.value
+    duration.value = player.value.duration
+    currentTime.value = player.value.currentTime
   }
 }
 
-function changeVolume(direction) {
-  if ((direction === 'up' && get(volume) < 1) || (direction === 'down' && get(volume) > 0)) {
+function changeVolume(dir: 'down' | 'up') {
+  if ((dir === 'up' && volume.value < 1) || (dir === 'down' && volume.value > 0)) {
     state.value.volume =
-      direction === 'up' ? Math.min(get(volume) + 0.1, 1) : Math.max(get(volume) - 0.1, 0)
+      dir === 'up' ? Math.min(volume.value + 0.1, 1) : Math.max(volume.value - 0.1, 0)
   }
 }
 
@@ -79,17 +78,17 @@ onMounted(initPlayer)
 watch(isPlaying, (isRun) =>
   isRun
     ? player.value
-    .play()
-    .then(startTimer)
-    .catch(() => {
-      set(isLoadingError, true)
-      set(isPlaying, false)
-      state.value.song = null
-    })
+        .play()
+        .then(startTimer)
+        .catch(() => {
+          isLoadingError.value = true
+          isPlaying.value = false
+          state.value.song = null
+        })
     : player.value.pause(),
 )
 
-watch(volume, () => (player.value.volume = get(volume)))
+watch(volume, () => (player.value.volume = volume.value))
 
 watch(() => state.value.song, initPlayer)
 </script>
@@ -188,7 +187,7 @@ watch(() => state.value.song, initPlayer)
             <Tooltip>
               <template #trigger>
                 <Link
-                  :href="route('singer.show', state.singer.id)"
+                  :href="/* @ts-ignore */ route('singer.show', state.singer.id)"
                   preserve-state
                   class="block audio-player-button group"
                 >
@@ -267,7 +266,7 @@ watch(() => state.value.song, initPlayer)
             <div
               @mouseenter="isShowVolumePopover = true"
               @mouseleave="isShowVolumePopover = false"
-              @wheel="changeVolume($event.wheelDeltaY > 0 ? 'up' : 'down')"
+              @wheel="changeVolume(($event as WheelEvent).deltaY < 0 ? 'up' : 'down')"
               class="relative"
             >
               <OpacitySmallTransition>

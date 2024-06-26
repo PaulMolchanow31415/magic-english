@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Pagination from '@/Shared/Pagination.vue'
 import {
   FwbAvatar,

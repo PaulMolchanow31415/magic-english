@@ -1,5 +1,5 @@
 <script setup>
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import { computed, nextTick, reactive, ref } from 'vue'

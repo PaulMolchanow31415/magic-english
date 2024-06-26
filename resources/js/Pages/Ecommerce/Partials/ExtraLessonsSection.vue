@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import { set } from '@vueuse/core'
 import EcommerceCard from '@/Pages/Ecommerce/Partials/EcommerceCard.vue'
 

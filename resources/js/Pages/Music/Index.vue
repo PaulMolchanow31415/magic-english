@@ -1,6 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import { useGlobalState } from '@/Composables/useGlobalState.js'
+import { useGlobalState } from '@/Composables/useGlobalState.ts'
 import { FwbListGroup, FwbListGroupItem } from 'flowbite-vue'
 
 const props = defineProps({ musics: Array, singer: Object })

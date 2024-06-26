@@ -4,7 +4,7 @@ import { useSearch } from '@/Composables/useSearch.js'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
 import { set } from '@vueuse/core'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {

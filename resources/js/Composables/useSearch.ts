@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { watchThrottled } from '@vueuse/core'
 import { router } from '@inertiajs/vue3'
 
-export function useSearch(searchValue) {
+export function useSearch(searchValue: string) {
   const searched = ref(searchValue || '')
 
   watchThrottled(

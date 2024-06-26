@@ -1,6 +1,6 @@
 <script setup>
 import { FwbToast } from 'flowbite-vue'
-import Toast from '@/Types/Toast.js'
+import Toast from '@/Types/Toast.ts'
 import CloseButton from '@/Shared/CloseButton.vue'
 import SlideLeftTransition from '@/Animations/SlideLeftTransition.vue'
 

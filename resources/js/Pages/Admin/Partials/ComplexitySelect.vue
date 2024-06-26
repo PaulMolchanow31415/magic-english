@@ -1,5 +1,5 @@
 <script setup>
-import SelectOption from '@/Types/SelectOption.js'
+import SelectOption from '@/Types/SelectOption.ts'
 import { FwbSelect } from 'flowbite-vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { usePage } from '@inertiajs/vue3'
