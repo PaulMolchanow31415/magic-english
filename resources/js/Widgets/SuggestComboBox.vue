@@ -1,29 +1,22 @@
-<script setup>
-import SuggestListItem from '@/Types/SuggestListItem.ts'
+<script setup lang="ts">
+import { SuggestListItem } from '../Classes'
 import { FwbInput } from 'flowbite-vue'
 import { ref } from 'vue'
-import { onClickOutside, set } from '@vueuse/core'
-import InputLabel from '@/Shared/InputLabel.vue'
-import ComboboxTransition from '@/Animations/ComboboxTransition.vue'
+import { onClickOutside } from '@vueuse/core'
+import InputLabel from '../Shared/InputLabel.vue'
+import ComboboxTransition from '../Animations/ComboboxTransition.vue'
 
-defineProps({
-  results: {
-    type: Array,
-    default: [],
-    validator(values) {
-      return values.every((r) => r instanceof SuggestListItem)
-    },
+withDefaults(
+  defineProps<{
+    results?: SuggestListItem[]
+    label?: string
+    placeholder?: string
+  }>(),
+  {
+    results: () => [],
+    placeholder: 'Найти...',
   },
-  className: {
-    type: String,
-    default: 'w-full',
-  },
-  label: String,
-  placeholder: {
-    type: String,
-    default: 'Найти...',
-  },
-})
+)
 
 defineEmits(['add'])
 
@@ -33,9 +26,7 @@ const isFocused = ref(false)
 const comboBox = ref(null)
 const searchInput = ref(null)
 
-onClickOutside(comboBox, () => set(isFocused, false), {
-  ignore: [searchInput],
-})
+onClickOutside(comboBox, () => (isFocused.value = false), { ignore: [searchInput] })
 </script>
 
 <template>
@@ -48,7 +39,7 @@ onClickOutside(comboBox, () => set(isFocused, false), {
           @focus="isFocused = true"
           size="sm"
           :placeholder="placeholder"
-          :class="className"
+          class="w-full"
         >
           <template #prefix>
             <Icon

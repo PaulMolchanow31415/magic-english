@@ -1,11 +1,16 @@
-type DateLocale = 'en-US' | 'ru-RU'
+interface FormatterOptions extends Intl.DateTimeFormatOptions {
+  locale?: 'en-US' | 'ru-RU'
+}
 
-export default function (timestamp: string, locale?: DateLocale) {
-  return new Date(timestamp).toLocaleString(locale ?? 'ru-RU', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+export default function (timestamp: string, options?: FormatterOptions) {
+  return new Date(timestamp).toLocaleString(
+    options?.locale ?? 'ru-RU',
+    options ?? {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    },
+  )
 }

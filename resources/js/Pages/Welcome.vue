@@ -1,14 +1,9 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import {
-  FwbAccordion,
-  FwbAccordionContent,
-  FwbAccordionHeader,
-  FwbAccordionPanel,
-  FwbButton,
-} from 'flowbite-vue'
+import { FwbButton } from 'flowbite-vue'
 import EmailSubscribeSection from '@/Widgets/EmailSubscribeSection.vue'
 import { ref } from 'vue'
+import { Accordion, AccordionItem } from '@/Shared/Accordion'
 
 defineProps({ faqs: Array })
 
@@ -50,17 +45,12 @@ const subscribeSection = ref(null)
 
     <section v-if="faqs.length > 0" class="py-14 md:py-24 lg:py-32">
       <h2 class="heading-2 mb-6">Ответы на вопросы</h2>
-      <FwbAccordion
-        class="border-b border-gray-200 dark:border-gray-700 shadow-md rounded-t-lg"
-        :open-first-item="false"
-      >
-        <FwbAccordionPanel v-for="faq in faqs" :key="faq.id">
-          <FwbAccordionHeader>{{ faq.heading }}</FwbAccordionHeader>
-          <FwbAccordionContent>
-            <p v-html="faq.content" class="text-gray-500 dark:text-gray-400 accordion-content" />
-          </FwbAccordionContent>
-        </FwbAccordionPanel>
-      </FwbAccordion>
+      <Accordion always-open>
+        <AccordionItem v-for="(faq, index) in faqs" :order="index" open-first :key="faq.id">
+          <template #heading>{{ faq.heading }}</template>
+          <p v-html="faq.content" class="accordion-content" />
+        </AccordionItem>
+      </Accordion>
     </section>
 
     <section ref="subscribeSection" class="pt-12 mb-28">

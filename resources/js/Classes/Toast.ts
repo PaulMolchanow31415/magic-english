@@ -1,22 +1,24 @@
 import ValidationError from './ValidationError'
-
-type ToastType = 'success' | 'info' | 'warning'
+import { TypeToast } from '../Types'
 
 interface IToast {
-  type: ToastType
+  type: TypeToast
   isShow: boolean
   value: string
+  closable?: boolean
 }
 
 export default class implements IToast {
-  type: ToastType
+  type: TypeToast
   isShow: boolean
   value: string
+  closable = false
 
   constructor(props: IToast) {
     this.type = props.type
     this.isShow = props.isShow
     this.value = props.value
+    this.closable = props.closable ?? false
 
     if (!this.validate()) {
       console.error(this)

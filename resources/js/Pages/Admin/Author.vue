@@ -1,10 +1,9 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useSearch } from '@/Composables/useSearch.js'
+import { useSearch } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import { set } from '@vueuse/core'
-import Toast from '@/Types/Toast.ts'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
@@ -23,7 +22,6 @@ import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import NameInput from '@/Shared/NameInput.vue'
-import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   authors: Object,
@@ -83,7 +81,7 @@ function confirmDelete() {
   form.delete(route('admin.author.destroy', authorForRemoval.value.id), {
     onSuccess: () => quickEnableRef(isDeleted),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(authorForRemoval, null),
+    onFinish: () => (authorForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
   })
@@ -108,7 +106,7 @@ function deletePoster() {
   <Head title="Авторы песен" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Автор успешно сохранен' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Автор удален' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

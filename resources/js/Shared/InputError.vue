@@ -1,9 +1,7 @@
 <script setup>
 import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
 
-defineProps({
-  message: String,
-})
+defineProps({ message: String })
 </script>
 
 <template>

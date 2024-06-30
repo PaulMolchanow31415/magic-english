@@ -1,10 +1,9 @@
 <script setup>
 import { Link, router } from '@inertiajs/vue3'
 import ApplicationMark from '@/Shared/ApplicationMark.vue'
-import DropdownLink from '@/Shared/DropdownLink.vue'
+import { Dropdown, DropdownLink } from '@/Shared/Dropdown'
 import { FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
 import ToggleThemeButton from '@/Shared/ToggleThemeButton.vue'
-import Dropdown from '../Shared/Dropdown.vue'
 import GlobalSearch from '@/Shared/GlobalSearch.vue'
 </script>
 
@@ -12,7 +11,7 @@ import GlobalSearch from '@/Shared/GlobalSearch.vue'
   <header>
     <FwbNavbar>
       <template #logo>
-        <Link class="shrink-0" href="/public">
+        <Link class="shrink-0" href="/">
           <ApplicationMark class="block h-9 w-auto" />
         </Link>
 

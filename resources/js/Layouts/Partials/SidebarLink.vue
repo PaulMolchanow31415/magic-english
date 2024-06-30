@@ -1,19 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 
-defineProps({
-  to: {
-    type: String,
-    required: true,
-  },
-  icon: {
-    type: String,
-  },
-  text: {
-    type: String,
-    required: true,
-  },
-})
+defineProps<{
+  to: string
+  text: string
+  icon?: string
+}>()
 </script>
 
 <template>

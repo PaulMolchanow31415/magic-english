@@ -1,10 +1,9 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useSearch } from '@/Composables/useSearch.js'
+import { useSearch, useSuggest } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import { set } from '@vueuse/core'
-import Toast from '@/Types/Toast.ts'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
@@ -24,11 +23,9 @@ import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationMo
 import AudioUploader from '@/Pages/Admin/Partials/AudioUploader.vue'
 import LyricsEditor from '@/Pages/Admin/Partials/LyricsEditor.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
-import { useSuggest } from '@/Composables/useSuggest.ts'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
 import OpacityTransition from '@/Animations/OpacityTransition.vue'
-import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   musics: Object,
@@ -64,7 +61,7 @@ const editable = reactive({
 function handleCreate() {
   editable.isShowModal = true
   editable.audio_url = null
-  set(selectedSinger, null)
+  selectedSinger.value = null
   form.reset()
 }
 
@@ -73,7 +70,7 @@ function handleEdit(music) {
   form.name = music.name
   form.audio = null
   form.lyrics = music.lyrics
-  set(selectedSinger, music.singer)
+  selectedSinger.value = music.singer
   editable.isShowModal = true
   editable.audio_url = music.audio_url
 }
@@ -88,7 +85,7 @@ function confirmUpdate() {
       onSuccess: () => {
         editable.isShowModal = false
         editable.audio_url = null
-        set(selectedSinger, null)
+        selectedSinger.value = null
         quickEnableRef(isSaved)
         form.reset()
       },
@@ -101,7 +98,7 @@ function confirmDelete() {
   form.delete(route('admin.music.destroy', musicForRemoval.value.id), {
     onSuccess: () => quickEnableRef(isDeleted),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(musicForRemoval, null),
+    onFinish: () => (musicForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
   })
@@ -123,7 +120,7 @@ function deleteAudio() {
   <Head title="Музыка" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Песня успешно сохранена' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Песня удалена' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

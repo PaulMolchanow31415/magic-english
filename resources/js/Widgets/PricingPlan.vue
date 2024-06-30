@@ -1,41 +1,26 @@
-<script>
-import { defineComponent } from 'vue'
-import PricingCardItem from '@/Types/PricingPlanItem.ts'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { PricingPlanItem } from '../Classes'
 import { FwbButton } from 'flowbite-vue'
 
-export default defineComponent({
-  components: { FwbButton },
-  props: {
-    title: {
-      type: String,
-      default: 'Стандартный план',
-    },
-    price: {
-      type: Number,
-      default: 1000,
-    },
-    duringTheTimePeriod: {
-      type: String,
-      default: 'месяц',
-    },
-    items: {
-      type: Array,
-      required: true,
-      validator(values) {
-        return values.every((v) => v instanceof PricingCardItem)
-      },
-    },
+const props = withDefaults(
+  defineProps<{
+    items: PricingPlanItem[]
+    title?: string
+    price?: number
+    duringTheTimePeriod?: string
+  }>(),
+  {
+    title: 'Стандартный план',
+    price: 1000,
+    duringTheTimePeriod: 'месяц',
   },
-  emits: ['selectPlan'],
-  computed: {
-    allowedItems() {
-      return this.items.filter((i) => i.isAllowed)
-    },
-    disallowedItems() {
-      return this.items.filter((i) => !i.isAllowed)
-    },
-  },
-})
+)
+
+defineEmits(['selectPlan'])
+
+const allowedItems = computed(() => props.items.filter((i) => i.isAllowed))
+const disallowedItems = computed(() => props.items.filter((i) => !i.isAllowed))
 </script>
 
 <template>

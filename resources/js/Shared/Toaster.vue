@@ -1,23 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { FwbToast } from 'flowbite-vue'
-import Toast from '@/Types/Toast.ts'
-import CloseButton from '@/Shared/CloseButton.vue'
-import SlideLeftTransition from '@/Animations/SlideLeftTransition.vue'
+import CloseButton from '../Shared/CloseButton.vue'
+import SlideLeftTransition from '../Animations/SlideLeftTransition.vue'
+import { FwbToastType } from '../Types'
+import { Toast } from '../Classes'
 
-defineProps({
-  tosts: {
-    type: Array,
-    required: true,
-    default: [],
-    validator(values = []) {
-      return values.every((t) => t instanceof Toast)
-    },
+withDefaults(
+  defineProps<{
+    toasts: Toast[]
+    closable?: boolean
+  }>(),
+  {
+    toasts: () => [],
+    closable: false,
   },
-  closable: {
-    type: Boolean,
-    default: false,
-  },
-})
+)
 
 defineEmits(['close'])
 </script>
@@ -27,8 +24,8 @@ defineEmits(['close'])
     <div class="fixed right-5 top-5 flex flex-col gap-2.5">
       <SlideLeftTransition>
         <FwbToast
-          v-for="(message, index) in tosts"
-          :type="message.type"
+          v-for="(message, index) in toasts"
+          :type="message.type as FwbToastType"
           v-show="message.isShow"
           :key="index"
         >
@@ -39,6 +36,7 @@ defineEmits(['close'])
           </template>
           <div class="info-line">
             {{ message.value }}
+            <!-- fixme -->
             <CloseButton v-if="closable" @close="$emit('close', index)" />
           </div>
         </FwbToast>

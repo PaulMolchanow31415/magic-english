@@ -12,25 +12,17 @@ const props = defineProps({
   },
 })
 
-const currentPage = ref(props.data.current_page)
+const page = ref(props.data.current_page)
 
-watch(currentPage, (updated) => {
-  router.visit(props.data.links[updated].url, {
+watch(page, (currentPage) => {
+  router.visit(props.data.links[currentPage].url, {
     preserveState: true,
   })
 })
 
-onKeyStroke('ArrowLeft', () => {
-  if (currentPage.value > 1) {
-    --currentPage.value
-  }
-})
+onKeyStroke('ArrowLeft', () => page.value > 1 && --page.value)
 
-onKeyStroke('ArrowRight', () => {
-  if (currentPage.value < props.data.last_page) {
-    ++currentPage.value
-  }
-})
+onKeyStroke('ArrowRight', () => page.value < props.data.last_page && ++page.value)
 </script>
 
 <template>
@@ -42,7 +34,7 @@ onKeyStroke('ArrowRight', () => {
         <Tooltip>
           <template #trigger>
             <FwbPagination
-              v-model="currentPage"
+              v-model="page"
               :total-pages="data.last_page"
               previous-label="Назад"
               next-label="Вперед"

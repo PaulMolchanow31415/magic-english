@@ -1,8 +1,8 @@
 <script setup>
-import { useSearch } from '@/Composables/useSearch.js'
+import { useSearch } from '@/Composables'
 import { ref } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
@@ -18,11 +18,9 @@ import {
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
-import { set } from '@vueuse/core'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import { formatTimestamp, quickEnableRef } from '@/Helpers'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
-import formatTimestamp from '@/Helpers/formatTimestamp.js'
 
 const props = defineProps({
   lessons: Object,
@@ -51,7 +49,7 @@ function handleCreate() {
   form.number = number.value + 1
   form.content = ''
   form.complexity = page.props.complexities[0]
-  set(isShowEditModal, true)
+  isShowEditModal.value = true
 }
 
 function handleEdit(lesson) {
@@ -59,7 +57,7 @@ function handleEdit(lesson) {
   form.number = lesson.number || number.value + 1
   form.content = lesson.content
   form.complexity = lesson.complexity
-  set(isShowEditModal, true)
+  isShowEditModal.value = true
 }
 
 function confirmUpdate() {
@@ -67,7 +65,7 @@ function confirmUpdate() {
     preserveScroll: true,
     onSuccess() {
       quickEnableRef(isSaved)
-      set(isShowEditModal, false)
+      isShowEditModal.value = false
       form.reset()
       number.value++
     },
@@ -78,7 +76,7 @@ function confirmUpdate() {
 function confirmDelete() {
   form.delete(route('admin.lesson.destroy', { id: lessonForRemoval.value.id }), {
     onSuccess: () => {
-      set(lessonForRemoval, null)
+      lessonForRemoval.value = null
       quickEnableRef(isDeleted)
     },
     onError: () => quickEnableRef(isError),
@@ -92,7 +90,7 @@ function confirmDelete() {
   <Head title="Уроки" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Урок успешно сохранен' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Урок удален' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

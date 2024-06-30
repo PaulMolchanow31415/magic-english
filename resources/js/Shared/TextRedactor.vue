@@ -1,55 +1,55 @@
-<script setup>
+<script setup lang="ts">
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { ref } from 'vue'
-import { set } from '@vueuse/core'
-import InputError from '@/Shared/InputError.vue'
+import InputError from '../Shared/InputError.vue'
 
-const props = defineProps({
-  placeholder: {
-    type: String,
-    default: 'Start typing here...',
-  },
-  breakLineKeyBinding: {
-    type: String,
-    default: 'Enter', // instead Shift+Enter
-  },
-  errorMessage: String,
-  toolbarStyle: {
-    type: String,
-    default: 'default',
-    validator(v) {
-      return v === 'full' || v === 'minimal' || v === 'default' || v === 'none'
-    },
-  },
-  disabled: Boolean,
-})
+type ToolbarStyle = 'full' | 'minimal' | 'default' | 'none'
 
-const model = defineModel({ type: String })
+const props = withDefaults(
+  defineProps<{
+    placeholder?: string
+    breakLineKeyBinding?: string
+    errorMessage?: string
+    toolbarStyle?: ToolbarStyle
+    disabled?: boolean
+  }>(),
+  {
+    placeholder: 'Начните печатать здесь...',
+    breakLineKeyBinding: 'Enter', // instead Shift+Enter
+    toolbarStyle: 'default',
+  },
+)
+
+const model = defineModel<string>()
 const editor = ref()
-let toolbar = ref({})
+let toolbar = ref<string[]>()
 
 switch (props.toolbarStyle) {
   case 'default':
     // prettier-ignore
-    set(toolbar, [
+    toolbar.value = [
       'undo', 'redo',
       '|', 'heading',
       '|', 'bold', 'italic',
       // '|', 'link', 'uploadImage', 'blockQuote',
       // '|', 'bulletedList', 'numberedList', 'outdent', 'indent',
-    ])
+    ]
     break
   case 'minimal':
-    set(toolbar, ['undo', 'redo', '|', 'bold', 'italic'])
+    toolbar.value = ['undo', 'redo', '|', 'bold', 'italic']
     break
   case 'none':
-    set(toolbar, ['undo', 'redo'])
+    toolbar.value = ['undo', 'redo']
     break
 }
 
-function onReady(readyEditor) {
+interface ReadyEvent {
+  keystrokes: { set: (binding: string, key: string) => void }
+}
+
+function onReady(readyEditor: ReadyEvent) {
   readyEditor.keystrokes.set(props.breakLineKeyBinding, 'enter')
-  set(editor, readyEditor)
+  editor.value = readyEditor
 }
 </script>
 

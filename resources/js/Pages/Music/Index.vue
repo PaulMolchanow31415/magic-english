@@ -1,11 +1,11 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import { useGlobalState } from '@/Composables/useGlobalState.ts'
+import { useMusicState } from '@/Composables'
 import { FwbListGroup, FwbListGroupItem } from 'flowbite-vue'
 
 const props = defineProps({ musics: Array, singer: Object })
 
-const state = useGlobalState()
+const state = useMusicState()
 
 function onClick(music) {
   state.value.song = music

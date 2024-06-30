@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import { watchThrottled } from '@vueuse/core'
-import SuggestListItem from '../Types/SuggestListItem'
 import { RouteName } from '../../../vendor/tightenco/ziggy'
+import { SuggestListItem } from '../Classes'
+import { getSuggestions } from '../api'
 
 export function useSuggest(routeName: RouteName, propName = 'en') {
   const searched = ref('')
@@ -11,8 +12,8 @@ export function useSuggest(routeName: RouteName, propName = 'en') {
     searched,
     (search) =>
       search &&
-      axios.get(route(routeName, { search })).then((res) => {
-        results.value = res.data.data.map((item: { id: number }) => {
+      getSuggestions(routeName, search).then((res) => {
+        results.value = res.data.map((item) => {
           return new SuggestListItem({ id: item.id, value: item[propName] })
         })
       }),

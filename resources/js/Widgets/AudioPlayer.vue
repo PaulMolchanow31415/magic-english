@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGlobalState } from '../Composables/useGlobalState.js'
+import { useMusicState } from '../Composables'
 import Tooltip from '../Shared/Tooltip.vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, onMounted, ref, watch } from 'vue'
@@ -8,7 +8,7 @@ import OpacitySmallTransition from '../Animations/OpacitySmallTransition.vue'
 import OpacitySlideTopTransition from '../Animations/OpacitySlideTopTransition.vue'
 import FadeHeightTransition from '../Animations/FadeHeightTransition.vue'
 
-const state = useGlobalState()
+const state = useMusicState()
 
 const volume = computed(() => state.value.volume)
 

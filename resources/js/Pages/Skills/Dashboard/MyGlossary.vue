@@ -3,12 +3,12 @@ import { FwbButton } from 'flowbite-vue'
 import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
-import { useSuggest } from '@/Composables/useSuggest.ts'
+import { useSuggest } from '@/Composables'
 import { router } from '@inertiajs/vue3'
 import { ref, toRef, watch } from 'vue'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import { quickEnableRef } from '@/Helpers'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
 
 const props = defineProps({
@@ -49,7 +49,7 @@ watch(selectedFilter, (learnable) => {
   <AutoHead />
 
   <Toaster
-    :tosts="[new Toast({ type: 'info', isShow: isEmpty, value: 'Слишком мало добавленных слов' })]"
+    :toasts="[new Toast({ type: 'info', isShow: isEmpty, value: 'Слишком мало добавленных слов' })]"
   />
 
   <section

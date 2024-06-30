@@ -2,7 +2,7 @@
 import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbBadge,
@@ -18,9 +18,8 @@ import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import Pagination from '@/Shared/Pagination.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { set } from '@vueuse/core'
-import { useSearch } from '@/Composables/useSearch.js'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import formatTimestamp from '@/Helpers/formatTimestamp.js'
+import { useSearch } from '@/Composables'
+import { formatTimestamp, quickEnableRef } from '@/Helpers'
 
 const props = defineProps({
   subscribers: Object,
@@ -45,7 +44,7 @@ function confirmDelete() {
   <Head title="Подписчики" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isDeleted, value: 'Подписчик успешно удален' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
     ]"

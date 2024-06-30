@@ -2,10 +2,9 @@
 import { FwbButton, FwbP } from 'flowbite-vue'
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
+import { quickEnableRef } from '@/Helpers'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
-import { set } from '@vueuse/core'
+import { Toast } from '@/Classes'
 import EcommerceCard from '@/Pages/Ecommerce/Partials/EcommerceCard.vue'
 
 defineProps({ lessons: Array })
@@ -25,10 +24,10 @@ function handleAddToCart(selected) {
 function onCloseToast(index) {
   switch (index) {
     case 0:
-      set(isAdded, false)
+      isAdded.value = false
       break
     case 1:
-      set(isError, false)
+      isError.value = false
       break
   }
 }
@@ -38,7 +37,7 @@ function onCloseToast(index) {
   <Toaster
     closable
     @close="onCloseToast"
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', value: 'Продукт добавлен в корзину!', isShow: isAdded }),
       new Toast({
         type: 'warning',

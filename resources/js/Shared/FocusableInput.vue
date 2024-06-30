@@ -1,8 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-const model = defineModel({ modelValue: String })
-const input = ref(null)
+const model = defineModel({ type: String })
+
+const input = ref<HTMLInputElement>(null)
 
 onMounted(() => {
   if (input.value.hasAttribute('autofocus')) {

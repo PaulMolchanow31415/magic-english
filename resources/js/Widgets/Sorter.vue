@@ -1,23 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { Sortable } from 'sortablejs-vue3'
-import SortableItem from '@/Types/SortableItem.ts'
+import { SortableItem } from '../Classes'
 import { computed } from 'vue'
 
-const props = defineProps({
-  list: {
-    type: Array,
-    required: true,
-    validator(values) {
-      return values.every((i) => i instanceof SortableItem)
-    },
-  },
-})
-
-const emit = defineEmits(['change-order'])
+const props = defineProps<{ list: SortableItem[] }>()
 
 const items = computed(() => props.list)
 
-function onReplace(event) {
+const emit = defineEmits<{
+  'change-order': [items: SortableItem[]]
+}>()
+
+interface ReplaceEvent {
+  oldIndex: number
+  newIndex: number
+}
+
+function onReplace(event: ReplaceEvent) {
   const { oldIndex, newIndex } = event
   const replaced = items.value.splice(oldIndex, 1)
   items.value.splice(newIndex, 0, ...replaced)

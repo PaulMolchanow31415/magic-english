@@ -15,16 +15,14 @@ import { ref } from 'vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import Pagination from '@/Shared/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { set } from '@vueuse/core'
 import DeleteConfirmationModal from './Partials/DeleteConfirmationModal.vue'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import UpdateModal from './Partials/UpdateModal.vue'
 import TableActionButton from './Partials/TableActionButton.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
-import { useSearch } from '@/Composables/useSearch.js'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import avatarInitials from '@/Helpers/avatarInitials'
+import { useSearch } from '@/Composables'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
 
 const props = defineProps({
   users: Object,
@@ -44,14 +42,14 @@ function handleEdit(user) {
   form.id = user.id
   form.role = user.role
   form.is_banned = !!user.is_banned
-  set(isShowEditModal, true)
+  isShowEditModal.value = true
 }
 
 function confirmDelete() {
   router.delete(route('admin.user.destroy', { id: userForRemoval.value.id }), {
     onSuccess: () => quickEnableRef(userDeleted),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(userForRemoval, null),
+    onFinish: () => (userForRemoval.value = null),
   })
 }
 
@@ -59,7 +57,7 @@ function confirmEdit() {
   form.post(route('admin.user.store'), {
     onSuccess: () => quickEnableRef(userSaved),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(isShowEditModal, false),
+    onFinish: () => (isShowEditModal.value = false),
   })
 }
 </script>
@@ -68,7 +66,7 @@ function confirmEdit() {
   <Head title="Пользователи" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: userSaved, value: 'Пользователь успешно обновлен' }),
       new Toast({ type: 'success', isShow: userDeleted, value: 'Пользователь удален!' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

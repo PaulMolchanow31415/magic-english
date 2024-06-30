@@ -1,27 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
 import { initCollapses } from 'flowbite'
+import { nanoid } from 'nanoid'
 
-defineProps({
-  text: {
-    type: String,
-    required: true,
-  },
-})
+defineProps<{ text: string }>()
 
-onMounted(() => {
-  initCollapses()
-})
+onMounted(initCollapses)
 
-const uuid = crypto.randomUUID()
+const id = nanoid()
 </script>
 
 <template>
   <button
     type="button"
     class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-    :aria-controls="uuid"
-    :data-collapse-toggle="uuid"
+    :aria-controls="id"
+    :data-collapse-toggle="id"
   >
     <Icon
       :icon="['fas', 'list']"
@@ -30,7 +24,7 @@ const uuid = crypto.randomUUID()
     <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ text }}</span>
     <Icon :icon="['fas', 'angle-down']" />
   </button>
-  <ul :id="uuid" class="hidden py-2 space-y-2">
+  <ul :id="id" class="hidden py-2 space-y-2">
     <slot />
   </ul>
 </template>

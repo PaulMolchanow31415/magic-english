@@ -1,5 +1,5 @@
 <script setup>
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import { computed, nextTick, reactive, ref } from 'vue'
@@ -21,9 +21,8 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
-import { useSearch } from '@/Composables/useSearch.js'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import avatarInitials from '@/Helpers/avatarInitials'
+import { useSearch } from '@/Composables'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
 
 const props = defineProps({
   dictionary: Object,
@@ -155,7 +154,7 @@ function confirmEdit() {
   <Head title="Лексика" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Слово с переводом добавлено' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Слово удалено' }),
       new Toast({

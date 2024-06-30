@@ -1,23 +1,28 @@
-<script setup>
-import SelectOption from '@/Types/SelectOption.ts'
+<script setup lang="ts">
+import { SelectOption } from '../../../Classes'
+import { FwbOptionsType } from '../../../Types'
 import { FwbSelect } from 'flowbite-vue'
-import InputLabel from '@/Shared/InputLabel.vue'
+import InputLabel from '../../../Shared/InputLabel.vue'
 import { usePage } from '@inertiajs/vue3'
 
-defineProps({
-  label: {
-    type: String,
-    default: 'Сложность набора',
+withDefaults(
+  defineProps<{
+    label?: string
+    errorMessage?: string
+  }>(),
+  {
+    label: 'Сложность набора',
   },
-  errorMessage: { type: String },
-})
+)
 
 const selected = defineModel({
   type: [null, String],
   required: true,
 })
 
-const options = usePage().props.complexities.map((c) => new SelectOption({ value: c, name: c }))
+const options = usePage<{
+  complexities: string[]
+}>().props.complexities.map((c) => new SelectOption({ value: c, name: c })) as FwbOptionsType
 </script>
 
 <template>
@@ -28,7 +33,7 @@ const options = usePage().props.complexities.map((c) => new SelectOption({ value
         placeholder="Выберите сложность"
         size="sm"
         :options="options"
-        :validation-status="errorMessage ? 'error' : ''"
+        :validation-status="errorMessage ? 'error' : null"
       >
         <template #validationMessage>{{ errorMessage }} </template>
         <template #helper><slot /></template>

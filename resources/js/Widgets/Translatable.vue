@@ -1,30 +1,31 @@
-<script setup>
-import { onClickOutside, set } from '@vueuse/core'
+<script setup lang="ts">
+import { onClickOutside } from '@vueuse/core'
 import { reactive, ref } from 'vue'
 import { FwbButton, FwbSpinner } from 'flowbite-vue'
-import Toast from '@/Types/Toast.ts'
-import Toaster from '@/Shared/Toaster.vue'
+import Toaster from '../Shared/Toaster.vue'
 import { router } from '@inertiajs/vue3'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
-import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
+import { quickEnableRef } from '../Helpers'
+import OpacitySlideTopTransition from '../Animations/OpacitySlideTopTransition.vue'
+import Opacity300Transition from '../Animations/Opacity300Transition.vue'
+import { Spinner, Toast } from '../Classes'
+import { apiTranslate } from '../api'
 
-const wrapper = ref(null)
+const wrapper = ref<HTMLDivElement>(null)
 const srcWord = ref('')
-const translations = ref([])
-const popover = ref(null)
+const translations = ref<string[]>([])
+const popover = ref<HTMLDivElement>(null)
 const isAdded = ref(false)
 const isError = ref(false)
 const isLoading = ref(false)
-const spinnerStyles = reactive({ left: `0px`, top: `0px`, position: 'absolute' })
+const spinnerStyles = reactive(new Spinner())
 
-async function translateOrHide(event) {
+async function translateOrHide(event: MouseEvent) {
   const selection = getSelection()
   const range = selection.getRangeAt(0)
   const text = selection.anchorNode.textContent
-  let word
-  let startIndex
-  let endIndex
+  let word: string
+  let startIndex: number
+  let endIndex: number
   let currentIndex = range.startOffset
 
   hide()
@@ -33,9 +34,9 @@ async function translateOrHide(event) {
     return
   }
 
-  set(isLoading, true)
-  spinnerStyles.top = event.pageY + 'px'
-  spinnerStyles.left = event.pageX + 'px'
+  isLoading.value = true
+  spinnerStyles.top = `${event.pageY}px`
+  spinnerStyles.left = `${event.pageX}px`
 
   while (!startIndex && typeof startIndex !== 'number') {
     if (text[currentIndex] === ' ') {
@@ -59,16 +60,16 @@ async function translateOrHide(event) {
     }
   }
 
-  word = text.slice(startIndex, endIndex).replaceAll(/[^a-zA-Z\s]+/g, '')
+  word = text.slice(startIndex, endIndex).replace(/[^a-zA-Z\s]+/g, '')
 
   if (!word || word.match(/^[А-я]+$/)) {
-    set(isLoading, false)
+    isLoading.value = false
     return
   }
 
-  const { data } = await axios.get(route('api.translate', { word }))
+  const data = await apiTranslate(word)
 
-  set(isLoading, false)
+  isLoading.value = false
 
   if (data.length === 0) {
     return
@@ -77,8 +78,8 @@ async function translateOrHide(event) {
   popover.value.style.top = event.pageY + 'px'
   popover.value.style.left = event.pageX + 'px'
 
-  set(srcWord, word)
-  set(translations, data.length > 4 ? data.slice(0, 5) : data.slice(0, data.length))
+  srcWord.value = word
+  translations.value = data.length > 4 ? data.slice(0, 5) : data.slice(0, data.length)
 }
 
 function learn() {
@@ -93,8 +94,8 @@ function learn() {
 }
 
 function hide() {
-  set(srcWord, '')
-  set(translations, [])
+  srcWord.value = ''
+  translations.value.length = 0
 }
 
 onClickOutside(wrapper, hide, { ignore: [popover] })
@@ -103,7 +104,7 @@ onClickOutside(wrapper, hide, { ignore: [popover] })
 <template>
   <div>
     <Toaster
-      :tosts="[
+      :toasts="[
         new Toast({ type: 'success', isShow: isAdded, value: 'Слово добавлено!' }),
         new Toast({ type: 'warning', isShow: isError, value: 'Не удалось добавить в словарь' }),
       ]"

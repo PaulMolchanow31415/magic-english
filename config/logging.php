@@ -13,7 +13,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option defines the default log channel that gets used when writing
-    | tosts to the logs. The name specified in this option should match
+    | toasts to the logs. The name specified in this option should match
     | one of the channels defined in the "channels" configuration array.
     |
     */

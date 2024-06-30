@@ -1,21 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 
-const props = defineProps({
-  align: {
-    type: String,
-    default: 'right',
+type DropdownAlign = 'left' | 'right'
+type TWidth = '48'
+
+const props = withDefaults(
+  defineProps<{
+    align?: DropdownAlign
+    width?: TWidth
+    contentClasses?: string[]
+  }>(),
+  {
+    align: 'right',
+    width: '48',
+    contentClasses: () => ['py-1', 'bg-white dark:bg-gray-700'],
   },
-  width: {
-    type: String,
-    default: '48',
-  },
-  contentClasses: {
-    type: Array,
-    default: () => ['py-1', 'bg-white dark:bg-gray-700'],
-  },
-})
+)
 
 const open = ref(false)
 
@@ -37,7 +38,7 @@ const alignmentClasses = computed(() => {
   return 'origin-top'
 })
 
-const closeOnEscape = (e) => {
+const closeOnEscape = (e: KeyboardEvent) => {
   if (open.value && e.key === 'Escape') {
     open.value = false
   }

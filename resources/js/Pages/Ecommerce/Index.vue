@@ -1,8 +1,7 @@
 <script setup>
 import ExtraLessonsSection from '@/Pages/Ecommerce/Partials/ExtraLessonsSection.vue'
 import { Head, Link } from '@inertiajs/vue3'
-import { useWindowSize } from '@vueuse/core'
-import { computed } from 'vue'
+import { useDeviceSize } from '@/Composables'
 
 defineProps({
   filters: Object,
@@ -10,9 +9,7 @@ defineProps({
   hasCartProducts: Boolean,
 })
 
-const { width } = useWindowSize()
-
-const isMobile = computed(() => width.value <= 400)
+const { isMobile } = useDeviceSize({ mobile: 400 })
 </script>
 
 <template>

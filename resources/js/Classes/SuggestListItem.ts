@@ -1,9 +1,5 @@
 import ValidationError from './ValidationError'
-
-interface ISuggestListItem {
-  id: number
-  value: string
-}
+import { ISuggestListItem } from '../Interfaces'
 
 export default class implements ISuggestListItem {
   id: number

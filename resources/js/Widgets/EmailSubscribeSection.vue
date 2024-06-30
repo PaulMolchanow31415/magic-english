@@ -1,22 +1,18 @@
 <script setup>
 import { FwbA, FwbButton, FwbInput } from 'flowbite-vue'
 import { useForm } from '@inertiajs/vue3'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import { useWindowSize } from '@vueuse/core'
+import { Toast } from '@/Classes'
+import { quickEnableRef } from '@/Helpers'
 import { useReCaptcha } from 'vue-recaptcha-v3'
+import { useDeviceSize } from '@/Composables'
 
 const isSuccess = ref(false)
 const isError = ref(false)
-const form = useForm({
-  email: '',
-  recaptcha_token: null,
-})
-
+const form = useForm({ email: '', recaptcha_token: null })
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
-const { width } = useWindowSize()
+const { isMobile } = useDeviceSize()
 
 async function submit() {
   await recaptchaLoaded()
@@ -33,13 +29,11 @@ async function submit() {
     preserveScroll: true,
   })
 }
-
-const isMobile = computed(() => width.value <= 460)
 </script>
 
 <template>
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSuccess, value: 'Вы успешно подписались!' }),
       new Toast({ type: 'warning', isShow: isError, value: form.errors.email || 'Ошибка' }),
     ]"

@@ -1,35 +1,25 @@
-<script>
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { FwbBadge } from 'flowbite-vue'
+import { FwbBadgeSize, FwbBadgeType } from '../Types'
 
-export default defineComponent({
-  name: 'Badge',
-  components: { FwbBadge },
-  props: {
-    closable: {
-      type: Boolean,
-      default: false,
-    },
-    icon: {
-      type: String,
-    },
-    size: {
-      type: String,
-      validator(v) {
-        return v === 'xs' || v === 'sm' || v === 'lg'
-      },
-    },
-    theme: {
-      /* 'default' | 'dark' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink'> */
-      type: String,
-    },
+withDefaults(
+  defineProps<{
+    icon?: string
+    closable?: boolean
+    size?: FwbBadgeSize
+    theme?: FwbBadgeType
+  }>(),
+  {
+    closable: false,
+    theme: 'default',
   },
-  emits: ['close'],
-})
+)
+
+defineEmits(['close'])
 </script>
 
 <template>
-  <FwbBadge :type="theme || 'default'" :size="size" class="gap-1.5 whitespace-nowrap items-center">
+  <FwbBadge :type="theme" :size="size" class="gap-1.5 whitespace-nowrap items-center">
     <template v-if="icon" #icon>
       <Icon :icon="['fas', icon]" size="sm" />
     </template>
@@ -50,5 +40,3 @@ export default defineComponent({
     </template>
   </FwbBadge>
 </template>
-
-<style scoped></style>

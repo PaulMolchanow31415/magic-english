@@ -1,7 +1,6 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import { set } from '@vueuse/core'
 import { FwbButton, FwbP } from 'flowbite-vue'
 import CloseButton from '@/Shared/CloseButton.vue'
 import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
@@ -10,7 +9,7 @@ const page = usePage()
 const isShow = ref(false)
 
 if (!page.props.isAcceptCookies) {
-  setTimeout(() => set(isShow, true), 10_000)
+  setTimeout(() => (isShow.value = true), 10_000)
 }
 
 function accept() {
@@ -18,7 +17,7 @@ function accept() {
     preserveScroll: true,
     preserveState: true,
   })
-  set(isShow, false)
+  isShow.value = false
 }
 </script>
 

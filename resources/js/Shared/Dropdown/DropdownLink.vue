@@ -1,10 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 
-defineProps({
-  href: String,
-  as: String,
-})
+type TagLink = 'button' | 'a'
+
+defineProps<{
+  href?: string
+  as?: TagLink
+}>()
 </script>
 
 <template>

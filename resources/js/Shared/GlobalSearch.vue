@@ -2,8 +2,8 @@
 import { FwbInput } from 'flowbite-vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-import { get, onClickOutside, set, watchThrottled } from '@vueuse/core'
-import { useScrollLock } from '@/Composables/useScrollLock.ts'
+import { onClickOutside, watchThrottled } from '@vueuse/core'
+import { useScrollLock } from '@/Composables'
 import DropdownTransition from '@/Animations/ComboboxTransition.vue'
 
 const searched = ref('')
@@ -12,24 +12,24 @@ const isFocused = ref(false)
 const comboBox = ref(null)
 const searchInput = ref(null)
 
-const isComboboxVisible = computed(() => get(isFocused) && get(searched) && get(results).length > 0)
+const isComboboxVisible = computed(() => isFocused.value && searched.value && results.value.length)
 
 function clear() {
-  set(results, [])
-  set(searched, '')
-  set(isFocused, false)
+  results.value = []
+  searched.value = ''
+  isFocused.value = false
 }
 
-onClickOutside(comboBox, () => set(isFocused, false), { ignore: [searchInput] })
+onClickOutside(comboBox, () => (isFocused.value = false), { ignore: [searchInput] })
 
 watchThrottled(
   searched,
   (query) =>
     query &&
     axios
-    .get(route('api.global-search'), { params: { query } })
-    .then((res) => set(results, res.data))
-    .catch(() => set(results, [])),
+      .get(route('api.global-search'), { params: { query } })
+      .then((res) => (results.value = res.data))
+      .catch(() => (results.value = [])),
   { throttle: 900 },
 )
 

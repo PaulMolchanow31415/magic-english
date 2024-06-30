@@ -1,13 +1,11 @@
 import { DefineComponent, warn } from 'vue'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
+import { IModule } from '../Interfaces'
+
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import SkillsLayout from '@/Layouts/SkillsLayout.vue'
-
-interface IModule {
-  default: { layout: DefineComponent[] | DefineComponent }
-}
 
 export default function (name: string) {
   const page = resolvePageComponent(
@@ -36,7 +34,7 @@ export default function (name: string) {
         return layout
       }
 
-      warn('Вы записали пустой массив в опцию layout', layout)
+      warn('You have written an empty array to the layout definition (defineLayout)', module)
       return [BaseLayout]
     })()
   })

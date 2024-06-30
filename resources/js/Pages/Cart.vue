@@ -7,23 +7,19 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
 import Toaster from '@/Shared/Toaster.vue'
-import Toast from '@/Types/Toast.ts'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import { useWindowSize } from '@vueuse/core'
-import avatarInitials from '@/Helpers/avatarInitials'
+import { Toast } from '@/Classes'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { useDeviceSize } from '@/Composables'
 
 defineProps({ products: Array })
 
 const isRemoved = ref(false)
 const isError = ref(false)
-
-const { width } = useWindowSize()
-
-const isTablet = computed(() => width.value > 639)
+const isTablet = useDeviceSize().isGreaterThen(639)
 
 function handleRemove(product) {
   router.delete(route('cart.remove-product', product.pivot.product_id), {
@@ -39,7 +35,7 @@ function handleRemove(product) {
   <Head :title="`Корзина (${products.length})`" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', value: 'Успешно удалено!', isShow: isRemoved }),
       new Toast({
         type: 'warning',

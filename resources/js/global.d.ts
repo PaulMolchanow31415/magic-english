@@ -1,5 +1,4 @@
-// import { Router } from 'vendor/tightenco/ziggy/src/js/Router.js'
-import { route as routeFn } from '../../../vendor/tightenco/ziggy/src/js/index.d.ts'
+import { route as routeFn } from '../../vendor/tightenco/ziggy'
 import { AxiosInstance } from 'axios'
 
 declare global {

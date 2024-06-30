@@ -1,38 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
+import { FwbValidationStatus } from '../Types'
 
-const props = defineProps({
-  value: [String, Object],
-  name: String,
-  label: String,
-  disabled: Boolean,
-  status: {
-    type: String,
-    validator: (v) => v === 'success' || v === 'error',
-  },
-})
+const props = defineProps<{
+  value?: string | object
+  name?: string
+  label?: string
+  disabled?: boolean
+  status?: FwbValidationStatus
+}>()
 
-const checked = defineModel({ type: [String, Object] })
+const checked = defineModel<string | object>()
 
-const labelClasses = computed(() => {
-  if (props.status === 'success') {
-    return 'has-[:checked]:ring-green-500 has-[:checked]:text-green-900 has-[:checked]:bg-green-50 dark:has-[:checked]:ring-green-700 dark:has-[:checked]:text-green-300 dark:has-[:checked]:bg-gray-950'
-  }
-  if (props.status === 'error') {
-    return 'has-[:checked]:ring-red-500 has-[:checked]:text-red-900 has-[:checked]:bg-red-50 dark:has-[:checked]:ring-red-700 dark:has-[:checked]:text-red-300 dark:has-[:checked]:bg-gray-950'
-  }
+const labelClasses = computed<string>(() => {
+  return props.status === 'success'
+    ? 'has-[:checked]:ring-green-500 has-[:checked]:text-green-900 has-[:checked]:bg-green-50 dark:has-[:checked]:ring-green-700 dark:has-[:checked]:text-green-300 dark:has-[:checked]:bg-gray-950'
+    : 'has-[:checked]:ring-red-500 has-[:checked]:text-red-900 has-[:checked]:bg-red-50 dark:has-[:checked]:ring-red-700 dark:has-[:checked]:text-red-300 dark:has-[:checked]:bg-gray-950'
 })
 
 const icon = computed(() => {
   if (!props.status) {
     return ['far', 'circle']
   }
-  if (props.status === 'success') {
-    return ['fas', 'circle-check']
-  }
-  if (props.status === 'error') {
-    return ['fas', 'circle-xmark']
-  }
+  return props.status === 'success' ? ['fas', 'circle-check'] : ['fas', 'circle-xmark']
 })
 </script>
 

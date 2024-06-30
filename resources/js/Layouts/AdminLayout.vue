@@ -1,8 +1,6 @@
 <script setup>
-import SidebarLink from './Partials/SidebarLink.vue'
-import SidebarCollapsed from '@/Layouts/Partials/SidebarCollapsed.vue'
-import Dropdown from '@/Shared/Dropdown.vue'
-import DropdownLink from '@/Shared/DropdownLink.vue'
+import { Dropdown, DropdownLink } from '@/Shared/Dropdown'
+import { SidebarCollapsed, SidebarLink } from '@/Layouts/Partials'
 </script>
 
 <template>

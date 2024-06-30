@@ -1,20 +1,12 @@
 <script setup>
-import {
-  FwbAccordion,
-  FwbAccordionContent,
-  FwbAccordionHeader,
-  FwbAccordionPanel,
-  FwbAvatar,
-  FwbHeading,
-} from 'flowbite-vue'
+import { FwbAvatar, FwbHeading } from 'flowbite-vue'
 import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import avatarInitials from '@/Helpers/avatarInitials'
-import formatTimestamp from '../../Helpers/formatTimestamp.js'
+import { avatarInitials, formatTimestamp, quickEnableRef } from '@/Helpers'
+import { Accordion, AccordionItem } from '@/Shared/Accordion'
 
 defineProps({
   discussions: Array,
@@ -64,7 +56,7 @@ function handleBlock(comment) {
   <Head title="Обсуждения" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({
         type: 'success',
         isShow: userBlocked,
@@ -86,9 +78,9 @@ function handleBlock(comment) {
 
   <template v-if="reportedComments.length > 0">
     <FwbHeading class="text-center" tag="h6">Жалобы на пользователей</FwbHeading>
-    <FwbAccordion flush>
-      <FwbAccordionPanel v-for="comment in reportedComments" :key="comment.id">
-        <FwbAccordionHeader>
+    <Accordion flush>
+      <AccordionItem v-for="(comment, index) in reportedComments" :key="comment.id" :order="index">
+        <template #heading>
           <div class="flex items-center">
             <FwbAvatar
               :alt="comment.creator.name"
@@ -101,29 +93,28 @@ function handleBlock(comment) {
             <Badge class="ms-4">{{ comment.creator.role }}</Badge>
             <time class="ms-auto me-4">{{ formatTimestamp(comment.updated_at) }}</time>
           </div>
-        </FwbAccordionHeader>
-        <FwbAccordionContent>
-          <div class="text-gray-500 dark:text-gray-400 accordion-content">
-            {{ comment.message }}
-          </div>
+        </template>
 
-          <div class="accordion-button-group">
-            <div class="flex gap-6">
-              <button
-                @click="markAsRead(comment)"
-                type="button"
-                class="hover:text-blue-600 hover:dark:text-blue-400 hover:underline"
-              >
-                Пометить прочитанным
-              </button>
-              <button @click="handleBlock(comment)" type="button" class="hover:text-red-600">
-                Заблокировать
-              </button>
-            </div>
+        <div class="text-gray-500 dark:text-gray-400 accordion-content">
+          {{ comment.message }}
+        </div>
+
+        <div class="accordion-button-group">
+          <div class="flex gap-6">
+            <button
+              @click="markAsRead(comment)"
+              type="button"
+              class="hover:text-blue-600 hover:dark:text-blue-400 hover:underline"
+            >
+              Пометить прочитанным
+            </button>
+            <button @click="handleBlock(comment)" type="button" class="hover:text-red-600">
+              Заблокировать
+            </button>
           </div>
-        </FwbAccordionContent>
-      </FwbAccordionPanel>
-    </FwbAccordion>
+        </div>
+      </AccordionItem>
+    </Accordion>
   </template>
   <FwbHeading class="m-4 text-center" v-else tag="h6">Жалоб пользователей пока не было</FwbHeading>
 </template>

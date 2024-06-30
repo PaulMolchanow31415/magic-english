@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
-import Toast from '@/Types/Toast.ts'
+import { Toast } from '@/Classes'
 import Toaster from '@/Shared/Toaster.vue'
 import { reactive, ref } from 'vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
@@ -17,19 +17,15 @@ import {
 import Pagination from '@/Shared/Pagination.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import { set } from '@vueuse/core'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import Badge from '@/Shared/Badge.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { useSearch } from '@/Composables/useSearch.js'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import { useSuggest } from '@/Composables/useSuggest.ts'
+import { useSearch, useSuggest } from '@/Composables'
+import { avatarInitials, formatTimestamp, quickEnableRef } from '@/Helpers'
 import OpacityTransition from '@/Animations/OpacityTransition.vue'
-import avatarInitials from '@/Helpers/avatarInitials'
-import formatTimestamp from '@/Helpers/formatTimestamp.js'
 
 const props = defineProps({
   filters: Object,
@@ -98,7 +94,7 @@ function confirmDelete() {
   form.delete(route('admin.dictionary.destroy', { id: dictionaryForRemoval.value.id }), {
     onSuccess: () => quickEnableRef(isDeleted),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(dictionaryForRemoval, null),
+    onFinish: () => (dictionaryForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
   })
@@ -123,7 +119,7 @@ function deletePoster() {
   <Head title="Словари" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Словарь успешно сохранен' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Словарь удален' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

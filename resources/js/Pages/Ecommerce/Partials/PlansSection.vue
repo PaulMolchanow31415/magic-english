@@ -1,7 +1,7 @@
 <script setup>
-import PricingPlanItem from '@/Types/PricingPlanItem.ts'
-import PricingPlan from '@/Shared/PricingPlan.vue'
+import PricingPlan from '@/Widgets/PricingPlan.vue'
 import { FwbHeading, FwbP } from 'flowbite-vue'
+import { PricingPlanItem } from '@/Classes'
 
 function _(isAllowed, description) {
   return new PricingPlanItem({ isAllowed, description })

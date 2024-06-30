@@ -1,10 +1,9 @@
 <script setup>
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { reactive, ref, watchEffect } from 'vue'
-import { useSearch } from '@/Composables/useSearch.js'
-import { set } from '@vueuse/core'
-import { quickEnableRef } from '@/Helpers/quickEnableRef.ts'
-import Toast from '@/Types/Toast.ts'
+import { usePrice, useSearch } from '@/Composables'
+import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { Toast } from '@/Classes'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import Toaster from '@/Shared/Toaster.vue'
 import {
@@ -28,8 +27,6 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import PriceInput from '@/Pages/Admin/Partials/PriceInput.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import usePrice from '@/Composables/usePrice'
-import avatarInitials from '@/Helpers/avatarInitials'
 
 const props = defineProps({
   products: Object,
@@ -94,7 +91,7 @@ function confirmDelete() {
   form.delete(route('admin.product.destroy', productForRemoval.value.id), {
     onSuccess: () => quickEnableRef(isDeleted),
     onError: () => quickEnableRef(isError),
-    onFinish: () => set(productForRemoval, null),
+    onFinish: () => (productForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
   })
@@ -121,7 +118,7 @@ watchEffect(() => (form.price = price.value))
   <Head title="Продукт" />
 
   <Toaster
-    :tosts="[
+    :toasts="[
       new Toast({ type: 'success', isShow: isSaved, value: 'Продукт успешно сохранен' }),
       new Toast({ type: 'success', isShow: isDeleted, value: 'Продукт удален' }),
       new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),

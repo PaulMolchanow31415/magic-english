@@ -1,9 +1,5 @@
 import ValidationError from './ValidationError'
-
-interface ISortableItem {
-  id: number
-  name: string
-}
+import { ISortableItem } from '../Interfaces'
 
 export default class implements ISortableItem {
   id: number
