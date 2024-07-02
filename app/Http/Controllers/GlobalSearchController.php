@@ -11,14 +11,8 @@ use Illuminate\Http\Request;
 
 class GlobalSearchController extends Controller {
 
-    private function toObj(string $name, string $route) {
-        return (object)[
-            'name' => $name,
-            'url'  => $route,
-        ];
-    }
-
     public function __invoke(Request $request) {
+        $compact = fn(string $name, string $route) => (object)['name' => $name, 'url' => $route];
         $request->validate(['query' => 'string|required|min:1']);
         $perPage = 4;
         $maxAmount = 20;
@@ -29,7 +23,7 @@ class GlobalSearchController extends Controller {
         $result->push(
             ...Arr::map(
             Singer::search($query)->paginate($perPage)->items(),
-            fn($singer) => $this->toObj($singer->name, route('singer.show', $singer)),
+            fn($singer) => $compact($singer->name, route('singer.show', $singer)),
         ),
         );
         // Courses
@@ -37,7 +31,7 @@ class GlobalSearchController extends Controller {
             $result->push(
                 ...Arr::map(
                 Course::search($query)->paginate($perPage)->items(),
-                fn($course) => $this->toObj($course->name, route('skills.course.show', $course)),
+                fn($course) => $compact($course->name, route('skills.course.show', $course)),
             ),
             );
         }
@@ -46,8 +40,10 @@ class GlobalSearchController extends Controller {
             $result->push(
                 ...Arr::map(
                 Lesson::search($query)->paginate($perPage)->items(),
-                fn($lesson) => $this
-                    ->toObj($lesson->number.' Урок', route('skills.lesson.show', $lesson->number)),
+                fn($lesson) => $compact(
+                    $lesson->number.' Урок',
+                    route('skills.lesson.show', $lesson->number),
+                ),
             ),
             );
         }
@@ -56,7 +52,7 @@ class GlobalSearchController extends Controller {
             $result->push(
                 ...Arr::map(
                 Dictionary::search($query)->paginate($perPage)->items(),
-                fn($dictionary) => $this->toObj(
+                fn($dictionary) => $compact(
                     $dictionary->category,
                     route('skills.dictionary.show', $dictionary->category),
                 ),

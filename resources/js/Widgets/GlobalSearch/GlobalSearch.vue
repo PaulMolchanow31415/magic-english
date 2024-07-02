@@ -26,9 +26,13 @@ function clear() {
 
 onClickOutside(comboBox, () => (isFocused.value = false), { ignore: [searchInput] })
 
-watchThrottled(searched, (query) => query && (async () => (results.value = await search(query))), {
-  throttle: 900,
-})
+watchThrottled(
+  searched,
+  (query) => query && (async () => (results.value = await search(query)))(),
+  {
+    throttle: 900,
+  },
+)
 
 useScrollLock(isComboboxVisible)
 </script>
