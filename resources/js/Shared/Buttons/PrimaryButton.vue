@@ -2,8 +2,8 @@
 import { FwbButton } from 'flowbite-vue'
 // prettier-ignore
 withDefaults(defineProps<{
-  type: 'submit' | 'button',
-  loading: boolean
+  type?: 'submit' | 'button',
+  loading?: boolean
 }>(), {
   type: 'submit',
   loading: false,

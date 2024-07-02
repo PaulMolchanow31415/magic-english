@@ -1,12 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { FwbButton } from 'flowbite-vue'
 
-defineProps({
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-})
+withDefaults(defineProps<{ disabled?: boolean }>(), { disabled: false })
 </script>
 
 <template>
