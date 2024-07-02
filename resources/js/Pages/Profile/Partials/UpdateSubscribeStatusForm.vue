@@ -1,8 +1,7 @@
 <script setup>
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton, SecondaryButton } from '@/Shared/Buttons'
 import { useForm } from '@inertiajs/vue3'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import { getStatus } from './api'
 
 const form = useForm({ status: false })

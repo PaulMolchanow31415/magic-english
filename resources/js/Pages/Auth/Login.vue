@@ -6,7 +6,7 @@ import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbCheckbox, FwbInput } from 'flowbite-vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import { useReCaptcha } from 'vue-recaptcha-v3'
 
 defineOptions({ layout: StubLayout })
@@ -120,7 +120,7 @@ async function submit() {
             Забыли пароль?
           </Link>
 
-          <PrimaryButton class="ms-4" :processing="form.processing">Войти</PrimaryButton>
+          <PrimaryButton class="ms-4" :loading="form.processing">Войти</PrimaryButton>
         </div>
       </div>
     </form>

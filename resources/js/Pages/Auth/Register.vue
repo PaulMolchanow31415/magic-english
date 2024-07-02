@@ -8,7 +8,7 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import { useReCaptcha } from 'vue-recaptcha-v3'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbA, FwbInput } from 'flowbite-vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 
 defineOptions({ layout: StubLayout })
 
@@ -142,7 +142,7 @@ async function submit() {
           Уже зарегистрированы?
         </Link>
 
-        <PrimaryButton class="ms-4" :processing="form.processing">Регистрация</PrimaryButton>
+        <PrimaryButton class="ms-4" :loading="form.processing">Регистрация</PrimaryButton>
       </div>
     </form>
   </AuthenticationCard>

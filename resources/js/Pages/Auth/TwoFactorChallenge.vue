@@ -4,7 +4,7 @@ import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import { FwbA, FwbInput } from 'flowbite-vue'
 import StubLayout from '@/Layouts/StubLayout.vue'
 
@@ -104,7 +104,7 @@ const submit = () => {
           <template v-else>Используйте код аутентификации</template>
         </button>
 
-        <PrimaryButton class="ms-4" :processing="form.processing">Вход</PrimaryButton>
+        <PrimaryButton class="ms-4" :loading="form.processing">Вход</PrimaryButton>
       </div>
     </form>
   </AuthenticationCard>

@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbInput } from 'flowbite-vue'
 import { useReCaptcha } from 'vue-recaptcha-v3'
@@ -67,9 +67,7 @@ async function submit() {
       </div>
 
       <div class="flex items-center justify-end mt-4">
-        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Получить ссылку на сброс пароля
-        </PrimaryButton>
+        <PrimaryButton :loading="form.processing"> Получить ссылку на сброс пароля </PrimaryButton>
       </div>
     </form>
   </AuthenticationCard>

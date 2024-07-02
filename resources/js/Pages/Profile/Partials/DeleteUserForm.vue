@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
-import DangerButton from '@/Shared/DangerButton.vue'
+import { DangerButton } from '@/Shared/Buttons'
 import DialogModal from '@/Pages/Auth/Partials/DialogModal.vue'
 import InputError from '@/Shared/InputError.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import SecondaryButton from '@/Shared/Buttons/SecondaryButton.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'
 
 const confirmingUserDeletion = ref(false)
@@ -79,7 +79,7 @@ const closeModal = () => {
         <template #footer>
           <SecondaryButton @click="closeModal">Закрыть</SecondaryButton>
 
-          <DangerButton class="ms-3" :processing="form.processing" @click="deleteUser">
+          <DangerButton class="ms-3" :disabled="form.processing" @click="deleteUser">
             Удалить
           </DangerButton>
         </template>

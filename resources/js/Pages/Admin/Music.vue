@@ -21,7 +21,7 @@ import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationMo
 import AudioUploader from '@/Pages/Admin/Partials/AudioUploader.vue'
 import LyricsEditor from '@/Pages/Admin/Partials/LyricsEditor.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import SecondaryButton from '@/Shared/Buttons/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
 import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
@@ -185,11 +185,9 @@ function deleteAudio() {
       <AudioUploader v-model="form.audio" :error="form.errors.audio" />
 
       <OpacityTransition>
-        <SecondaryButton
-          v-show="editable.audio_url"
-          @click="deleteAudio"
-          v-text="'Удалить аудио'"
-        />
+        <SecondaryButton v-show="editable.audio_url" @click="deleteAudio">
+          Удалить аудио
+        </SecondaryButton>
       </OpacityTransition>
     </div>
   </UpdateModal>

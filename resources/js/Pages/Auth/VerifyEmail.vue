@@ -3,7 +3,7 @@ import { computed, defineOptions } from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import StubLayout from '@/Layouts/StubLayout.vue'
 
 defineOptions({ layout: StubLayout })
@@ -48,7 +48,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
     <form @submit.prevent="submit">
       <div>
-        <PrimaryButton :processing="form.processing">
+        <PrimaryButton :loading="form.processing">
           Повторно отправить электронное письмо
         </PrimaryButton>
 

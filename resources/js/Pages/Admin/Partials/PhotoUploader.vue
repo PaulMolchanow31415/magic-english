@@ -1,6 +1,6 @@
 <script setup>
 import { FwbFileInput, FwbInput } from 'flowbite-vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import SecondaryButton from '@/Shared/Buttons/SecondaryButton.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 
 defineProps({
@@ -37,12 +37,7 @@ defineEmits(['deletePhoto'])
           placeholder="https://example.image.png"
         />
       </InputLabel>
-      <SecondaryButton
-        class="min-h-9"
-        v-if="hasPhoto"
-        type="button"
-        @click.prevent="$emit('deletePhoto')"
-      >
+      <SecondaryButton class="min-h-9" v-if="hasPhoto" @click.prevent="$emit('deletePhoto')">
         Удалить фотографию
       </SecondaryButton>
     </div>

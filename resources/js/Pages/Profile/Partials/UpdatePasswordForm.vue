@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import FormSection from '@/Pages/Auth/Partials/FormSection.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import { FwbInput } from 'flowbite-vue'
 import { useFlashMessages } from '@/Composables'
 
@@ -98,7 +98,7 @@ const updatePassword = () => {
     </template>
 
     <template #actions>
-      <PrimaryButton :processing="form.processing">Сохранить</PrimaryButton>
+      <PrimaryButton :loading="form.processing">Сохранить</PrimaryButton>
     </template>
   </FormSection>
 </template>

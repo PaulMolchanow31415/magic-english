@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import StubLayout from '@/Layouts/StubLayout.vue'
 import { FwbInput } from 'flowbite-vue'
 
@@ -88,7 +88,7 @@ async function submit() {
         </InputLabel>
       </div>
       <div class="flex items-center justify-end mt-4">
-        <PrimaryButton :processing="form.processing">Сбросить пароль</PrimaryButton>
+        <PrimaryButton :loading="form.processing">Сбросить пароль</PrimaryButton>
       </div>
     </form>
   </AuthenticationCard>

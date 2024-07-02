@@ -1,14 +1,10 @@
 <script setup>
 import { nextTick, reactive, ref } from 'vue'
 import DialogModal from '@/Pages/Auth/Partials/DialogModal.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import { PrimaryButton, SecondaryButton } from '@/Shared/Buttons'
 import FocusableInput from '@/Shared/FocusableInput.vue'
 import InputError from '@/Shared/InputError.vue'
-import {
-  doConfirmPassword,
-  getPasswordConfirmStatus,
-} from '@/Pages/Auth/Partials/ConfirmsPassword/api'
+import { doConfirmPassword, getPasswordConfirmStatus } from './api'
 
 const emit = defineEmits(['confirmed'])
 
@@ -104,7 +100,12 @@ const closeModal = () => {
       <template #footer>
         <SecondaryButton @click="closeModal">Отмена</SecondaryButton>
 
-        <PrimaryButton class="ms-3" :processing="form.processing" @click="confirmPassword">
+        <PrimaryButton
+          class="ms-3"
+          type="button"
+          :loading="form.processing"
+          @click="confirmPassword"
+        >
           {{ buttonText }}
         </PrimaryButton>
       </template>

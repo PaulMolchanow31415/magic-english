@@ -3,8 +3,7 @@ import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
 import DialogModal from '@/Pages/Auth/Partials/DialogModal.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import { PrimaryButton, SecondaryButton } from '@/Shared/Buttons'
 import InputError from '@/Shared/InputError.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'
 import { useFlashMessages } from '@/Composables'
@@ -131,7 +130,7 @@ const closeModal = () => {
 
           <PrimaryButton
             class="ms-3"
-            :processing="form.processing"
+            :loading="form.processing"
             @click="logoutOtherBrowserSessions"
           >
             Закрыть все неиспользуемые сеансы

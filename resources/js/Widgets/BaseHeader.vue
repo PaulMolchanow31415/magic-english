@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/vue3'
 import ApplicationMark from '@/Shared/ApplicationMark.vue'
 import { Dropdown, DropdownLink } from '@/Shared/Dropdown'
 import { FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
-import ToggleThemeButton from '@/Shared/ToggleThemeButton.vue'
+import { ToggleThemeButton } from '@/Shared/Buttons'
 import { GlobalSearch } from '@/Widgets/GlobalSearch'
 </script>
 

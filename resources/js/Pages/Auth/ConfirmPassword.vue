@@ -4,7 +4,7 @@ import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Pages/Auth/Partials/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Pages/Auth/Partials/AuthenticationCardLogo.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
+import { PrimaryButton } from '@/Shared/Buttons'
 import { FwbInput } from 'flowbite-vue'
 
 const form = useForm({
@@ -54,7 +54,7 @@ const submit = () => {
       </div>
 
       <div class="flex justify-end mt-4">
-        <PrimaryButton class="ms-4" :processing="form.processing">Подтвердить</PrimaryButton>
+        <PrimaryButton class="ms-4" :loading="form.processing">Подтвердить</PrimaryButton>
       </div>
     </form>
   </AuthenticationCard>

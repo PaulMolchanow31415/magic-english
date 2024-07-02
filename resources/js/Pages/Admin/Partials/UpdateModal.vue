@@ -2,6 +2,7 @@
 import { FwbButton, FwbModal } from 'flowbite-vue'
 import { onKeyPressed, useEventListener } from '@vueuse/core'
 import Opacity300Transition from '../../../Shared/Animations/Opacity300Transition.vue'
+import { PrimaryButton } from '../../../Shared/Buttons'
 
 // prettier-ignore
 withDefaults(defineProps<{
@@ -48,9 +49,7 @@ useEventListener(document, 'keypress', (event: KeyboardEvent) => {
             <FwbButton @click="$emit('close')" type="button" color="alternative">
               Отмена
             </FwbButton>
-            <FwbButton type="submit" class="flex flex-nowrap" :loading="loading">
-              Сохранить
-            </FwbButton>
+            <PrimaryButton :loading="loading" />
             <p
               class="text-gray-500 dark:text-gray-400 leading-[2.5] line-clamp-1"
               :class="{ 'text-xs': size === 'md' }"

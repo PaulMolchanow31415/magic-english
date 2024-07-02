@@ -3,10 +3,8 @@ import { computed, ref, watch } from 'vue'
 import { router, useForm, usePage } from '@inertiajs/vue3'
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
 import { ConfirmsPassword } from '@/Pages/Auth/Partials/ConfirmsPassword'
-import DangerButton from '@/Shared/DangerButton.vue'
+import { DangerButton, PrimaryButton, SecondaryButton } from '@/Shared/Buttons'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import { FwbA, FwbInput } from 'flowbite-vue'
 import { getQrCode, getRecoveryCodes, getSecretKey, postRegenerateRecoveryCodes } from './api'
 
@@ -191,13 +189,13 @@ watch(twoFactorEnabled, (isEnabled) => {
       <div class="mt-5">
         <div v-if="!twoFactorEnabled">
           <ConfirmsPassword @confirmed="enableTwoFactorAuthentication">
-            <PrimaryButton type="button" :processing="enabling">Включить</PrimaryButton>
+            <PrimaryButton type="button" :loading="enabling">Включить</PrimaryButton>
           </ConfirmsPassword>
         </div>
 
         <div v-else>
           <ConfirmsPassword @confirmed="confirmTwoFactorAuthentication">
-            <PrimaryButton v-if="confirming" type="button" class="me-3" :processing="enabling">
+            <PrimaryButton v-if="confirming" type="button" class="me-3" :loading="enabling">
               Подтвердить
             </PrimaryButton>
           </ConfirmsPassword>
@@ -215,23 +213,11 @@ watch(twoFactorEnabled, (isEnabled) => {
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
-            <SecondaryButton
-              v-if="confirming"
-              :class="{ 'opacity-25': disabling }"
-              :disabled="disabling"
-            >
-              Отмена
-            </SecondaryButton>
+            <SecondaryButton v-if="confirming" :disabled="disabling"> Отмена </SecondaryButton>
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
-            <DangerButton
-              v-if="!confirming"
-              :class="{ 'opacity-25': disabling }"
-              :disabled="disabling"
-            >
-              Отключить
-            </DangerButton>
+            <DangerButton v-if="!confirming" :disabled="disabling"> Отключить </DangerButton>
           </ConfirmsPassword>
         </div>
       </div>

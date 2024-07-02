@@ -4,8 +4,7 @@ import { Link, router, useForm } from '@inertiajs/vue3'
 import FormSection from '@/Pages/Auth/Partials/FormSection.vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import PrimaryButton from '@/Shared/PrimaryButton.vue'
-import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import { PrimaryButton, SecondaryButton } from '@/Shared/Buttons'
 import { FwbInput } from 'flowbite-vue'
 import { useFlashMessages } from '@/Composables'
 
@@ -114,16 +113,11 @@ const clearPhotoFileInput = () => {
           </div>
         </InputLabel>
 
-        <SecondaryButton class="mt-4 me-2" type="button" @click.prevent="selectNewPhoto">
+        <SecondaryButton class="mt-4 me-2" @click.prevent="selectNewPhoto">
           Выберите новую фотографию
         </SecondaryButton>
 
-        <SecondaryButton
-          v-if="user.profile_photo_path"
-          type="button"
-          class="mt-4"
-          @click.prevent="deletePhoto"
-        >
+        <SecondaryButton v-if="user.profile_photo_path" class="mt-4" @click.prevent="deletePhoto">
           Удалить фотографию
         </SecondaryButton>
 
@@ -185,7 +179,7 @@ const clearPhotoFileInput = () => {
     </template>
 
     <template #actions>
-      <PrimaryButton :processing="form.processing">Сохранить</PrimaryButton>
+      <PrimaryButton :loading="form.processing">Сохранить</PrimaryButton>
     </template>
   </FormSection>
 </template>
