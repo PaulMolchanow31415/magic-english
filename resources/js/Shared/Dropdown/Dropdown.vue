@@ -20,31 +20,22 @@ const props = withDefaults(
 
 const open = ref(false)
 
-const widthClass = computed(() => {
-  return {
-    48: 'w-48',
-  }[props.width.toString()]
+const widthClass = computed(() => ({ 48: 'w-48' })[props.width.toString()])
+
+const alignmentClasses = computed<string>(() => {
+  switch (props.align) {
+    case 'left':
+      return 'ltr:origin-top-left rtl:origin-top-right start-0'
+    case 'right':
+      return 'ltr:origin-top-right rtl:origin-top-left end-0'
+    default:
+      return 'origin-top'
+  }
 })
 
-const alignmentClasses = computed(() => {
-  if (props.align === 'left') {
-    return 'ltr:origin-top-left rtl:origin-top-right start-0'
-  }
-
-  if (props.align === 'right') {
-    return 'ltr:origin-top-right rtl:origin-top-left end-0'
-  }
-
-  return 'origin-top'
+useEventListener('keydown', (e: KeyboardEvent) => {
+  open.value && e.key === 'Escape' && (open.value = false)
 })
-
-const closeOnEscape = (e: KeyboardEvent) => {
-  if (open.value && e.key === 'Escape') {
-    open.value = false
-  }
-}
-
-useEventListener('keydown', closeOnEscape)
 </script>
 
 <template>
@@ -53,7 +44,7 @@ useEventListener('keydown', closeOnEscape)
       <slot name="trigger" />
     </div>
 
-    <transition
+    <Transition
       enter-active-class="transition ease-out duration-200"
       enter-from-class="transform opacity-0 scale-95"
       enter-to-class="transform opacity-100 scale-100"
@@ -72,9 +63,12 @@ useEventListener('keydown', closeOnEscape)
         <div class="absolute w-full -z-10" style="height: calc(100% + 1rem); top: -0.5rem" />
 
         <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+          <span v-if="$slots.heading" class="block px-4 py-2 text-xs text-gray-400">
+            <slot name="heading" />
+          </span>
           <slot name="content" />
         </div>
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>

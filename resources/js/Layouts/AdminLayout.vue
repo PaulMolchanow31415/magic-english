@@ -96,70 +96,48 @@ import { SidebarCollapsed, SidebarLink } from '@/Shared/SidebarItem'
 
           <template #content>
             <DropdownLink :href="route('admin.user.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'users']" class="w-4" />
-                Пользователи
-              </span>
+              <Icon :icon="['fas', 'users']" class="w-4" />
+              Пользователи
             </DropdownLink>
             <DropdownLink :href="route('admin.faq.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'person-circle-question']" class="w-4" />
-                FAQ
-              </span>
+              <Icon :icon="['fas', 'person-circle-question']" class="w-4" />
+              FAQ
             </DropdownLink>
             <DropdownLink :href="route('admin.subscriber.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'bell']" class="w-4" />
-                Подписчики
-              </span>
+              <Icon :icon="['fas', 'bell']" class="w-4" />
+              Подписчики
             </DropdownLink>
             <DropdownLink :href="route('admin.discussion.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'comments']" class="w-4" />
-                Обсуждения
-              </span>
+              <Icon :icon="['fas', 'comments']" class="w-4" />
+              Обсуждения
             </DropdownLink>
             <DropdownLink :href="route('admin.vocabulary.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'language']" class="w-4" />
-                Лексика
-              </span>
+              <Icon :icon="['fas', 'language']" class="w-4" />
+              Лексика
             </DropdownLink>
             <DropdownLink :href="route('admin.dictionary.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'book']" class="w-4" />
-                Словари
-              </span>
+              <Icon :icon="['fas', 'book']" class="w-4" />
+              Словари
             </DropdownLink>
             <DropdownLink :href="route('admin.course.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'folder-tree']" class="w-4" />
-                Курсы
-              </span>
+              <Icon :icon="['fas', 'folder-tree']" class="w-4" />
+              Курсы
             </DropdownLink>
             <DropdownLink :href="route('admin.lesson.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'graduation-cap']" class="w-4" />
-                Самоучитель
-              </span>
+              <Icon :icon="['fas', 'graduation-cap']" class="w-4" />
+              Самоучитель
             </DropdownLink>
             <DropdownLink :href="route('admin.product.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'person-chalkboard']" class="w-4" />
-                Продукты
-              </span>
+              <Icon :icon="['fas', 'person-chalkboard']" class="w-4" />
+              Продукты
             </DropdownLink>
             <DropdownLink :href="route('admin.author.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'podcast']" class="w-4" />
-                Исполнители
-              </span>
+              <Icon :icon="['fas', 'podcast']" class="w-4" />
+              Исполнители
             </DropdownLink>
             <DropdownLink :href="route('admin.music.index')">
-              <span class="dropdown-line">
-                <Icon :icon="['fas', 'music']" class="w-4" />
-                Песни
-              </span>
+              <Icon :icon="['fas', 'music']" class="w-4" />
+              Песни
             </DropdownLink>
           </template>
         </Dropdown>

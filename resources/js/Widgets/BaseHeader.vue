@@ -31,77 +31,59 @@ import { GlobalSearch } from '@/Widgets/GlobalSearch'
                 <button class="nav-item">Дополнительно</button>
               </template>
 
+              <template #heading>Можно купить</template>
+
               <template #content>
-                <span class="dropdown-heading">Можно купить</span>
                 <DropdownLink :href="route('ecommerce')">
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'store']" class="w-4" />
-                    Магазин
-                  </span>
+                  <Icon :icon="['fas', 'store']" class="w-4" />
+                  Магазин
                 </DropdownLink>
                 <DropdownLink v-if="$page.props.cartItemsAmount > 0" :href="route('cart.show')">
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'shopping-cart']" class="w-4" />
-                    Корзина ({{ $page.props.cartItemsAmount }})
-                  </span>
+                  <Icon :icon="['fas', 'shopping-cart']" class="w-4" />
+                  Корзина ({{ $page.props.cartItemsAmount }})
                 </DropdownLink>
                 <DropdownLink
                   v-if="$page.props.purchasedProductsAmount > 0"
                   :href="route('purchased.lesson.all')"
                 >
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'bag-shopping']" class="w-4" />
-                    Покупки
-                  </span>
+                  <Icon :icon="['fas', 'bag-shopping']" class="w-4" />
+                  Покупки
                 </DropdownLink>
               </template>
             </Dropdown>
           </li>
 
           <template v-if="$page.props.auth.user">
-            <li>
+            <li v-if="$page.props.jetstream.managesProfilePhotos">
               <Dropdown :align="isShowMenu ? 'left' : 'right'">
                 <template #trigger>
-                  <button class="nav-item" v-if="$page.props.jetstream.managesProfilePhotos">
-                    Профиль
-                  </button>
+                  <button class="nav-item">Профиль</button>
                 </template>
 
+                <template #heading>Учетная запись</template>
+
                 <template #content>
-                  <span class="dropdown-heading">Учетная запись</span>
                   <DropdownLink :href="route('profile.show')">
-                    <span class="dropdown-line">
-                      <img
-                        :alt="$page.props.auth.user.name"
-                        :src="$page.props.auth.user.profile_photo_url"
-                        class="-ml-0.5 h-4 w-4 rounded-full object-cover"
-                      />
-                      Профиль
-                    </span>
+                    <img
+                      :alt="$page.props.auth.user.name"
+                      :src="$page.props.auth.user.profile_photo_url"
+                      class="-ml-0.5 h-4 w-4 rounded-full object-cover"
+                    />
+                    Профиль
                   </DropdownLink>
                   <DropdownLink
                     v-if="$page.props.auth.user.role === 'Администратор'"
                     :class="{ selected: route().current('admin.*') }"
                     :href="route('admin.user.index')"
                   >
-                    <span class="dropdown-line">
-                      <Icon :icon="['fas', 'database']" class="w-4" />
-                      Администрирование
-                    </span>
-                  </DropdownLink>
-                  <DropdownLink
-                    v-if="$page.props.jetstream.hasApiFeatures"
-                    :href="route('api-tokens.index')"
-                  >
-                    API Ключи
+                    <Icon :icon="['fas', 'database']" class="w-4" />
+                    Администрирование
                   </DropdownLink>
                   <hr class="border-t border-gray-200 dark:border-gray-600" />
                   <form @submit.prevent="router.post(route('logout'))">
                     <DropdownLink as="button">
-                      <span class="dropdown-line">
-                        <Icon :icon="['fas', 'right-from-bracket']" class="w-4" />
-                        Выход
-                      </span>
+                      <Icon :icon="['fas', 'right-from-bracket']" class="w-4" />
+                      Выход
                     </DropdownLink>
                   </form>
                 </template>
@@ -115,20 +97,17 @@ import { GlobalSearch } from '@/Widgets/GlobalSearch'
                   <button class="nav-item">Вход</button>
                 </template>
 
+                <template #heading>Аутентификация</template>
+
                 <template #content>
-                  <span class="dropdown-heading">Аутентификация</span>
                   <DropdownLink :href="route('login')">
-                    <span class="dropdown-line">
-                      <Icon :icon="['fas', 'right-to-bracket']" class="w-4" />
-                      Войти
-                    </span>
+                    <Icon :icon="['fas', 'right-to-bracket']" class="w-4" />
+                    Войти
                   </DropdownLink>
                   <hr class="border-t border-gray-200 dark:border-gray-600" />
                   <DropdownLink :href="route('register')">
-                    <span class="dropdown-line">
-                      <Icon :icon="['fas', 'address-card']" class="w-4" />
-                      Зарегистрироваться
-                    </span>
+                    <Icon :icon="['fas', 'address-card']" class="w-4" />
+                    Зарегистрироваться
                   </DropdownLink>
                 </template>
               </Dropdown>
@@ -142,22 +121,16 @@ import { GlobalSearch } from '@/Widgets/GlobalSearch'
 
               <template #content>
                 <DropdownLink :href="route('skills.glossary')">
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'language']" class="w-4" />
-                    Слова
-                  </span>
+                  <Icon :icon="['fas', 'language']" class="w-4" />
+                  Слова
                 </DropdownLink>
                 <DropdownLink :href="route('skills.courses')">
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'spell-check']" class="w-4" />
-                    Грамматика
-                  </span>
+                  <Icon :icon="['fas', 'spell-check']" class="w-4" />
+                  Грамматика
                 </DropdownLink>
                 <DropdownLink :href="route('skills.self-education')">
-                  <span class="dropdown-line">
-                    <Icon :icon="['fas', 'graduation-cap']" class="w-4" />
-                    Самоучитель
-                  </span>
+                  <Icon :icon="['fas', 'graduation-cap']" class="w-4" />
+                  Самоучитель
                 </DropdownLink>
               </template>
             </Dropdown>
@@ -180,9 +153,6 @@ import { GlobalSearch } from '@/Widgets/GlobalSearch'
 </template>
 
 <style scoped lang="postcss">
-.dropdown-heading {
-  @apply block px-4 py-2 text-xs text-gray-400;
-}
 .nav-item {
   @apply block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700
   md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400
