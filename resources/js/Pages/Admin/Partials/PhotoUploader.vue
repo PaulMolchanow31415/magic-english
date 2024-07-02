@@ -1,6 +1,6 @@
 <script setup>
 import { FwbFileInput, FwbInput } from 'flowbite-vue'
-import SecondaryButton from '@/Shared/Buttons/SecondaryButton.vue'
+import { SecondaryButton } from '@/Shared/Buttons'
 import InputLabel from '@/Shared/InputLabel.vue'
 
 defineProps({

@@ -2,10 +2,9 @@
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
-import { DangerButton } from '@/Shared/Buttons'
+import { DangerButton, SecondaryButton } from '@/Shared/Buttons'
 import DialogModal from '@/Pages/Auth/Partials/DialogModal.vue'
 import InputError from '@/Shared/InputError.vue'
-import SecondaryButton from '@/Shared/Buttons/SecondaryButton.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'
 
 const confirmingUserDeletion = ref(false)
