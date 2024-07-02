@@ -1,19 +1,17 @@
-import './bootstrap'
+import './Core/bootstrap'
+import './Plugins'
 
 import '../pcss/globals.pcss'
 
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
-
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import VWave from 'v-wave'
 
-/* Configs */
-import '@/Config/fontAwesome'
-import { appTitle, inertiaProgressSettings, layoutResolver, vueReCaptchaSettings } from '@/Config'
+import { appTitle, inertiaProgressSettings, layoutResolver, vueReCaptchaSettings } from './Core'
 
 createInertiaApp({
   title: appTitle,

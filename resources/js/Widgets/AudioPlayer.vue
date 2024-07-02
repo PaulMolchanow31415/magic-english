@@ -4,9 +4,9 @@ import Tooltip from '../Shared/Tooltip.vue'
 import { Link } from '@inertiajs/vue3'
 import { computed, onMounted, ref, watch } from 'vue'
 import { FwbP, FwbRange } from 'flowbite-vue'
-import OpacitySmallTransition from '../Animations/OpacitySmallTransition.vue'
-import OpacitySlideTopTransition from '../Animations/OpacitySlideTopTransition.vue'
-import FadeHeightTransition from '../Animations/FadeHeightTransition.vue'
+import OpacitySmallTransition from '../Shared/Animations/OpacitySmallTransition.vue'
+import OpacitySlideTopTransition from '../Shared/Animations/OpacitySlideTopTransition.vue'
+import FadeHeightTransition from '../Shared/Animations/FadeHeightTransition.vue'
 
 const state = useMusicState()
 

@@ -7,13 +7,13 @@ import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import InputError from '@/Shared/InputError.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'
+import { useFlashMessages } from '@/Composables'
 
 defineProps({ sessions: Array })
 
-const emit = defineEmits(['success'])
-
 const confirmingLogout = ref(false)
 const passwordInput = ref(null)
+const { showMessage } = useFlashMessages()
 
 const form = useForm({ password: '' })
 
@@ -27,7 +27,7 @@ const logoutOtherBrowserSessions = () => {
   form.delete(route('other-browser-sessions.destroy'), {
     preserveScroll: true,
     onSuccess: () => {
-      emit('success')
+      showMessage('Сессии закрыты', 'success')
       closeModal()
     },
     onError: () => passwordInput.value.focus(),

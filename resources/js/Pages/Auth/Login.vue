@@ -31,10 +31,10 @@ async function submit() {
   form.recaptcha_token = await executeRecaptcha('login')
 
   form
-  .transform((data) => ({ ...data, remember: form.remember ? 'on' : '' }))
-  .post(route('login'), {
-    onFinish: () => form.reset('password'),
-  })
+    .transform((data) => ({ ...data, remember: form.remember ? 'on' : '' }))
+    .post(route('login'), {
+      onFinish: () => form.reset('password'),
+    })
 }
 </script>
 
@@ -94,7 +94,7 @@ async function submit() {
 
       <div class="mt-6 flex justify-between gap-2 items-center">
         <Link
-          class="px-2 py-2 inline-flex items-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
+          class="px-2 py-2 inline-flex items-center bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
           :href="route('oauth2.google.redirect')"
         >
           <span

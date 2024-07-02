@@ -1,8 +1,6 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbBadge,
@@ -14,12 +12,12 @@ import {
   FwbTableRow,
 } from 'flowbite-vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import Pagination from '@/Shared/Pagination.vue'
+import { TableActionButton } from '@/Pages/Admin/Partials/TableAction'
+import Pagination from '@/Widgets/Pagination.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { set } from '@vueuse/core'
-import { useSearch } from '@/Composables'
-import { formatTimestamp, quickEnableRef } from '@/Helpers'
+import { useFlashMessages, useSearch } from '@/Composables'
+import { formatTimestamp } from '@/Utils'
 
 const props = defineProps({
   subscribers: Object,
@@ -27,14 +25,13 @@ const props = defineProps({
 })
 
 const searchedSubscriber = useSearch(props.filters.search)
-const isDeleted = ref(false)
-const isError = ref(false)
 const subscriberForRemoval = ref(null)
+const { showMessage } = useFlashMessages({ closable: true })
 
 function confirmDelete() {
   router.delete(route('admin.subscriber.destroy', { id: subscriberForRemoval.value.id }), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isDeleted),
+    onSuccess: () => showMessage('Подписчик успешно удален', 'success'),
+    onError: () => showMessage('Ошибка', 'warning'),
     onFinish: () => set(subscriberForRemoval, null),
   })
 }
@@ -42,13 +39,6 @@ function confirmDelete() {
 
 <template>
   <Head title="Подписчики" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Подписчик успешно удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader v-model:searched-value="searchedSubscriber" search-placeholder="Найти подписчика" />
 

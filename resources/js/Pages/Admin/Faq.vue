@@ -3,22 +3,18 @@ import { FwbButton, FwbInput } from 'flowbite-vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import { quickEnableRef } from '@/Helpers'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import { Accordion, AccordionItem } from '@/Shared/Accordion'
+import { useFlashMessages } from '@/Composables'
 
 defineProps({ faqs: Array })
 
 const isShowEditModal = ref(false)
 const isShowDeleteModal = ref(false)
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
 const form = useForm({ id: null, heading: '', content: '' })
+const { showMessage } = useFlashMessages({ closable: true })
 
 function clearForm() {
   form.id = null
@@ -28,8 +24,8 @@ function clearForm() {
 
 function saveFaq() {
   form.post(route('admin.faq.store'), {
-    onSuccess: () => quickEnableRef(isSaved),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Ответ на вопрос успешно добавлен', 'success'),
+    onError: () => showMessage('Ошибка, не удалось добавть ответ на вопрос', 'warning'),
     onFinish: () => {
       isShowEditModal.value = false
       clearForm()
@@ -40,8 +36,8 @@ function saveFaq() {
 
 function deleteFaq() {
   form.delete(route('admin.faq.destroy', { id: form.id }), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Ответ на вопрос успешно удален!', 'success'),
+    onError: () => showMessage('Ошибка', 'warning'),
     onFinish: () => {
       isShowDeleteModal.value = false
       clearForm()
@@ -70,14 +66,6 @@ function handleDelete(faq) {
 <template>
   <Head title="Ответы на частые вопросы" />
 
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Ответ на вопрос успешно добавлен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Ответ на вопрос успешно удален!' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
-
   <Accordion flush>
     <AccordionItem :order="0" open-first>
       <template #heading class="bg-blue-50 dark:bg-blue-950">Добавить FAQ</template>
@@ -97,7 +85,7 @@ function handleDelete(faq) {
           v-model="form.content"
           toolbar-style="minimal"
           placeholder="Ответ на вопрос"
-          :error-message="form.errors.content"
+          :error="form.errors.content"
         />
         <FwbButton type="submit" class="mt-4 flex flex-nowrap" :loading="form.processing">
           Сохранить
@@ -148,7 +136,7 @@ function handleDelete(faq) {
       v-model="form.content"
       placeholder="Ответ на вопрос"
       toolbar-style="minimal"
-      :error-message="form.errors.content"
+      :error="form.errors.content"
     />
   </UpdateModal>
 </template>

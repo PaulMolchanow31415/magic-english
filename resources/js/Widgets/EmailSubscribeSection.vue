@@ -1,18 +1,13 @@
 <script setup>
 import { FwbA, FwbButton, FwbInput } from 'flowbite-vue'
 import { useForm } from '@inertiajs/vue3'
-import { ref } from 'vue'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
-import { quickEnableRef } from '@/Helpers'
 import { useReCaptcha } from 'vue-recaptcha-v3'
-import { useDeviceSize } from '@/Composables'
+import { useDeviceSize, useFlashMessages } from '@/Composables'
 
-const isSuccess = ref(false)
-const isError = ref(false)
 const form = useForm({ email: '', recaptcha_token: null })
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 const { isMobile } = useDeviceSize()
+const { showMessage } = useFlashMessages({ closable: true, timeout: 3000 })
 
 async function submit() {
   await recaptchaLoaded()
@@ -20,8 +15,8 @@ async function submit() {
   form.recaptcha_token = await executeRecaptcha('subscribeNotifications')
 
   form.post(route('subscribe.store'), {
-    onSuccess: () => quickEnableRef(isSuccess, 3000),
-    onError: () => quickEnableRef(isError, 3000),
+    onSuccess: () => showMessage('Вы успешно подписались!', 'success'),
+    onError: () => showMessage(form.errors.email || 'Ошибка', 'warning'),
     onFinish: () => {
       form.email = ''
       form.recaptcha_token = null
@@ -32,13 +27,6 @@ async function submit() {
 </script>
 
 <template>
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSuccess, value: 'Вы успешно подписались!' }),
-      new Toast({ type: 'warning', isShow: isError, value: form.errors.email || 'Ошибка' }),
-    ]"
-  />
-
   <aside
     class="p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Подписка на рассылку курсов"

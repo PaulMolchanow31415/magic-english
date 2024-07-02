@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { initTooltips } from 'flowbite'
-import { TypeTheme } from '../Types'
 import { nanoid } from 'nanoid'
 
 type TooltipPlacement = 'bottom' | 'top' | 'left' | 'right'
+type Theme = 'light' | 'dark'
 
 const props = withDefaults(
   defineProps<{
     placement?: TooltipPlacement
-    theme?: TypeTheme
+    theme?: Theme
   }>(),
   {
     placement: 'top',

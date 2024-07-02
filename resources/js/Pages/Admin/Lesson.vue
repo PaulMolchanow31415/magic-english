@@ -1,12 +1,10 @@
 <script setup>
-import { useSearch } from '@/Composables'
+import { useFlashMessages, useSearch } from '@/Composables'
 import { ref } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import Pagination from '@/Shared/Pagination.vue'
+import Pagination from '@/Widgets/Pagination.vue'
 import {
   FwbTable,
   FwbTableBody,
@@ -15,11 +13,11 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
-import { formatTimestamp, quickEnableRef } from '@/Helpers'
+import { formatTimestamp } from '@/Utils'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 
 const props = defineProps({
@@ -31,11 +29,9 @@ const props = defineProps({
 const page = usePage()
 const searchedLesson = useSearch(props.filters.search)
 const number = ref(props.prevLessonNumber)
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
 const lessonForRemoval = ref(null)
 const isShowEditModal = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 
 const form = useForm({
   id: null,
@@ -62,14 +58,14 @@ function handleEdit(lesson) {
 
 function confirmUpdate() {
   form.post(route('admin.lesson.store'), {
-    preserveScroll: true,
     onSuccess() {
-      quickEnableRef(isSaved)
+      showMessage('Урок успешно сохранен', 'success')
       isShowEditModal.value = false
       form.reset()
       number.value++
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка', 'warning'),
+    preserveScroll: true,
   })
 }
 
@@ -77,9 +73,9 @@ function confirmDelete() {
   form.delete(route('admin.lesson.destroy', { id: lessonForRemoval.value.id }), {
     onSuccess: () => {
       lessonForRemoval.value = null
-      quickEnableRef(isDeleted)
+      showMessage('Урок удален', 'success')
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка', 'warning'),
     preserveScroll: true,
     preserveState: true,
   })
@@ -88,14 +84,6 @@ function confirmDelete() {
 
 <template>
   <Head title="Уроки" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Урок успешно сохранен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Урок удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedLesson"
@@ -119,12 +107,12 @@ function confirmDelete() {
         <FwbTableCell v-text="formatTimestamp(lesson.created_at)" />
         <FwbTableCell v-text="lesson.complexity" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6 justify-end pe-4">
+          <TableActionRow class="pe-4">
             <TableActionButton @click="handleEdit(lesson)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="lessonForRemoval = lesson">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -152,14 +140,14 @@ function confirmDelete() {
       class="mb-6"
       label="Сложность урока"
       v-model="form.complexity"
-      :error-message="form.errors.complexity"
+      :error="form.errors.complexity"
     />
 
     <TextRedactor
       v-model="form.content"
       toolbar-style="full"
       placeholder="Текст урока"
-      :error-message="form.errors.content"
+      :error="form.errors.content"
     />
   </UpdateModal>
 

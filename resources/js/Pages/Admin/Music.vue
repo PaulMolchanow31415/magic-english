@@ -1,10 +1,8 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useSearch, useSuggest } from '@/Composables'
+import { useFlashMessages, useSearch, useSuggest } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
+import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
@@ -17,15 +15,15 @@ import {
   FwbTableRow,
 } from 'flowbite-vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import Pagination from '@/Shared/Pagination.vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import Pagination from '@/Widgets/Pagination.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import AudioUploader from '@/Pages/Admin/Partials/AudioUploader.vue'
 import LyricsEditor from '@/Pages/Admin/Partials/LyricsEditor.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import NameInput from '@/Shared/NameInput.vue'
-import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
 const props = defineProps({
   musics: Object,
@@ -39,9 +37,7 @@ const {
   results: loadedSingers,
 } = useSuggest('api.author-song.list', 'name')
 
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 const musicForRemoval = ref(null)
 const selectedSinger = ref()
 
@@ -86,18 +82,18 @@ function confirmUpdate() {
         editable.isShowModal = false
         editable.audio_url = null
         selectedSinger.value = null
-        quickEnableRef(isSaved)
+        showMessage('Песня успешно сохранена', 'success')
         form.reset()
       },
-      onError: () => quickEnableRef(isError),
+      onError: () => showMessage('Ошибка', 'warning'),
       preserveScroll: true,
     })
 }
 
 function confirmDelete() {
   form.delete(route('admin.music.destroy', musicForRemoval.value.id), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Песня удалена', 'success'),
+    onError: () => showMessage('Ошибка', 'warning'),
     onFinish: () => (musicForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
@@ -118,14 +114,6 @@ function deleteAudio() {
 
 <template>
   <Head title="Музыка" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Песня успешно сохранена' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Песня удалена' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedMusic"
@@ -156,12 +144,12 @@ function deleteAudio() {
         <FwbTableCell v-text="music.singer.name" />
         <FwbTableCell v-text="music.name" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton @click="handleEdit(music)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="musicForRemoval = music">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -179,7 +167,7 @@ function deleteAudio() {
     @close="editable.isShowModal = false"
   >
     <div class="space-y-6">
-      <NameInput v-model="form.name" :error-message="form.errors.name" />
+      <NameInput v-model="form.name" :error="form.errors.name" />
 
       <OpacityTransition>
         <FwbP v-show="selectedSinger" class="font-medium">{{ selectedSinger?.name }}</FwbP>
@@ -192,9 +180,9 @@ function deleteAudio() {
         label="Исполнитель песни"
       />
 
-      <LyricsEditor v-model="form.lyrics" :error-message="form.errors.lyrics" />
+      <LyricsEditor v-model="form.lyrics" :error="form.errors.lyrics" />
 
-      <AudioUploader v-model="form.audio" :error-message="form.errors.audio" />
+      <AudioUploader v-model="form.audio" :error="form.errors.audio" />
 
       <OpacityTransition>
         <SecondaryButton

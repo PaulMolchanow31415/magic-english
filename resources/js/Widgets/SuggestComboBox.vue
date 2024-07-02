@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { SuggestListItem } from '../Classes'
+import { SuggestListItem } from '../Entities'
 import { FwbInput } from 'flowbite-vue'
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import InputLabel from '../Shared/InputLabel.vue'
-import ComboboxTransition from '../Animations/ComboboxTransition.vue'
+import ComboboxTransition from '../Shared/Animations/ComboboxTransition.vue'
 
 withDefaults(
   defineProps<{

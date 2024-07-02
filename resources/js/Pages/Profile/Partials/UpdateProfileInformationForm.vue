@@ -7,12 +7,11 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import { FwbInput } from 'flowbite-vue'
+import { useFlashMessages } from '@/Composables'
 
-const props = defineProps({
-  user: Object,
-})
+const props = defineProps({ user: Object })
 
-const emit = defineEmits(['success'])
+const { showMessage } = useFlashMessages()
 
 const form = useForm({
   _method: 'PUT',
@@ -34,7 +33,7 @@ const updateProfileInformation = () => {
     errorBag: 'updateProfileInformation',
     preserveScroll: true,
     onSuccess: () => {
-      emit('success')
+      showMessage('Успешно сохранено', 'success')
       clearPhotoFileInput()
     },
   })

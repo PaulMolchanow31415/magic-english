@@ -4,7 +4,7 @@ import ApplicationMark from '@/Shared/ApplicationMark.vue'
 import { Dropdown, DropdownLink } from '@/Shared/Dropdown'
 import { FwbNavbar, FwbNavbarCollapse } from 'flowbite-vue'
 import ToggleThemeButton from '@/Shared/ToggleThemeButton.vue'
-import GlobalSearch from '@/Shared/GlobalSearch.vue'
+import { GlobalSearch } from '@/Widgets/GlobalSearch'
 </script>
 
 <template>
@@ -180,6 +180,14 @@ import GlobalSearch from '@/Shared/GlobalSearch.vue'
 </template>
 
 <style scoped lang="postcss">
+.dropdown-heading {
+  @apply block px-4 py-2 text-xs text-gray-400;
+}
+.nav-item {
+  @apply block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700
+  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400
+  md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:hover:bg-transparent;
+}
 .selected {
   @apply block py-2 pr-4 pl-3 rounded md:p-0 bg-blue-700 md:bg-transparent text-white md:text-blue-700 dark:text-white;
 }

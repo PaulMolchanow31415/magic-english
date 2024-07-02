@@ -1,6 +1,6 @@
 <script setup>
 import { Dropdown, DropdownLink } from '@/Shared/Dropdown'
-import { SidebarCollapsed, SidebarLink } from '@/Layouts/Partials'
+import { SidebarCollapsed, SidebarLink } from '@/Shared/SidebarItem'
 </script>
 
 <template>
@@ -170,7 +170,7 @@ import { SidebarCollapsed, SidebarLink } from '@/Layouts/Partials'
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .collapsed-list {
   @apply pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700;
 }

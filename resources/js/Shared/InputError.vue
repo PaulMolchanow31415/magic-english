@@ -1,5 +1,5 @@
 <script setup>
-import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
+import Opacity300Transition from '@/Shared/Animations/Opacity300Transition.vue'
 
 defineProps({ message: String })
 </script>

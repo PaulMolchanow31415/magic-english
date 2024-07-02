@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { SelectOption } from '../../../Classes'
-import { FwbOptionsType } from '../../../Types'
+import { SelectOption } from '../../../Entities'
 import { FwbSelect } from 'flowbite-vue'
 import InputLabel from '../../../Shared/InputLabel.vue'
 import { usePage } from '@inertiajs/vue3'
 
+type FwbOptionsType = typeof FwbSelect.__defaults.options
+
 withDefaults(
   defineProps<{
     label?: string
-    errorMessage?: string
+    error?: string
   }>(),
   {
     label: 'Сложность набора',
@@ -33,9 +34,9 @@ const options = usePage<{
         placeholder="Выберите сложность"
         size="sm"
         :options="options"
-        :validation-status="errorMessage ? 'error' : null"
+        :validation-status="error ? 'error' : null"
       >
-        <template #validationMessage>{{ errorMessage }} </template>
+        <template #validationMessage>{{ error }} </template>
         <template #helper><slot /></template>
       </FwbSelect>
     </InputLabel>

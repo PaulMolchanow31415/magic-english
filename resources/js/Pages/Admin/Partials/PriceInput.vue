@@ -11,7 +11,7 @@ defineProps({
     type: Number,
     default: 10000,
   },
-  errorMessage: String,
+  error: String,
 })
 
 const model = defineModel({ type: Number })
@@ -92,9 +92,9 @@ const model = defineModel({ type: Number })
           :min="min"
           :max="max"
           placeholder="Цена"
-          :validation-status="errorMessage ? 'error' : ''"
+          :validation-status="error ? 'error' : ''"
         >
-          <template #validationMessage>{{ errorMessage }}</template>
+          <template #validationMessage>{{ error }}</template>
         </FwbInput>
       </div>
     </div>

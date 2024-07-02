@@ -2,16 +2,15 @@
 import { computed, ref, watch } from 'vue'
 import { router, useForm, usePage } from '@inertiajs/vue3'
 import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
-import ConfirmsPassword from '@/Pages/Auth/Partials/ConfirmsPassword.vue'
+import { ConfirmsPassword } from '@/Pages/Auth/Partials/ConfirmsPassword'
 import DangerButton from '@/Shared/DangerButton.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
 import { FwbA, FwbInput } from 'flowbite-vue'
+import { getQrCode, getRecoveryCodes, getSecretKey, postRegenerateRecoveryCodes } from './api'
 
-const props = defineProps({
-  requiresConfirmation: Boolean,
-})
+const props = defineProps({ requiresConfirmation: Boolean })
 
 const page = usePage()
 const enabling = ref(false)
@@ -25,20 +24,26 @@ const form = useForm({ code: '' })
 
 const twoFactorEnabled = computed(() => !enabling.value && page.props.auth.user?.two_factor_enabled)
 
-watch(twoFactorEnabled, () => {
-  if (!twoFactorEnabled.value) {
-    form.reset()
-    form.clearErrors()
-  }
-})
+const showQrCode = async () => {
+  let response = await getQrCode()
+  qrCode.value = response.data.svg
+}
+
+const showSetupKey = async () => {
+  let response = await getSecretKey()
+  setupKey.value = response.data.secretKey
+}
+
+const showRecoveryCodes = async () => {
+  let response = await getRecoveryCodes()
+  recoveryCodes.value = response.data
+}
 
 const enableTwoFactorAuthentication = () => {
   enabling.value = true
 
-  router.post(
-    route('two-factor.enable'),
-    {},
-    {
+  // prettier-ignore
+  router.post(route('two-factor.enable'), {}, {
       preserveScroll: true,
       onSuccess: () => Promise.all([showQrCode(), showSetupKey(), showRecoveryCodes()]),
       onFinish: () => {
@@ -47,24 +52,6 @@ const enableTwoFactorAuthentication = () => {
       },
     },
   )
-}
-
-const showQrCode = () => {
-  return axios.get(route('two-factor.qr-code')).then((response) => {
-    qrCode.value = response.data.svg
-  })
-}
-
-const showSetupKey = () => {
-  return axios.get(route('two-factor.secret-key')).then((response) => {
-    setupKey.value = response.data.secretKey
-  })
-}
-
-const showRecoveryCodes = () => {
-  return axios.get(route('two-factor.recovery-codes')).then((response) => {
-    recoveryCodes.value = response.data
-  })
 }
 
 const confirmTwoFactorAuthentication = () => {
@@ -81,7 +68,7 @@ const confirmTwoFactorAuthentication = () => {
 }
 
 const regenerateRecoveryCodes = () => {
-  axios.post(route('two-factor.recovery-codes')).then(() => showRecoveryCodes())
+  postRegenerateRecoveryCodes().then(() => showRecoveryCodes())
 }
 
 const disableTwoFactorAuthentication = () => {
@@ -95,6 +82,13 @@ const disableTwoFactorAuthentication = () => {
     },
   })
 }
+
+watch(twoFactorEnabled, (isEnabled) => {
+  if (!isEnabled) {
+    form.reset()
+    form.clearErrors()
+  }
+})
 </script>
 
 <template>

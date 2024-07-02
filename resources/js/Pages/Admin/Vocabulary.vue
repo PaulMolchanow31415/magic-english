@@ -1,6 +1,4 @@
 <script setup>
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import { computed, nextTick, reactive, ref } from 'vue'
 import {
@@ -12,27 +10,24 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import Pagination from '@/Shared/Pagination.vue'
+import Pagination from '@/Widgets/Pagination.vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import FocusableInput from '@/Shared/FocusableInput.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import Tooltip from '@/Shared/Tooltip.vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
-import { useSearch } from '@/Composables'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { useFlashMessages, useSearch } from '@/Composables'
+import { avatarInitials } from '@/Utils'
 
 const props = defineProps({
   dictionary: Object,
   filters: Object,
 })
 
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isWordDeletionError = ref(false)
-const isSavingError = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 const searchedVocabulary = useSearch(props.filters.search)
 const form = useForm({
   id: null,
@@ -96,8 +91,8 @@ function handleAddTranslation() {
 
 function remove(vocabulary) {
   form.delete(route('admin.vocabulary.destroy', { id: vocabulary.id }), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isWordDeletionError),
+    onSuccess: () => showMessage('Слово удалено', 'success'),
+    onError: () => showMessage('Ошибка, не удалось удалить слово', 'warning'),
     preserveScroll: true,
     preserveState: true,
   })
@@ -111,6 +106,7 @@ function deletePoster() {
       onSuccess: () => {
         editable.poster_url = null
         form.photo_external_path = null
+        showMessage('Фотография удалена!', 'success')
       },
       preserveScroll: true,
     },
@@ -135,8 +131,8 @@ function confirmEdit() {
   form.translations = Array.from(editable.translations)
 
   form.post(route('admin.vocabulary.store'), {
-    onSuccess: () => quickEnableRef(isSaved),
-    onError: () => quickEnableRef(isSavingError),
+    onSuccess: () => showMessage('Слово с переводом добавлено', 'success'),
+    onError: () => showMessage('Ошибка, не удалось сохранить слово', 'warning'),
     onFinish: () => {
       editable.isShowModal = false
       form.id = null
@@ -152,23 +148,6 @@ function confirmEdit() {
 
 <template>
   <Head title="Лексика" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Слово с переводом добавлено' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Слово удалено' }),
-      new Toast({
-        type: 'warning',
-        isShow: isWordDeletionError,
-        value: 'Ошибка, не удалось удалить слово',
-      }),
-      new Toast({
-        type: 'warning',
-        isShow: isSavingError,
-        value: 'Ошибка, не удалось сохранить слово',
-      }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedVocabulary"
@@ -207,10 +186,10 @@ function confirmEdit() {
           </Badge>
         </FwbTableCell>
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton @click="handleEdit(vocabulary)">Редактировать</TableActionButton>
             <TableActionButton @click="remove(vocabulary)" theme="red">Удалить</TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>

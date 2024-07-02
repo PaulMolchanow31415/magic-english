@@ -1,5 +1,5 @@
 <script setup>
-import { SelectOption } from '@/Classes'
+import { SelectOption } from '@/Entities'
 import { FwbSelect } from 'flowbite-vue'
 
 const model = defineModel({ type: String })

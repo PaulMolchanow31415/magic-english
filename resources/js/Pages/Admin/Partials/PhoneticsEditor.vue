@@ -11,7 +11,7 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    errorMessage: String,
+    error: String,
   },
 
   beforeUpdate() {
@@ -106,6 +106,6 @@ export default defineComponent({
       />
       <input v-model="translation" type="text" class="input-underlined" placeholder="Перевод" />
     </div>
-    <InputError :message="errorMessage" />
+    <InputError :message="error" />
   </div>
 </template>

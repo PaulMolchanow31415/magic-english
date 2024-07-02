@@ -1,0 +1,5 @@
+export const getStatus = () => axios.get(route('subscribe.is-subscribed'))
+export const getQrCode = () => axios.get(route('two-factor.qr-code'))
+export const getSecretKey = () => axios.get(route('two-factor.secret-key'))
+export const getRecoveryCodes = () => axios.get(route('two-factor.recovery-codes'))
+export const postRegenerateRecoveryCodes = () => axios.post(route('two-factor.recovery-codes'))

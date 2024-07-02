@@ -13,16 +13,14 @@ import {
 import TableHeader from './Partials/TableHeader.vue'
 import { ref } from 'vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import Pagination from '@/Shared/Pagination.vue'
+import Pagination from '@/Widgets/Pagination.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import DeleteConfirmationModal from './Partials/DeleteConfirmationModal.vue'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
 import UpdateModal from './Partials/UpdateModal.vue'
-import TableActionButton from './Partials/TableActionButton.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import EmailLink from '@/Shared/EmailLink.vue'
-import { useSearch } from '@/Composables'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
+import { useFlashMessages, useSearch } from '@/Composables'
+import { avatarInitials } from '@/Utils'
 
 const props = defineProps({
   users: Object,
@@ -30,13 +28,11 @@ const props = defineProps({
   filters: Object,
 })
 
+const { showMessage } = useFlashMessages({ closable: true })
 const searchedUser = useSearch(props.filters.search)
 const isShowEditModal = ref(false)
 const userForRemoval = ref(null)
 const form = useForm({ id: null, role: '', is_banned: false })
-const userSaved = ref(false)
-const userDeleted = ref(false)
-const isError = ref(false)
 
 function handleEdit(user) {
   form.id = user.id
@@ -47,16 +43,16 @@ function handleEdit(user) {
 
 function confirmDelete() {
   router.delete(route('admin.user.destroy', { id: userForRemoval.value.id }), {
-    onSuccess: () => quickEnableRef(userDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Пользователь удален!', 'success'),
+    onError: () => showMessage('Не удалось удалить пользователя', 'warning'),
     onFinish: () => (userForRemoval.value = null),
   })
 }
 
 function confirmEdit() {
   form.post(route('admin.user.store'), {
-    onSuccess: () => quickEnableRef(userSaved),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Пользователь успешно обновлен', 'success'),
+    onError: () => showMessage('Ошибка, не удалось удалить пользователя'),
     onFinish: () => (isShowEditModal.value = false),
   })
 }
@@ -64,14 +60,6 @@ function confirmEdit() {
 
 <template>
   <Head title="Пользователи" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: userSaved, value: 'Пользователь успешно обновлен' }),
-      new Toast({ type: 'success', isShow: userDeleted, value: 'Пользователь удален!' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader v-model:searched-value="searchedUser" search-placeholder="Найти пользователя" />
 
@@ -110,12 +98,12 @@ function confirmEdit() {
           />
         </FwbTableCell>
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton @click="handleEdit(user)">Редактировать</TableActionButton>
             <TableActionButton @click="userForRemoval = user" theme="red">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>

@@ -2,7 +2,7 @@
 import { FwbInput } from 'flowbite-vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 
-const [model] = defineModel({
+const model = defineModel({
   set: (value) =>
     value
       .split(' ')
@@ -19,14 +19,14 @@ defineProps({
     type: String,
     default: 'Название',
   },
-  errorMessage: String,
+  error: String,
 })
 </script>
 
 <template>
   <InputLabel :value="label">
-    <FwbInput v-model="model" :validation-status="errorMessage ? 'error' : ''">
-      <template #validationMessage v-text="errorMessage" />
+    <FwbInput v-model="model" :validation-status="error ? 'error' : ''">
+      <template #validationMessage v-text="error" />
     </FwbInput>
   </InputLabel>
 </template>

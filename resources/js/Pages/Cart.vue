@@ -7,43 +7,28 @@ import {
   FwbListGroupItem,
   FwbP,
 } from 'flowbite-vue'
-import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
-import { useDeviceSize } from '@/Composables'
+import { avatarInitials } from '@/Utils'
+import { useDeviceSize, useFlashMessages } from '@/Composables'
 
 defineProps({ products: Array })
 
-const isRemoved = ref(false)
-const isError = ref(false)
+const { showMessage } = useFlashMessages()
 const isTablet = useDeviceSize().isGreaterThen(639)
 
 function handleRemove(product) {
   router.delete(route('cart.remove-product', product.pivot.product_id), {
     preserveState: true,
     preserveScroll: true,
-    onSuccess: () => quickEnableRef(isRemoved),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Успешно удалено!', 'success'),
+    onError: () => showMessage('Ошибка, попробуйте перезагрузить страницу', 'warning'),
   })
 }
 </script>
 
 <template>
   <Head :title="`Корзина (${products.length})`" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', value: 'Успешно удалено!', isShow: isRemoved }),
-      new Toast({
-        type: 'warning',
-        value: 'Ошибка, попробуйте перезагрузить страницу',
-        isShow: isError,
-      }),
-    ]"
-  />
 
   <div class="container pt-12 pb-16 mx-auto">
     <section class="max-w-5xl mx-auto">

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { FwbBadge } from 'flowbite-vue'
-import { FwbBadgeSize, FwbBadgeType } from '../Types'
+
+type FwbBadgeSize = typeof FwbBadge.__defaults.size | 'lg'
+type FwbBadgeType = typeof FwbBadge.__defaults.type
 
 withDefaults(
   defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, provide } from 'vue'
-import { ACCORDION_INJECTION_KEY, AccordionProvidePayload } from './types'
+import { ACCORDION_INJECTION_KEY, AccordionProviderPayload } from './types'
 import { nanoid } from 'nanoid'
 
 const props = defineProps<{ alwaysOpen?: boolean; flush?: boolean }>()
@@ -15,7 +15,7 @@ const activeClasses = computed<string>(() => {
 
 const inactiveClasses = computed<string>(() => props.flush && 'text-gray-500 dark:text-gray-400')
 
-provide<AccordionProvidePayload>(ACCORDION_INJECTION_KEY, { accordionId, flush: props.flush })
+provide<AccordionProviderPayload>(ACCORDION_INJECTION_KEY, { accordionId, flush: props.flush })
 </script>
 
 <template>

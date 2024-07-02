@@ -5,10 +5,11 @@ import FormSection from '@/Pages/Auth/Partials/FormSection.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { FwbInput } from 'flowbite-vue'
+import { useFlashMessages } from '@/Composables'
 
 const passwordInput = ref(null)
 const currentPasswordInput = ref(null)
-const emit = defineEmits(['success'])
+const { showMessage } = useFlashMessages()
 
 const form = useForm({
   current_password: '',
@@ -21,10 +22,12 @@ const updatePassword = () => {
     errorBag: 'updatePassword',
     preserveScroll: true,
     onSuccess: () => {
-      emit('success')
+      showMessage('Пароль успешно обновлен', 'success')
       form.reset()
     },
     onError: () => {
+      showMessage('Неправильно введен пароль', 'warning')
+
       if (form.errors.password) {
         form.reset('password', 'password_confirmation')
         passwordInput.value.focus()

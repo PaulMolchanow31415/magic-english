@@ -3,11 +3,12 @@ import ActionSection from '@/Pages/Auth/Partials/ActionSection.vue'
 import PrimaryButton from '@/Shared/PrimaryButton.vue'
 import { useForm } from '@inertiajs/vue3'
 import SecondaryButton from '@/Shared/SecondaryButton.vue'
+import { getStatus } from './api'
 
 const form = useForm({ status: false })
 
 function loadStatus() {
-  axios.get(route('subscribe.is-subscribed')).then((res) => (form.status = !!res.data))
+  getStatus().then((res) => (form.status = !!res.data))
 }
 
 function handleSubmit(isEnabled) {

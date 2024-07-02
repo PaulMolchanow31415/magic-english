@@ -9,7 +9,7 @@ const props = withDefaults(
   defineProps<{
     placeholder?: string
     breakLineKeyBinding?: string
-    errorMessage?: string
+    error?: string
     toolbarStyle?: ToolbarStyle
     disabled?: boolean
   }>(),
@@ -63,7 +63,7 @@ function onReady(readyEditor: ReadyEvent) {
       tag-name="textarea"
       :disabled="disabled"
     />
-    <InputError :message="errorMessage" />
+    <InputError :message="error" />
   </div>
 </template>
 

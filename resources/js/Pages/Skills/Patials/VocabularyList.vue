@@ -9,7 +9,7 @@ import {
 } from 'flowbite-vue'
 import { router } from '@inertiajs/vue3'
 import { useSay } from '@/Composables'
-import { avatarInitials } from '@/Helpers'
+import { avatarInitials } from '@/Utils'
 
 defineProps({
   vocabularies: {

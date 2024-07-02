@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from 'vue'
-import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
-import JetstreamModalTransition from '@/Animations/JetstreamModalTransition.vue'
+import OpacitySlideTopTransition from '@/Shared/Animations/OpacitySlideTopTransition.vue'
+import JetstreamModalTransition from '@/Shared/Animations/JetstreamModalTransition.vue'
 
 const props = defineProps({
   show: {

@@ -3,12 +3,9 @@ import { FwbButton } from 'flowbite-vue'
 import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'
 import AutoHead from '@/Shared/AutoHead.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
-import { useSuggest } from '@/Composables'
+import { useFlashMessages, useSuggest } from '@/Composables'
 import { router } from '@inertiajs/vue3'
 import { ref, toRef, watch } from 'vue'
-import { quickEnableRef } from '@/Helpers'
-import Toaster from '@/Shared/Toaster.vue'
-import { Toast } from '@/Classes'
 import FilterSelect from '@/Pages/Skills/Patials/FilterSelect.vue'
 
 const props = defineProps({
@@ -16,11 +13,10 @@ const props = defineProps({
   filters: Object,
 })
 
+const { showMessage } = useFlashMessages()
 const { searched, results } = useSuggest('api.vocabulary.list')
-
 const filters = toRef(props, 'filters')
 const selectedFilter = ref(filters.learnable)
-const isEmpty = ref(false)
 
 function add(event) {
   router.post(route('student.add-vocabulary', { word: event.value }), null, {
@@ -34,7 +30,7 @@ function train() {
     return
   }
 
-  quickEnableRef(isEmpty)
+  showMessage('Слишком мало добавленных слов')
 }
 
 watch(selectedFilter, (learnable) => {
@@ -47,10 +43,6 @@ watch(selectedFilter, (learnable) => {
 
 <template>
   <AutoHead />
-
-  <Toaster
-    :toasts="[new Toast({ type: 'info', isShow: isEmpty, value: 'Слишком мало добавленных слов' })]"
-  />
 
   <section
     class="group flex flex-wrap items-center justify-between gap-6 mb-6 px-3 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"

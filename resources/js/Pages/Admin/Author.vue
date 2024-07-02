@@ -1,10 +1,8 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useSearch } from '@/Composables'
+import { useFlashMessages, useSearch } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
+import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
@@ -15,8 +13,8 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import Pagination from '@/Shared/Pagination.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
+import Pagination from '@/Widgets/Pagination.vue'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
@@ -28,11 +26,8 @@ const props = defineProps({
   filters: Object,
 })
 
+const { showMessage } = useFlashMessages({ closable: true })
 const searchedAuthor = useSearch(props.filters.search)
-
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
 const authorForRemoval = ref(null)
 
 const form = useForm({
@@ -69,18 +64,18 @@ function confirmUpdate() {
     onSuccess: () => {
       editable.isShowModal = false
       editable.poster_url = null
-      quickEnableRef(isSaved)
+      showMessage('Автор успешно сохранен', 'success')
       form.reset()
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка, не удалось сохранить автора', 'warning'),
     preserveScroll: true,
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.author.destroy', authorForRemoval.value.id), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Автор удален', 'success'),
+    onError: () => showMessage('Ошибка, не удалось удалить автора', 'warning'),
     onFinish: () => (authorForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
@@ -104,14 +99,6 @@ function deletePoster() {
 
 <template>
   <Head title="Авторы песен" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Автор успешно сохранен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Автор удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedAuthor"
@@ -140,12 +127,12 @@ function deletePoster() {
         </FwbTableCell>
         <FwbTableCell v-text="author.name" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton @click="handleEdit(author)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="authorForRemoval = author">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -163,13 +150,13 @@ function deletePoster() {
     @close="editable.isShowModal = false"
   >
     <div class="space-y-6">
-      <NameInput v-model="form.name" label="Полное имя" :error-message="form.errors.name" />
+      <NameInput v-model="form.name" label="Полное имя" :error="form.errors.name" />
 
       <TextRedactor
         toolbar-style="full"
         v-model="form.biography"
         placeholder="Биография"
-        :error-message="form.errors.biography"
+        :error="form.errors.biography"
       />
 
       <PhotoUploader

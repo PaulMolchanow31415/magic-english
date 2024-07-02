@@ -3,9 +3,9 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import InputError from '@/Shared/InputError.vue'
 import { FwbButton } from 'flowbite-vue'
 import { computed } from 'vue'
-import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
-defineProps({ errorMessage: String })
+defineProps({ error: String })
 
 const blob = defineModel({ type: Blob })
 
@@ -45,7 +45,7 @@ const src = computed(() => (blob.value ? URL.createObjectURL(blob.value) : null)
         </FwbButton>
       </div>
     </OpacityTransition>
-    <InputError :message="errorMessage" />
+    <InputError :message="error" />
   </div>
 </template>
 

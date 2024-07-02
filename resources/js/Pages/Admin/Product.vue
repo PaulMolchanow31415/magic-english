@@ -1,11 +1,9 @@
 <script setup>
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { reactive, ref, watchEffect } from 'vue'
-import { usePrice, useSearch } from '@/Composables'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
-import { Toast } from '@/Classes'
+import { useFlashMessages, usePrice, useSearch } from '@/Composables'
+import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
-import Toaster from '@/Shared/Toaster.vue'
 import {
   FwbA,
   FwbAvatar,
@@ -19,8 +17,8 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
-import Pagination from '@/Shared/Pagination.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
+import Pagination from '@/Widgets/Pagination.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
@@ -34,10 +32,8 @@ const props = defineProps({
 })
 
 const searchedProduct = useSearch(props.filters.search)
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
 const productForRemoval = ref(null)
+const { showMessage } = useFlashMessages({ closable: true })
 
 const form = useForm({
   id: null,
@@ -78,19 +74,19 @@ function confirmUpdate() {
   form.post(route('admin.product.store'), {
     preserveScroll: true,
     onSuccess() {
-      quickEnableRef(isSaved)
+      showMessage('Продукт успешно сохранен', 'success')
       editable.isShowModal = false
       editable.poster_url = null
       form.reset()
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка', 'warning'),
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.product.destroy', productForRemoval.value.id), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Продукт удален', 'success'),
+    onError: () => showMessage('Ошибка', 'warning'),
     onFinish: () => (productForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
@@ -116,14 +112,6 @@ watchEffect(() => (form.price = price.value))
 
 <template>
   <Head title="Продукт" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Продукт успешно сохранен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Продукт удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedProduct"
@@ -154,12 +142,12 @@ watchEffect(() => (form.price = price.value))
         <FwbTableCell v-text="product.name" />
         <FwbTableCell v-text="product.price" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6 justify-end pe-4">
+          <TableActionRow class="pe-4">
             <TableActionButton @click="handleEdit(product)">Редактировать</TableActionButton>
             <TableActionButton theme="red" @click="productForRemoval = product">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -193,7 +181,7 @@ watchEffect(() => (form.price = price.value))
         </FwbInput>
       </InputLabel>
 
-      <PriceInput v-model="price" :min="min" :error-message="form.errors.price" />
+      <PriceInput v-model="price" :min="min" :error="form.errors.price" />
 
       <div class="place-content-center flex items-center gap-4">
         <FwbRange v-model.number="price" :min="min" :max="max" label="" class="grow" />
@@ -208,7 +196,7 @@ watchEffect(() => (form.price = price.value))
           toolbar-style="full"
           v-model="form.content"
           placeholder="Содержание"
-          :error-message="form.errors.content"
+          :error="form.errors.content"
         />
       </div>
 

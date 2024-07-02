@@ -3,7 +3,7 @@ import { router, usePage } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { FwbButton, FwbP } from 'flowbite-vue'
 import CloseButton from '@/Shared/CloseButton.vue'
-import OpacitySlideTopTransition from '@/Animations/OpacitySlideTopTransition.vue'
+import OpacitySlideTopTransition from '@/Shared/Animations/OpacitySlideTopTransition.vue'
 
 const page = usePage()
 const isShow = ref(false)

@@ -1,48 +1,36 @@
 <script setup lang="ts">
 import { FwbToast } from 'flowbite-vue'
-import CloseButton from '../Shared/CloseButton.vue'
-import SlideLeftTransition from '../Animations/SlideLeftTransition.vue'
-import { FwbToastType } from '../Types'
-import { Toast } from '../Classes'
+import CloseButton from './CloseButton.vue'
+import SlideLeftTransition from './Animations/SlideLeftTransition.vue'
+import { Toast } from '../Entities'
 
-withDefaults(
-  defineProps<{
-    toasts: Toast[]
-    closable?: boolean
-  }>(),
-  {
-    toasts: () => [],
-    closable: false,
-  },
-)
+type FwbToastType = typeof FwbToast.__defaults.type
 
-defineEmits(['close'])
+withDefaults(defineProps<{ toasts: Toast[] }>(), { toasts: () => [] })
+
+defineEmits<{ close: [index: number] }>()
 </script>
 
 <template>
-  <teleport to="body">
-    <div class="fixed right-5 top-5 flex flex-col gap-2.5">
-      <SlideLeftTransition>
-        <FwbToast
-          v-for="(message, index) in toasts"
-          :type="message.type as FwbToastType"
-          v-show="message.isShow"
-          :key="index"
-        >
-          <template #icon>
-            <Icon v-if="message.type === 'success'" :icon="['fas', 'check']" />
-            <Icon v-else-if="message.type === 'info'" :icon="['fas', 'circle-info']" />
-            <Icon v-else-if="message.type === 'warning'" :icon="['fas', 'bolt']" size="xs" />
-          </template>
-          <div class="info-line">
-            {{ message.value }}
-            <!-- fixme -->
-            <CloseButton v-if="closable" @close="$emit('close', index)" />
-          </div>
-        </FwbToast>
-      </SlideLeftTransition>
-    </div>
-  </teleport>
+  <div class="fixed right-5 top-5 flex flex-col gap-2.5">
+    <SlideLeftTransition>
+      <FwbToast
+        v-for="(message, index) in toasts"
+        :type="message.type as FwbToastType"
+        :key="index"
+      >
+        <template #icon>
+          <Icon v-if="message.type === 'success'" :icon="['fas', 'check']" />
+          <Icon v-else-if="message.type === 'info'" :icon="['fas', 'circle-info']" />
+          <Icon v-else-if="message.type === 'warning'" :icon="['fas', 'bolt']" size="xs" />
+        </template>
+        <div class="flex items-center gap-2">
+          {{ message.value }}
+          <CloseButton v-if="message.closable" @close="$emit('close', index)" />
+        </div>
+      </FwbToast>
+    </SlideLeftTransition>
+  </div>
 </template>
 
 <style scoped></style>

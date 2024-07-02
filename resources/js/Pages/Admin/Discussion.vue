@@ -1,22 +1,17 @@
 <script setup>
 import { FwbAvatar, FwbHeading } from 'flowbite-vue'
 import { Head, router } from '@inertiajs/vue3'
-import { ref } from 'vue'
 import Badge from '@/Shared/Badge.vue'
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
-import { avatarInitials, formatTimestamp, quickEnableRef } from '@/Helpers'
+import { avatarInitials } from '@/Utils'
 import { Accordion, AccordionItem } from '@/Shared/Accordion'
+import { useFlashMessages } from '@/Composables'
 
-defineProps({
+const props = defineProps({
   discussions: Array,
   reportedComments: Array,
 })
 
-const isEmptyComments = ref(false)
-const userBlocked = ref(false)
-const commentMarkAsRead = ref(false)
-const isError = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 
 function markAsRead(comment) {
   router.patch(
@@ -26,8 +21,8 @@ function markAsRead(comment) {
       isReported: false,
     },
     {
-      onSuccess: () => quickEnableRef(commentMarkAsRead),
-      onError: () => quickEnableRef(isError),
+      onSuccess: () => showMessage('Комментарий закрыт', 'success'),
+      onError: () => showMessage('Ошибка', 'warning'),
       preserveScroll: true,
     },
   )
@@ -42,39 +37,25 @@ function handleBlock(comment) {
     },
     {
       onSuccess: () => {
-        quickEnableRef(userBlocked)
+        showMessage('Пользователь успешно заблокирован!', 'success')
         markAsRead(comment)
       },
-      onError: () => quickEnableRef(isError),
+      onError: () => showMessage('Ошибка', 'warning'),
       preserveScroll: true,
     },
   )
+}
+
+if (!props.reportedComments.length) {
+  showMessage('Для данного обсуждения не составлены комментарии', 'info', {
+    timeout: 3000,
+    closable: true,
+  })
 }
 </script>
 
 <template>
   <Head title="Обсуждения" />
-
-  <Toaster
-    :toasts="[
-      new Toast({
-        type: 'success',
-        isShow: userBlocked,
-        value: 'Пользователь успешно заблокирован!',
-      }),
-      new Toast({
-        type: 'success',
-        isShow: commentMarkAsRead,
-        value: 'Комментарий закрыт',
-      }),
-      new Toast({
-        type: 'info',
-        isShow: isEmptyComments,
-        value: 'Для данного обсуждения не составлены комментарии',
-      }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <template v-if="reportedComments.length > 0">
     <FwbHeading class="text-center" tag="h6">Жалобы на пользователей</FwbHeading>
@@ -116,7 +97,9 @@ function handleBlock(comment) {
       </AccordionItem>
     </Accordion>
   </template>
-  <FwbHeading class="m-4 text-center" v-else tag="h6">Жалоб пользователей пока не было</FwbHeading>
+  <FwbHeading class="m-4 mt-8 text-center" v-else tag="h6"
+    >Жалобы на комментарии пользователей не найдены</FwbHeading
+  >
 </template>
 
 <style scoped></style>

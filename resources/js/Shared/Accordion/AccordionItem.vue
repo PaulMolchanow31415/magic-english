@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, onMounted } from 'vue'
-import { ACCORDION_INJECTION_KEY, AccordionProvidePayload } from './types'
+import { ACCORDION_INJECTION_KEY, AccordionProviderPayload } from './types'
 import { nanoid } from 'nanoid'
 import { initAccordions } from 'flowbite'
 
 const props = defineProps<{ order?: number; openFirst?: boolean }>()
 
-const { accordionId, flush } = inject<AccordionProvidePayload>(ACCORDION_INJECTION_KEY)
+const { accordionId, flush } = inject<AccordionProviderPayload>(ACCORDION_INJECTION_KEY)
 
 const itemOrder = props.order ?? nanoid()
 const headingId = `${accordionId}-heading-${itemOrder}`
@@ -29,7 +29,7 @@ onMounted(initAccordions)
   <h2 :id="headingId">
     <button
       type="button"
-      class="flex items-center justify-between w-full font-medium rtl:text-right text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+      class="aria-expanded:text-gray-800 dark:aria-expanded:text-gray-200 flex items-center justify-between w-full font-medium rtl:text-right text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
       :class="[!flush && itemOrder === 0 && 'rounded-t-xl', headerClasses]"
       :data-accordion-target="`#${contentId}`"
       :aria-controls="contentId"
@@ -64,4 +64,4 @@ onMounted(initAccordions)
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="postcss"></style>

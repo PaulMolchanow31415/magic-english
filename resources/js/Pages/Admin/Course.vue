@@ -1,7 +1,6 @@
 <script setup>
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
-import { Toast } from '@/Classes'
-import Pagination from '@/Shared/Pagination.vue'
+import Pagination from '@/Widgets/Pagination.vue'
 import {
   FwbAvatar,
   FwbInput,
@@ -13,17 +12,16 @@ import {
   FwbTableRow,
 } from 'flowbite-vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
-import Toaster from '@/Shared/Toaster.vue'
 import { reactive, ref } from 'vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
-import { useSearch } from '@/Composables'
+import { useFlashMessages, useSearch } from '@/Composables'
 import InputLabel from '@/Shared/InputLabel.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import { avatarInitials, quickEnableRef } from '@/Helpers'
-import GrammarModal from '@/Pages/Admin/Partials/GrammarModal.vue'
+import { avatarInitials } from '@/Utils'
+import { GrammarModal } from '@/Pages/Admin/Partials/GrammarModal'
 
 const props = defineProps({
   courses: Object,
@@ -32,9 +30,7 @@ const props = defineProps({
 
 const page = usePage()
 const searchedCourse = useSearch(props.filters.search)
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 const courseForRemoval = ref(null)
 
 const editable = reactive({
@@ -70,12 +66,12 @@ function handleEdit(course) {
 function confirmUpdate() {
   form.post(route('admin.course.store'), {
     onSuccess: () => {
-      quickEnableRef(isSaved)
+      showMessage('Курс успешно сохранен', 'success')
       editable.isShowModal = false
       editable.poster_url = null
       form.reset()
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Не удалось сохранить курс', 'warning'),
   })
 }
 
@@ -83,9 +79,9 @@ function confirmDelete() {
   form.delete(route('admin.course.destroy', { id: courseForRemoval.value.id }), {
     onSuccess: () => {
       courseForRemoval.value = null
-      quickEnableRef(isDeleted)
+      showMessage('Курс удален')
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка', 'warning'),
     preserveState: true,
     preserveScroll: true,
   })
@@ -108,14 +104,6 @@ function deletePoster() {
 
 <template>
   <Head title="Курсы" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Курс успешно сохранен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Курс удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedCourse"
@@ -148,7 +136,7 @@ function deletePoster() {
         <FwbTableCell v-text="course.description" />
         <FwbTableCell v-text="course.complexity" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton theme="green" @click="selectedId = course.id">
               Грамматика
             </TableActionButton>
@@ -156,7 +144,7 @@ function deletePoster() {
             <TableActionButton theme="red" @click="courseForRemoval = course">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -184,7 +172,7 @@ function deletePoster() {
           </template>
         </FwbInput>
       </InputLabel>
-      <ComplexitySelect v-model="form.complexity" :error-message="form.errors.complexity" />
+      <ComplexitySelect v-model="form.complexity" :error="form.errors.complexity" />
       <div class="col-span-2">
         <InputLabel value="Описание">
           <FwbInput

@@ -11,9 +11,7 @@ import FocusableInput from '@/Shared/FocusableInput.vue'
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
 
-const form = useForm({
-  password: '',
-})
+const form = useForm({ password: '' })
 
 const confirmUserDeletion = () => {
   confirmingUserDeletion.value = true

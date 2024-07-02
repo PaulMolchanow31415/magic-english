@@ -1,10 +1,10 @@
 <script setup>
 import AutoHead from '@/Shared/AutoHead.vue'
-import DiscussionSection from '@/Widgets/DiscussionSection.vue'
+import { DiscussionSection } from '@/Widgets/Dicsussion'
 import { FwbButton, FwbHeading, FwbP, FwbProgress } from 'flowbite-vue'
 import { computed, ref, watch } from 'vue'
 import Tooltip from '@/Shared/Tooltip.vue'
-import Translatable from '@/Widgets/Translatable.vue'
+import { Translatable } from '@/Widgets/Translatable'
 import { onKeyStroke } from '@vueuse/core'
 import { useSay } from '@/Composables'
 import { router } from '@inertiajs/vue3'

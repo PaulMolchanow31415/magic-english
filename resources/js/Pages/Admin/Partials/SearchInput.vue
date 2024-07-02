@@ -2,10 +2,7 @@
 import { ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 
-const model = defineModel({
-  type: String,
-  required: true,
-})
+const model = defineModel({ type: String, required: true })
 const input = ref(null)
 
 defineProps({
@@ -16,10 +13,7 @@ defineProps({
 })
 
 useEventListener(document, 'keydown', (e) => {
-  const code = e.which || e.keyCode
-
-  // click ctrl + k
-  if (e.ctrlKey && code === 75) {
+  if (e.ctrlKey && e.key.toLowerCase() === 'k') {
     e.preventDefault()
     input.value.focus()
   }

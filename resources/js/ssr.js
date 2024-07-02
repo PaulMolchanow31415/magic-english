@@ -1,17 +1,17 @@
+import './Plugins'
+
 import createServer from '@inertiajs/vue3/server'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { renderToString } from '@vue/server-renderer'
 import { createSSRApp, h } from 'vue'
-
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist'
+
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import VWave from 'v-wave'
 
-/* Configs */
-import '@/Config/fontAwesome'
-import { appTitle, inertiaProgressSettings, layoutResolver, vueReCaptchaSettings } from '@/Config'
+import { appTitle, inertiaProgressSettings, layoutResolver, vueReCaptchaSettings } from './Core'
 
 createServer((page) =>
   createInertiaApp({

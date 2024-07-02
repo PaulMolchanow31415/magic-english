@@ -1,49 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { FwbButton, FwbModal } from 'flowbite-vue'
 import { onKeyPressed, useEventListener } from '@vueuse/core'
-import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
+import Opacity300Transition from '../../../Shared/Animations/Opacity300Transition.vue'
 
-defineProps({
-  show: {
-    type: Boolean,
-    default: false,
-  },
-  title: {
-    type: String,
-    default: 'Обновление данных',
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  size: {
-    type: String,
-    default: 'xl',
-    validator(v) {
-      return (
-        v === 'xs' ||
-        v === 'sm' ||
-        v === 'md' ||
-        v === 'lg' ||
-        v === 'xl' ||
-        v === '2xl' ||
-        v === '3xl' ||
-        v === '4xl' ||
-        v === '5xl' ||
-        v === '6xl' ||
-        v === '7xl'
-      )
-    },
-  },
+// prettier-ignore
+withDefaults(defineProps<{
+  show?: boolean
+  title?: string
+  loading?: boolean
+  size?: typeof FwbModal.__defaults.size
+}>(), {
+  show: false,
+  title: 'Обновление данных',
+  loading: false,
+  size: 'xl',
 })
 
 const emit = defineEmits(['confirm', 'close', 'pressEnter'])
-
-function onKeyPress(event) {
-  if (event.shiftKey && event.key === 'Enter') {
-    emit('confirm')
-  }
-}
 
 // без него не получится добавить перевод в Vocabulary.vue
 onKeyPressed('Enter', (e) => {
@@ -51,7 +24,11 @@ onKeyPressed('Enter', (e) => {
   e.preventDefault()
 })
 
-useEventListener(document, 'keypress', onKeyPress)
+useEventListener(document, 'keypress', (event: KeyboardEvent) => {
+  if (event.shiftKey && event.key === 'Enter') {
+    emit('confirm')
+  }
+})
 </script>
 
 <template>

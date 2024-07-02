@@ -1,6 +1,6 @@
 <script setup>
 import { FwbButton, FwbModal } from 'flowbite-vue'
-import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
+import Opacity300Transition from '@/Shared/Animations/Opacity300Transition.vue'
 
 defineProps({
   show: {

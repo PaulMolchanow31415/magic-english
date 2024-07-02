@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { FwbValidationStatus } from '../Types'
+import { FwbInput } from 'flowbite-vue'
+
+type FwbValidationStatus = typeof FwbInput.__defaults.validationStatus
 
 const props = defineProps<{
   value?: string | object

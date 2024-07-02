@@ -1,6 +1,6 @@
 <script setup>
 import { FwbAvatar, FwbButton, FwbHeading, FwbP } from 'flowbite-vue'
-import DiscussionSection from '@/Widgets/DiscussionSection.vue'
+import { DiscussionSection } from '@/Widgets/Dicsussion'
 import AutoHead from '@/Shared/AutoHead.vue'
 import { router } from '@inertiajs/vue3'
 import VocabularyList from '@/Pages/Skills/Patials/VocabularyList.vue'

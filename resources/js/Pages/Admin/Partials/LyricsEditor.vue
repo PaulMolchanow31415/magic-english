@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import InputError from '@/Shared/InputError.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
-import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
 export default defineComponent({
   components: { OpacityTransition, TextRedactor, InputLabel, InputError },
@@ -13,7 +13,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    errorMessage: String,
+    error: String,
   },
 
   emits: ['update:modelValue'],
@@ -32,8 +32,8 @@ export default defineComponent({
       const lines = []
       const wrapper = document.createElement('p')
       const tags = this.$options.parser
-      .parseFromString(value, 'text/html')
-      .getElementsByTagName('p')
+        .parseFromString(value, 'text/html')
+        .getElementsByTagName('p')
 
       for (const tag of tags) {
         tag.childNodes.forEach((node) => {
@@ -86,7 +86,7 @@ export default defineComponent({
       />
     </OpacityTransition>
 
-    <InputError :message="errorMessage" />
+    <InputError :message="error" />
   </div>
 </template>
 

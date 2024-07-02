@@ -1,7 +1,5 @@
 <script setup>
 import { Head, router, useForm, usePage } from '@inertiajs/vue3'
-import { Toast } from '@/Classes'
-import Toaster from '@/Shared/Toaster.vue'
 import { reactive, ref } from 'vue'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
@@ -14,18 +12,18 @@ import {
   FwbTableHeadCell,
   FwbTableRow,
 } from 'flowbite-vue'
-import Pagination from '@/Shared/Pagination.vue'
+import Pagination from '@/Widgets/Pagination.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import TableActionButton from '@/Pages/Admin/Partials/TableActionButton.vue'
+import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import DeleteConfirmationModal from '@/Pages/Admin/Partials/DeleteConfirmationModal.vue'
 import SuggestComboBox from '@/Widgets/SuggestComboBox.vue'
 import Badge from '@/Shared/Badge.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
-import { useSearch, useSuggest } from '@/Composables'
-import { avatarInitials, formatTimestamp, quickEnableRef } from '@/Helpers'
-import OpacityTransition from '@/Animations/OpacityTransition.vue'
+import { useFlashMessages, useSearch, useSuggest } from '@/Composables'
+import { avatarInitials, formatTimestamp } from '@/Utils'
+import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
 const props = defineProps({
   filters: Object,
@@ -35,9 +33,7 @@ const props = defineProps({
 const searchedDictionary = useSearch(props.filters.search)
 const { searched: searchedVocabulary, results: vocabularies } = useSuggest('api.vocabulary.list')
 const page = usePage()
-const isSaved = ref(false)
-const isDeleted = ref(false)
-const isError = ref(false)
+const { showMessage } = useFlashMessages({ closable: true })
 const selectedVocabularies = ref(new Map())
 const dictionaryForRemoval = ref(null)
 
@@ -82,18 +78,18 @@ function confirmUpdate() {
     onSuccess: () => {
       editable.isShowModal = false
       editable.poster_url = null
-      quickEnableRef(isSaved)
+      showMessage('Словарь успешно сохранен', 'success')
       form.reset()
     },
-    onError: () => quickEnableRef(isError),
+    onError: () => showMessage('Ошибка', 'warning'),
     preserveScroll: true,
   })
 }
 
 function confirmDelete() {
   form.delete(route('admin.dictionary.destroy', { id: dictionaryForRemoval.value.id }), {
-    onSuccess: () => quickEnableRef(isDeleted),
-    onError: () => quickEnableRef(isError),
+    onSuccess: () => showMessage('Словарь удален', 'success'),
+    onError: () => showMessage('Ошибка', 'warning'),
     onFinish: () => (dictionaryForRemoval.value = null),
     preserveScroll: true,
     preserveState: true,
@@ -117,14 +113,6 @@ function deletePoster() {
 
 <template>
   <Head title="Словари" />
-
-  <Toaster
-    :toasts="[
-      new Toast({ type: 'success', isShow: isSaved, value: 'Словарь успешно сохранен' }),
-      new Toast({ type: 'success', isShow: isDeleted, value: 'Словарь удален' }),
-      new Toast({ type: 'warning', isShow: isError, value: 'Ошибка' }),
-    ]"
-  />
 
   <TableHeader
     v-model:searched-value="searchedDictionary"
@@ -157,12 +145,12 @@ function deletePoster() {
         <FwbTableCell v-text="dictionary.complexity" />
         <FwbTableCell v-text="formatTimestamp(dictionary.updated_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
-          <div class="flex gap-6">
+          <TableActionRow>
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>
             <TableActionButton theme="red" @click="dictionaryForRemoval = dictionary">
               Удалить
             </TableActionButton>
-          </div>
+          </TableActionRow>
         </FwbTableCell>
       </FwbTableRow>
     </FwbTableBody>
@@ -216,7 +204,7 @@ function deletePoster() {
         @add="selectedVocabularies.set($event.id, $event.value)"
       />
 
-      <ComplexitySelect v-model="form.complexity" :error-message="form.errors.complexity" />
+      <ComplexitySelect v-model="form.complexity" :error="form.errors.complexity" />
 
       <PhotoUploader
         class="col-span-2"

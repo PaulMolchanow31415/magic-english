@@ -39,7 +39,7 @@ Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController
 
 // Singer and music
 Route::prefix('/singer')->name('singer.')->group(function () {
-    Route::inertia('/list', 'Music/SingerList', ['singers' => Singer::all()])->name('list');
+    Route::inertia('/list', 'Music/Singers', ['singers' => Singer::all()])->name('list');
 
     Route::get('/{singer}', [SingerController::class, 'show'])->name('show');
 });

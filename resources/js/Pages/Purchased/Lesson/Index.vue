@@ -2,8 +2,8 @@
 import { Head } from '@inertiajs/vue3'
 import { FwbButton, FwbCard, FwbHeading, FwbModal } from 'flowbite-vue'
 import { ref } from 'vue'
-import Translatable from '@/Widgets/Translatable.vue'
-import Opacity300Transition from '@/Animations/Opacity300Transition.vue'
+import { Translatable } from '@/Widgets/Translatable'
+import Opacity300Transition from '@/Shared/Animations/Opacity300Transition.vue'
 
 defineProps({ lessons: Array })
 

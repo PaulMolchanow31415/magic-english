@@ -1,6 +1,6 @@
 <script setup>
 import { FwbSpinner } from 'flowbite-vue'
-import OpacitySmallTransition from '@/Animations/OpacitySmallTransition.vue'
+import OpacitySmallTransition from '@/Shared/Animations/OpacitySmallTransition.vue'
 
 defineProps({
   type: {
