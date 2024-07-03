@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class User extends Authenticatable implements MustVerifyEmail {
     use HasApiTokens;
     use HasFactory;
-    use CustomHasProfilePhoto;
+    use HasCustomProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Searchable;
@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     public function products(): BelongsToMany {
-        return $this->belongsToMany(\App\Models\Product::class);
+        return $this->belongsToMany(Product::class);
     }
 
     public function cart(): HasOne {

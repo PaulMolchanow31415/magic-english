@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Complexity;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
-use App\Models\Complexity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LearnableFilter;
 

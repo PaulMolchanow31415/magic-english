@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 enum Complexity: string {
     case EASY   = 'легкий';

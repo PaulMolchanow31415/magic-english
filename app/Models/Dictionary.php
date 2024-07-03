@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Complexity;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;

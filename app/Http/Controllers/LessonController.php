@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Complexity;
 use Inertia\Response;
 use App\Models\Lesson;
-use App\Models\Complexity;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;

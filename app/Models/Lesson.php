@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Complexity;
 use Laravel\Scout\Searchable;
 use App\Events\LessonCreated;
 use Illuminate\Database\Eloquent\Model;
