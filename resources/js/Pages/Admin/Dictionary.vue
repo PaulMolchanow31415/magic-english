@@ -22,7 +22,6 @@ import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import InputLabel from '@/Shared/InputLabel.vue'
 import { useFlashMessages, useSearch, useSuggest } from '@/Composables'
-import { avatarInitials, formatTimestamp } from '@/Utils'
 import OpacityTransition from '@/Shared/Animations/OpacityTransition.vue'
 
 const props = defineProps({
@@ -138,12 +137,12 @@ function deletePoster() {
             size="xs"
             :alt="dictionary.category"
             :img="dictionary.poster_url"
-            :initials="avatarInitials(dictionary.category)"
+            :initials="$helpers.avatarInitials(dictionary.category)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="dictionary.category" />
         <FwbTableCell v-text="dictionary.complexity" />
-        <FwbTableCell v-text="formatTimestamp(dictionary.updated_at)" />
+        <FwbTableCell v-text="$helpers.formatTimestamp(dictionary.updated_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionRow>
             <TableActionButton @click="handleEdit(dictionary)"> Редактировать </TableActionButton>

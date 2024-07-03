@@ -9,7 +9,6 @@ import {
 } from 'flowbite-vue'
 import Badge from '@/Shared/Badge.vue'
 import { Head, router } from '@inertiajs/vue3'
-import { avatarInitials } from '@/Utils'
 import { useDeviceSize, useFlashMessages } from '@/Composables'
 
 defineProps({ products: Array })
@@ -45,7 +44,7 @@ function handleRemove(product) {
               <FwbAvatar
                 :size="isTablet ? 'md' : 'xl'"
                 :img="product.poster_url"
-                :initials="avatarInitials(product.name)"
+                :initials="$helpers.avatarInitials(product.name)"
               />
             </template>
 

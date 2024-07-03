@@ -9,7 +9,6 @@ import {
 } from 'flowbite-vue'
 import { router } from '@inertiajs/vue3'
 import { useSay } from '@/Composables'
-import { avatarInitials } from '@/Utils'
 
 defineProps({
   vocabularies: {
@@ -35,7 +34,7 @@ function handleRemove(vocabulary) {
         <FwbAvatar
           size="md"
           :img="vocabulary.poster_url"
-          :initials="avatarInitials(vocabulary.en)"
+          :initials="$helpers.avatarInitials(vocabulary.en)"
         />
       </template>
 

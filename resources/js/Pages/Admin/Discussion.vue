@@ -2,7 +2,6 @@
 import { FwbAvatar, FwbHeading } from 'flowbite-vue'
 import { Head, router } from '@inertiajs/vue3'
 import Badge from '@/Shared/Badge.vue'
-import { avatarInitials } from '@/Utils'
 import { Accordion, AccordionItem } from '@/Shared/Accordion'
 import { useFlashMessages } from '@/Composables'
 
@@ -68,11 +67,11 @@ if (!props.reportedComments.length) {
               :img="comment.creator.profile_photo_url"
               rounded
               size="sm"
-              :initials="avatarInitials(comment.creator.name)"
+              :initials="$helpers.avatarInitials(comment.creator.name)"
             />
             <span class="ms-2" v-text="comment.creator.name" />
             <Badge class="ms-4">{{ comment.creator.role }}</Badge>
-            <time class="ms-auto me-4">{{ formatTimestamp(comment.updated_at) }}</time>
+            <time class="ms-auto me-4">{{ $helpers.formatTimestamp(comment.updated_at) }}</time>
           </div>
         </template>
 

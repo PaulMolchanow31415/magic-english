@@ -17,7 +17,6 @@ import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableA
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
 import TextRedactor from '@/Shared/TextRedactor.vue'
 import NumberInput from '@/Pages/Admin/Partials/NumberInput.vue'
-import { formatTimestamp } from '@/Utils'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 
 const props = defineProps({
@@ -104,7 +103,7 @@ function confirmDelete() {
     <FwbTableBody>
       <FwbTableRow v-for="lesson in lessons.data" :key="lesson.id" class="group">
         <FwbTableCell v-text="lesson.number" />
-        <FwbTableCell v-text="formatTimestamp(lesson.created_at)" />
+        <FwbTableCell v-text="$helpers.formatTimestamp(lesson.created_at)" />
         <FwbTableCell v-text="lesson.complexity" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionRow class="pe-4">

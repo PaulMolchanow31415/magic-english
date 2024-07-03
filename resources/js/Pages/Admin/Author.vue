@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useFlashMessages, useSearch } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
@@ -122,7 +121,7 @@ function deletePoster() {
             size="xs"
             :alt="author.name"
             :img="author.poster_url"
-            :initials="avatarInitials(author.name)"
+            :initials="$helpers.avatarInitials(author.name)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="author.name" />

@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useFlashMessages, useSearch, useSuggest } from '@/Composables'
 import { Head, router, useForm } from '@inertiajs/vue3'
-import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbAvatar,
@@ -138,7 +137,7 @@ function deleteAudio() {
             size="xs"
             :alt="music.singer.name"
             :img="music.singer.poster_url"
-            :initials="avatarInitials(music.singer.name)"
+            :initials="$helpers.avatarInitials(music.singer.name)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="music.singer.name" />

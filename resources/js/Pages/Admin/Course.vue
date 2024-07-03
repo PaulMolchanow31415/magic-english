@@ -20,7 +20,6 @@ import InputLabel from '@/Shared/InputLabel.vue'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import ComplexitySelect from '@/Pages/Admin/Partials/ComplexitySelect.vue'
 import UpdateModal from '@/Pages/Admin/Partials/UpdateModal.vue'
-import { avatarInitials } from '@/Utils'
 import { GrammarModal } from '@/Pages/Admin/Partials/GrammarModal'
 
 const props = defineProps({
@@ -129,7 +128,7 @@ function deletePoster() {
             size="xs"
             :alt="course.name"
             :img="course.poster_url"
-            :initials="avatarInitials(course.name)"
+            :initials="$helpers.avatarInitials(course.name)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="course.name" />

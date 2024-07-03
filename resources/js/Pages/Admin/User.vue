@@ -20,7 +20,6 @@ import UpdateModal from './Partials/UpdateModal.vue'
 import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { useFlashMessages, useSearch } from '@/Composables'
-import { avatarInitials } from '@/Utils'
 
 const props = defineProps({
   users: Object,
@@ -82,7 +81,7 @@ function confirmEdit() {
             :img="user.profile_photo_url"
             rounded
             size="sm"
-            :initials="avatarInitials(user.name)"
+            :initials="$helpers.avatarInitials(user.name)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="user.name" />

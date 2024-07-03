@@ -20,7 +20,6 @@ import Tooltip from '@/Shared/Tooltip.vue'
 import { TableActionButton, TableActionRow } from '@/Pages/Admin/Partials/TableAction'
 import PhotoUploader from '@/Pages/Admin/Partials/PhotoUploader.vue'
 import { useFlashMessages, useSearch } from '@/Composables'
-import { avatarInitials } from '@/Utils'
 
 const props = defineProps({
   dictionary: Object,
@@ -172,7 +171,7 @@ function confirmEdit() {
             size="xs"
             :alt="vocabulary.en"
             :img="vocabulary.poster_url"
-            :initials="avatarInitials(vocabulary.en)"
+            :initials="$helpers.avatarInitials(vocabulary.en)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="vocabulary.en" />

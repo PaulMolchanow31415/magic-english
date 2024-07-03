@@ -1,4 +1,4 @@
-import './Extensions'
+import './fontAwesome'
 
 import axios from 'axios'
 

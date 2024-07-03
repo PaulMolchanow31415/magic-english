@@ -17,7 +17,6 @@ import Pagination from '@/Widgets/Pagination.vue'
 import EmailLink from '@/Shared/EmailLink.vue'
 import { set } from '@vueuse/core'
 import { useFlashMessages, useSearch } from '@/Composables'
-import { formatTimestamp } from '@/Utils'
 
 const props = defineProps({
   subscribers: Object,
@@ -63,7 +62,7 @@ function confirmDelete() {
             class="!mr-0 !rounded-md whitespace-nowrap"
           />
         </FwbTableCell>
-        <FwbTableCell v-text="formatTimestamp(subscriber.created_at)" />
+        <FwbTableCell v-text="$helpers.formatTimestamp(subscriber.created_at)" />
         <FwbTableCell class="lg:opacity-0 group-hover:opacity-100 transition duration-75">
           <TableActionButton @click="subscriberForRemoval = subscriber" theme="red">
             Удалить

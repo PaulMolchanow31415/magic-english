@@ -2,11 +2,9 @@
 import { defineComponent } from 'vue'
 import { FwbAvatar } from 'flowbite-vue'
 import CommentActionDropdown from '@/Widgets/Dicsussion/CommentActionDropdown.vue'
-import { avatarInitials, formatTimestamp } from '@/Utils'
 
 export default defineComponent({
   name: 'DiscussionComment',
-  methods: { avatarInitials },
   components: { CommentActionDropdown, FwbAvatar },
   props: {
     comment: {
@@ -19,11 +17,13 @@ export default defineComponent({
       return this.comment.creator_id === this.$page.props.auth.user.id
     },
     dateUpdate() {
-      return formatTimestamp(this.comment.updated_at, {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      }).toUpperCase()
+      return this.$helpers
+        .formatTimestamp(this.comment.updated_at, {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        })
+        .toUpperCase()
     },
   },
   emits: ['reply', 'delete', 'report'],
@@ -46,7 +46,7 @@ export default defineComponent({
             rounded
             :alt="comment.creator.name"
             :img="comment.creator.profile_photo_url"
-            :initials="avatarInitials(comment.username)"
+            :initials="$helpers.avatarInitials(comment.username)"
           />
           {{ comment.creator.name }}
         </p>

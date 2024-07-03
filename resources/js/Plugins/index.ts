@@ -1,1 +1,2 @@
-import './fontAwesome'
+export * from './ConfiguratorPlugin'
+export { Helpers } from './HelpersPlugin'

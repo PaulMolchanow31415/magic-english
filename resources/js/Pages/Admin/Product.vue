@@ -2,7 +2,6 @@
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { reactive, ref, watchEffect } from 'vue'
 import { useFlashMessages, usePrice, useSearch } from '@/Composables'
-import { avatarInitials } from '@/Utils'
 import TableHeader from '@/Pages/Admin/Partials/TableHeader.vue'
 import {
   FwbA,
@@ -136,7 +135,7 @@ watchEffect(() => (form.price = price.value))
             size="xs"
             :alt="product.name"
             :img="product.poster_url"
-            :initials="avatarInitials(product.name)"
+            :initials="$helpers.avatarInitials(product.name)"
           />
         </FwbTableCell>
         <FwbTableCell v-text="product.name" />

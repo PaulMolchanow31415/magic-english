@@ -94,7 +94,7 @@ export default defineComponent({
     },
     generateQuestion() {
       rememberPositions.clear()
-      position = Math.randomInt(0, this.availableQuestions.length - 1)
+      position = this.$helpers.randomInt(0, this.availableQuestions.length - 1)
       i = 1
 
       this.rightAnswer = makeAnswer(this.availableQuestions[position], true)
@@ -103,7 +103,7 @@ export default defineComponent({
       this.questions.push(this.rightAnswer)
 
       while (i < 3) {
-        position = Math.randomInt(0, this.vocabularies.length - 1)
+        position = this.$helpers.randomInt(0, this.vocabularies.length - 1)
 
         if (rememberPositions.has(position)) {
           continue
@@ -114,7 +114,7 @@ export default defineComponent({
         ++i
       }
 
-      this.questions.shuffle()
+      this.$helpers.shuffle(this.questions)
     },
     selectionStatus(question) {
       if (!this.picked || this.picked?.id !== question.id) {
@@ -153,7 +153,7 @@ export default defineComponent({
 <template>
   <AutoHead />
 
-  <section class="">
+  <section>
     <FwbHeading tag="h3" v-text="rightAnswer.en" class="mb-6" />
 
     <div class="flex gap-6 items-center">
