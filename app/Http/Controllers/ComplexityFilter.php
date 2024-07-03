@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Complexity;
+use App\Complexity;
 use Illuminate\Validation\Rule;
 
 class ComplexityFilter {

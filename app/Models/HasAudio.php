@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-trait HasAudio
-{
+trait HasAudio {
 
 }

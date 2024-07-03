@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Complexity;
 use Laravel\Scout\Searchable;
 use App\Events\CourseCreated;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Course extends Model {
-    use Searchable, CustomHasProfilePhoto;
+    use Searchable, HasCustomProfilePhoto;
 
     protected $appends = ['profile_photo_url'];
 

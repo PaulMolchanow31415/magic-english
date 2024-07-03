@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Laravel\Jetstream\HasProfilePhoto;
 
-trait CustomHasProfilePhoto {
+trait HasCustomProfilePhoto {
     use HasProfilePhoto;
 
     public function updatePosterPhotoIfExist($photoOrEmpty, $storagePath = 'posters'): void {
