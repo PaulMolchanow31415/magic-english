@@ -1,4 +1,4 @@
-export * from './useMusicState'
+export * from './useMusic'
 export * from './usePrice'
 export * from './useSay'
 export * from './useScrollLock'

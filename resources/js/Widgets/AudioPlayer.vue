@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useMusicState } from '../Composables'
+import { useMusic } from '../Composables'
 import Tooltip from '../Shared/Tooltip.vue'
 import { Link } from '@inertiajs/vue3'
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { FwbP, FwbRange } from 'flowbite-vue'
 import OpacitySmallTransition from '../Shared/Animations/OpacitySmallTransition.vue'
 import OpacitySlideTopTransition from '../Shared/Animations/OpacitySlideTopTransition.vue'
 import FadeHeightTransition from '../Shared/Animations/FadeHeightTransition.vue'
 
-const state = useMusicState()
-
-const volume = computed(() => state.value.volume)
+const { setSong, setVolume, clear, isPresent, singer, song, volume, isMuted } = useMusic()
 
 const player = ref<HTMLAudioElement>()
 const isPlaying = ref(false)
@@ -55,7 +53,7 @@ function startTimer() {
 function onAudioEnded() {
   isPlaying.value = false
   clearTimer()
-  state.value.song = null
+  setSong(null)
 }
 
 function onLoadMetaData() {
@@ -68,12 +66,9 @@ function onLoadMetaData() {
 
 function changeVolume(dir: 'down' | 'up') {
   if ((dir === 'up' && volume.value < 1) || (dir === 'down' && volume.value > 0)) {
-    state.value.volume =
-      dir === 'up' ? Math.min(volume.value + 0.1, 1) : Math.max(volume.value - 0.1, 0)
+    setVolume(dir === 'up' ? Math.min(volume.value + 0.1, 1) : Math.max(volume.value - 0.1, 0))
   }
 }
-
-onMounted(initPlayer)
 
 watch(isPlaying, (isRun) =>
   isRun
@@ -83,21 +78,23 @@ watch(isPlaying, (isRun) =>
         .catch(() => {
           isLoadingError.value = true
           isPlaying.value = false
-          state.value.song = null
+          setSong(null)
         })
     : player.value.pause(),
 )
 
 watch(volume, () => (player.value.volume = volume.value))
 
-watch(() => state.value.song, initPlayer)
+onMounted(initPlayer)
+
+watch(() => song, initPlayer)
 </script>
 
 <template>
   <Teleport to="body">
     <OpacitySlideTopTransition>
       <div
-        v-if="!isLoadingError && state.song && state.singer"
+        v-if="!isLoadingError && isPresent"
         @dblclick="isShowCapture = !isShowCapture"
         class="fixed bottom-0 left-0 w-full z-50"
       >
@@ -108,19 +105,15 @@ watch(() => state.value.song, initPlayer)
           <audio
             ref="player"
             preload="auto"
-            :src="state.song.audio_url"
+            :src="song.audio_url"
             @ended="onAudioEnded"
             @pause="clearTimer"
             @loadedmetadata="onLoadMetaData"
           />
 
           <div class="items-center justify-center hidden me-auto md:flex">
-            <img
-              class="h-12 me-3 rounded"
-              :src="state.singer.poster_url"
-              :alt="state.singer.name"
-            />
-            <span class="text-sm text-gray-500 dark:text-gray-400" v-text="state.singer.name" />
+            <img class="h-12 me-3 rounded" :src="singer.poster_url" :alt="singer.name" />
+            <span class="text-sm text-gray-500 dark:text-gray-400" v-text="singer.name" />
           </div>
           <div class="flex items-center w-full">
             <div class="w-full">
@@ -149,7 +142,7 @@ watch(() => state.value.song, initPlayer)
                 </Tooltip>
               </div>
 
-              <FwbP class="text-center text-xs mt-2 mb-1" v-text="state.song.name" />
+              <FwbP class="text-center text-xs mt-2 mb-1" v-text="song.name" />
 
               <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
                 <span
@@ -173,11 +166,7 @@ watch(() => state.value.song, initPlayer)
           <div class="items-center justify-center hidden ms-auto md:flex">
             <Tooltip>
               <template #trigger>
-                <button
-                  @click="state.song = null"
-                  type="button"
-                  class="audio-player-button !py-1.5 group"
-                >
+                <button @click="clear" type="button" class="audio-player-button !py-1.5 group">
                   <Icon :icon="['fas', 'circle-xmark']" class="audio-player-icon" />
                   <span class="sr-only">Закрыть</span>
                 </button>
@@ -187,7 +176,7 @@ watch(() => state.value.song, initPlayer)
             <Tooltip>
               <template #trigger>
                 <Link
-                  :href="/* @ts-ignore */ route('singer.show', state.singer.id)"
+                  :href="/* @ts-ignore */ route('singer.show', singer.id)"
                   preserve-state
                   class="block audio-player-button group"
                 >
@@ -275,7 +264,7 @@ watch(() => state.value.song, initPlayer)
                   class="absolute -left-full -top-full -translate-y-full -translate-x-3 -mt-3 flex py-3 px-5 rounded-xl bg-gray-100 dark:bg-gray-800 -rotate-90"
                 >
                   <FwbRange
-                    v-model.number="state.volume"
+                    v-model.number="volume"
                     :steps="0.1"
                     :max="1"
                     :value="0.5"
@@ -290,19 +279,7 @@ watch(() => state.value.song, initPlayer)
                 class="p-2.5 group rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-600 dark:hover:bg-gray-600"
               >
                 <svg
-                  v-if="volume > 0"
-                  class="audio-player-icon"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    d="M10.836.357a1.978 1.978 0 0 0-2.138.3L3.63 5H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1.63l5.07 4.344a1.985 1.985 0 0 0 2.142.299A1.98 1.98 0 0 0 12 15.826V2.174A1.98 1.98 0 0 0 10.836.357Zm2.728 4.695a1.001 1.001 0 0 0-.29 1.385 4.887 4.887 0 0 1 0 5.126 1 1 0 0 0 1.674 1.095A6.645 6.645 0 0 0 16 9a6.65 6.65 0 0 0-1.052-3.658 1 1 0 0 0-1.384-.29Zm4.441-2.904a1 1 0 0 0-1.664 1.11A10.429 10.429 0 0 1 18 9a10.465 10.465 0 0 1-1.614 5.675 1 1 0 1 0 1.674 1.095A12.325 12.325 0 0 0 20 9a12.457 12.457 0 0 0-1.995-6.852Z"
-                  />
-                </svg>
-                <svg
-                  v-else
+                  v-if="isMuted"
                   class="audio-player-icon"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -316,6 +293,18 @@ watch(() => state.value.song, initPlayer)
                     <path d="M18 7L14 11" stroke="currentColor" stroke-linecap="round" />
                   </g>
                 </svg>
+                <svg
+                  v-else
+                  class="audio-player-icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 18"
+                >
+                  <path
+                    d="M10.836.357a1.978 1.978 0 0 0-2.138.3L3.63 5H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1.63l5.07 4.344a1.985 1.985 0 0 0 2.142.299A1.98 1.98 0 0 0 12 15.826V2.174A1.98 1.98 0 0 0 10.836.357Zm2.728 4.695a1.001 1.001 0 0 0-.29 1.385 4.887 4.887 0 0 1 0 5.126 1 1 0 0 0 1.674 1.095A6.645 6.645 0 0 0 16 9a6.65 6.65 0 0 0-1.052-3.658 1 1 0 0 0-1.384-.29Zm4.441-2.904a1 1 0 0 0-1.664 1.11A10.429 10.429 0 0 1 18 9a10.465 10.465 0 0 1-1.614 5.675 1 1 0 1 0 1.674 1.095A12.325 12.325 0 0 0 20 9a12.457 12.457 0 0 0-1.995-6.852Z"
+                  />
+                </svg>
 
                 <span class="sr-only">Изменить громкость</span>
               </button>
@@ -326,10 +315,7 @@ watch(() => state.value.song, initPlayer)
         <FadeHeightTransition>
           <!--  Capture  -->
           <div v-show="isShowCapture" class="bg-white border-t border-gray-200">
-            <div
-              class="max-h-72 pt-4 pb-6 overflow-y-scroll text-center"
-              v-html="state.song?.lyrics"
-            />
+            <div class="max-h-72 pt-4 pb-6 overflow-y-scroll text-center" v-html="song?.lyrics" />
           </div>
         </FadeHeightTransition>
       </div>
@@ -337,7 +323,7 @@ watch(() => state.value.song, initPlayer)
   </Teleport>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .audio-player-icon {
   @apply w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white;
 }

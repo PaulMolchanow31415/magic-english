@@ -1,15 +1,15 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import { useMusicState } from '@/Composables'
+import { useMusic } from '@/Composables'
 import { FwbListGroup, FwbListGroupItem } from 'flowbite-vue'
 
 const props = defineProps({ musics: Array, singer: Object })
 
-const state = useMusicState()
+const { setSinger, setSong } = useMusic()
 
 function onClick(music) {
-  state.value.song = music
-  state.value.singer = props.singer
+  setSong(music)
+  setSinger(props.singer)
 }
 </script>
 
