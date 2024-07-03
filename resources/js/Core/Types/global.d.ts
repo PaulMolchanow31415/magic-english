@@ -1,5 +1,6 @@
 import { route as routeFn } from '../../../../vendor/tightenco/ziggy'
 import { AxiosInstance } from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Helpers } from '../../Plugins'
 
 declare global {
@@ -13,8 +14,15 @@ declare global {
   static const $helpers: Helpers
 
   declare module 'vue' {
-    interface ComponentCustomProperties {
+    export interface ComponentCustomProperties {
       $helpers: Helpers
     }
   }
+
+  declare module '@vue/runtime-core' {
+    export interface GlobalComponents {
+      Icon: typeof FontAwesomeIcon
+    }
+  }
 }
+
