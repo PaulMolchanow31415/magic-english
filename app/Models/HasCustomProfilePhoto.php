@@ -8,9 +8,7 @@ trait HasCustomProfilePhoto {
     use HasProfilePhoto;
 
     public function updatePosterPhotoIfExist($photoOrEmpty, $storagePath = 'posters'): void {
-        if (isset($photoOrEmpty)) {
-            $this->updateProfilePhoto($photoOrEmpty, $storagePath);
-        }
+            $photoOrEmpty ?? $this->updateProfilePhoto($photoOrEmpty, $storagePath);
     }
 
 }

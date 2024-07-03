@@ -3,6 +3,7 @@
 use App\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -80,4 +81,6 @@ Route::middleware([
 
     Route::put('/music/delete-audio', [MusicController::class, 'deleteAudio'])
         ->name('music.delete-audio');
+
+    Route::delete('/file/{filename}', FileController::class)->name('delete-file');
 });
