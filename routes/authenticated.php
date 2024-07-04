@@ -11,12 +11,10 @@ use App\Http\Controllers\DictionaryController;
 Route::middleware(config('auth.authenticated_permissions'))->group(function () {
     // Comments
     Route::prefix('/discussion')->name('discussion.')->group(function () {
-        Route::get('/{id}', [DiscussionController::class, 'show'])
-            ->name('show');
+        Route::get('/{discussion}', [DiscussionController::class, 'show'])->name('show');
 
         Route::patch('/report', [CommentController::class, 'report'])
-            ->middleware(['unlocked', 'throttle:10,1'])
-            ->name('report');
+            ->middleware(['unlocked', 'throttle:10,1'])->name('report');
     });
 
     Route::resource('comment', CommentController::class)
