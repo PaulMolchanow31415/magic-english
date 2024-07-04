@@ -45,8 +45,8 @@ const subscribeSection = ref(null)
 
     <section v-if="faqs.length > 0" class="py-14 md:py-24 lg:py-32">
       <h2 class="heading-2 mb-6">Ответы на вопросы</h2>
-      <Accordion always-open>
-        <AccordionItem v-for="(faq, index) in faqs" :order="index" open-first :key="faq.id">
+      <Accordion always-open open-first>
+        <AccordionItem v-for="faq in faqs" :key="faq.id">
           <template #heading>{{ faq.heading }}</template>
           <p v-html="faq.content" class="accordion-content" />
         </AccordionItem>

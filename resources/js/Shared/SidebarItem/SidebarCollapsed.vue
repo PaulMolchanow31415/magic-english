@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { initCollapses } from 'flowbite'
-import { nanoid } from 'nanoid'
+import { useHelpers } from '../../Composables'
 
 defineProps<{ text: string }>()
 
 onMounted(initCollapses)
 
-const id = nanoid()
+const id = useHelpers().generateRandomId()
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { initTooltips } from 'flowbite'
-import { nanoid } from 'nanoid'
+import { useHelpers } from '../Composables'
 
 type TooltipPlacement = 'bottom' | 'top' | 'left' | 'right'
 type Theme = 'light' | 'dark'
@@ -17,7 +17,7 @@ const props = withDefaults(
   },
 )
 
-const id = nanoid()
+const id = useHelpers().generateRandomId()
 
 const classes = computed(() =>
   props.theme === 'dark'

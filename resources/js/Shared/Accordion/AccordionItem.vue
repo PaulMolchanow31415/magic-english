@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { computed, inject, onMounted } from 'vue'
+import { computed, inject, onMounted, ref } from 'vue'
 import { ACCORDION_INJECTION_KEY, AccordionProviderPayload } from './types'
-import { nanoid } from 'nanoid'
-import { initAccordions } from 'flowbite'
+import { useHelpers } from '../../Composables'
 
-const props = defineProps<{ order?: number; openFirst?: boolean }>()
+const { accordionId, flush, openFirst } = inject<AccordionProviderPayload>(ACCORDION_INJECTION_KEY)
 
-const { accordionId, flush } = inject<AccordionProviderPayload>(ACCORDION_INJECTION_KEY)
-
-const itemOrder = props.order ?? nanoid()
-const headingId = `${accordionId}-heading-${itemOrder}`
-const contentId = `${accordionId}-content-${itemOrder}`
+const itemId = useHelpers().generateRandomId()
+const headingId = `${accordionId}-heading-${itemId}`
+const contentId = `${accordionId}-content-${itemId}`
+const heading = ref<HTMLHeadingElement>()
+const open = ref(false)
 
 const headerClasses = computed(() => {
   return flush
@@ -22,18 +21,24 @@ const contentClasses = computed(() => {
   return flush ? 'px-1 py-5 border-b' : 'p-5 border border-b-0 dark:bg-gray-900'
 })
 
-onMounted(initAccordions)
+onMounted(() => {
+  // попробовать перенести в глобальный контекст
+  if (openFirst && heading.value.parentElement.children.item(0) === heading.value) {
+    open.value = true
+  }
+})
 </script>
 
 <template>
-  <h2 :id="headingId">
+  <h2 :id="headingId" ref="heading">
     <button
+      @click="open = !open"
       type="button"
       class="aria-expanded:text-gray-800 dark:aria-expanded:text-gray-200 flex items-center justify-between w-full font-medium rtl:text-right text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
-      :class="[!flush && itemOrder === 0 && 'rounded-t-xl', headerClasses]"
+      :class="headerClasses"
       :data-accordion-target="`#${contentId}`"
       :aria-controls="contentId"
-      :aria-expanded="openFirst ? itemOrder === 0 : false"
+      :aria-expanded="open"
     >
       <span>
         <slot name="heading" />
@@ -57,7 +62,7 @@ onMounted(initAccordions)
     </button>
   </h2>
 
-  <div :id="contentId" class="hidden" :aria-labelledby="headingId">
+  <div :id="contentId" :class="{ hidden: !open }" :aria-labelledby="headingId">
     <div :class="contentClasses" class="border-gray-200 dark:border-gray-700">
       <slot />
     </div>
