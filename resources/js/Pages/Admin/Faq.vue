@@ -66,9 +66,10 @@ function handleDelete(faq) {
 <template>
   <Head title="Ответы на частые вопросы" />
 
-  <Accordion flush>
-    <AccordionItem :order="0" open-first>
+  <Accordion flush open-first>
+    <AccordionItem>
       <template #heading class="bg-blue-50 dark:bg-blue-950">Добавить FAQ</template>
+
       <form @submit.prevent="saveFaq" method="post">
         <div class="mb-4">
           <InputLabel value="Заголовок">
@@ -92,8 +93,9 @@ function handleDelete(faq) {
         </FwbButton>
       </form>
     </AccordionItem>
-    <AccordionItem v-for="(faq, index) in faqs" :order="index + 1">
+    <AccordionItem v-for="faq in faqs">
       <template #heading>{{ faq.heading }}</template>
+
       <div v-html="faq.content" class="text-gray-500 dark:text-gray-400 accordion-content" />
       <div class="accordion-button-group">
         <button @click="handleDelete(faq)" type="button" class="hover:text-red-600">Удалить</button>

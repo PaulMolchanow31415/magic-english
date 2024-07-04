@@ -117,8 +117,8 @@ watch(() => props.courseId, async (value) => {
         </h3>
       </template>
       <template #body>
-        <Accordion flush always-open>
-          <AccordionItem :order="0" open-first>
+        <Accordion open-first flush always-open>
+          <AccordionItem>
             <template #heading>Добавление грамматики</template>
             <form ref="editor" @submit.prevent="confirmUpdate" method="post">
               <div class="mb-4">
@@ -154,11 +154,7 @@ watch(() => props.courseId, async (value) => {
               </FwbButton>
             </form>
           </AccordionItem>
-          <AccordionItem
-            v-for="(grammar, index) in grammarRules"
-            :order="index + 1"
-            :key="grammar.id"
-          >
+          <AccordionItem v-for="grammar in grammarRules" :key="grammar.id">
             <template #heading>{{ grammar.title }}</template>
 
             <article class="no-tailwindcss" v-html="grammar.content" />

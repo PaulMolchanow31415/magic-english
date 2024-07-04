@@ -59,7 +59,7 @@ if (!props.reportedComments.length) {
   <template v-if="reportedComments.length > 0">
     <FwbHeading class="text-center" tag="h6">Жалобы на пользователей</FwbHeading>
     <Accordion flush>
-      <AccordionItem v-for="(comment, index) in reportedComments" :key="comment.id" :order="index">
+      <AccordionItem v-for="comment in reportedComments" :key="comment.id">
         <template #heading>
           <div class="flex items-center">
             <FwbAvatar
