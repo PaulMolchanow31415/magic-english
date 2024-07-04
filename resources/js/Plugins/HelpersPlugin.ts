@@ -5,6 +5,14 @@ interface FormatterOptions extends Intl.DateTimeFormatOptions {
 }
 
 export class Helpers {
+  private static Holder = class {
+    static readonly HOLDER_INSTANCE = new Helpers()
+  }
+
+  static getInstance() {
+    return this.Holder.HOLDER_INSTANCE
+  }
+
   shuffle<T>(array: T[]) {
     return array.sort(() => Math.random() - 0.5)
   }
@@ -31,10 +39,16 @@ export class Helpers {
     const s = _[0].charAt(0)
     return (_.length > 1 ? s + _[1].charAt(0) : s).toUpperCase()
   }
+
+  generateRandomId(size = 7) {
+    return Math.random()
+      .toString(36)
+      .slice(2, 2 + size)
+  }
 }
 
 export const HelpersPlugin: Plugin = {
   install(app: App) {
-    app.config.globalProperties.$helpers = new Helpers()
+    app.config.globalProperties.$helpers = Helpers.getInstance()
   },
 }
