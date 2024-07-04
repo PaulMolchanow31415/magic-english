@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   <FwbButton
     gradient="blue"
     :type="type"
-    class="flex flex-nowrap font-medium"
+    class="flex flex-nowrap font-medium transition"
     :loading="loading"
     :class="{ 'opacity-65': loading }"
     :disabled="loading"
