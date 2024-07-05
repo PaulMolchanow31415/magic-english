@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 trait HasAudio {
 
     public function audioDisk() {
-        return config('posters.disk', 'public');
+        return config('audios.disk', 'public');
     }
 
     public function updateAudioIfExist(?UploadedFile $audioOrEmpty): void {

@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Singer;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\SearchRequest;
 
 class SingerController extends Controller {
     use PhotoUploadable;
 
-    public function index() {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Author', [
-            'authors' => Singer::search(request('search'))->paginate(5),
-            'filters' => request()->only(['search']),
+            'authors' => Singer::search($request['search'])->paginate(5),
+            'filters' => $request->only(['search']),
         ]);
     }
 

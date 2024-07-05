@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Music;
 use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 
 class MusicController extends Controller {
     use AudioUploadable;
 
-    public function index() {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Music', [
-            'musics'  => Music::search(request('search'))->paginate(5),
-            'filters' => request()->only(['search']),
+            'musics'  => Music::search($request['search'])->paginate(5),
+            'filters' => $request->only(['search']),
         ]);
     }
 

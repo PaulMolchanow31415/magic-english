@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 trait PhotoUploadable {
     use Uploadable;
 
-    public static function imageRules(int $maxSize): array { // todo make photo request
+    public static function imageRules(int $maxSize): array {
         return ['nullable', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:'.$maxSize];
     }
 

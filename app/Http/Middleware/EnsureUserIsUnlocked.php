@@ -15,7 +15,7 @@ class EnsureUserIsUnlocked {
      */
     public function handle(Request $request, Closure $next): Response {
         if (!User::isUnlocked()) {
-            abort(Response::HTTP_FORBIDDEN);
+            forbidden();
         }
 
         return $next($request);

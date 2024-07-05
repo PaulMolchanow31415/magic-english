@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Role;
 use Laravel\Scout\Searchable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
@@ -37,6 +38,12 @@ class User extends Authenticatable implements MustVerifyEmail {
         'social_type',
     ];
 
+    protected $appends = ['profile_photo_url'];
+
+    protected $attributes = [
+        'role' => Role::USER,
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -44,9 +51,10 @@ class User extends Authenticatable implements MustVerifyEmail {
         'two_factor_secret',
     ];
 
-    protected $casts = ['email_verified_at' => 'datetime'];
-
-    protected $appends = ['profile_photo_url'];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'role'              => Role::class,
+    ];
 
     public function comments(): HasMany {
         return $this->hasMany(Comment::class);
@@ -72,20 +80,27 @@ class User extends Authenticatable implements MustVerifyEmail {
         return $this->hasOne(Cart::class);
     }
 
+    public function cartItems(): BelongsToMany {
+        return $this->cart->products();
+    }
+
     public function deleteWithPhoto(): void {
         $this->deleteProfilePhoto();
         $this->delete();
     }
 
     public static function isUnlocked(): bool {
-        return auth()->check() && !auth()->user()->is_banned;
+        return auth()->check() && !user()->is_banned;
+    }
+
+    public function hasRole(Role $role): bool {
+        return $this->role === $role;
     }
 
     public function toSearchableArray(): array {
         return [
             'name'      => $this->name,
             'email'     => $this->email,
-            'password'  => $this->password,
             'role'      => $this->role,
             'is_banned' => $this->is_banned,
         ];

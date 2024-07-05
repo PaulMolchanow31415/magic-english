@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyRecaptcha {
+
     public function handle(Request $request, Closure $next): Response {
         $request->validate(['recaptcha_token' => 'required|string',]);
 

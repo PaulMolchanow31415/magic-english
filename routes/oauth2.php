@@ -3,6 +3,7 @@
 use App\Role;
 use Inertia\Inertia;
 use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\PasswordRegenerateMail;
@@ -19,9 +20,9 @@ Route::prefix('oauth2/google')->name('oauth2.google.')->group(function () {
     Route::get('/callback', function () {
         $googleUser = Socialite::driver('google')->user();
 
-        $password = Str::password(16);
+        $password = Str::password(6);
 
-        $user = \App\Models\User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => $googleUser->getEmail()],
             [
                 'name'               => $googleUser->getName(),

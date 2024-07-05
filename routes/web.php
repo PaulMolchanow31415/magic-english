@@ -32,7 +32,7 @@ Route::prefix("/subscribe")->name("subscribe.")->controller(SubscriberController
 
         Route::get('/is-subscribed', 'isSubscribed')->name('is-subscribed');
 
-        Route::put("/current-user", 'changeSubscribeStatus')
+        Route::put("/current-user", 'changeSubscribingStatus')
             ->middleware(['throttle:10,1', 'verified', 'auth:sanctum'])
             ->name('change-status');
     });

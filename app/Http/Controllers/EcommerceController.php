@@ -11,20 +11,17 @@ class EcommerceController extends Controller {
         $hasCartProducts = false;
 
         if (auth()->check()) {
-            $user = auth()->user();
-            $cartGoods = $user->cart->products();
-            $products = Product::select(['id', 'name', 'poster_url', 'price'])->whereNotIn(
-                'id',
-                $user->products()->allRelatedIds()->merge($cartGoods->allRelatedIds()),
-            )->get();
-            $hasCartProducts = $cartGoods->count() > 0;
+            $buyer = user();
+            $goods = $buyer->cartItems();
+            $mergedIds = $buyer->products()->allRelatedIds()->merge($goods->allRelatedIds());
+            $products = Product::select(['id', 'name', 'poster_url', 'price'])
+                ->whereNotIn('id', $mergedIds)->get();
+            $hasCartProducts = $goods->count() > 0;
         }
 
-        // todo: fix empty cart
         return inertia('Ecommerce/Index', [
             'lessons'         => $products ?? Product::all(),
             'hasCartProducts' => $hasCartProducts,
-            // plans
         ]);
     }
 }

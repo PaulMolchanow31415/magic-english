@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Dictionary extends Model {
-    use Searchable;
+    use Searchable, HasPoster;
 
     protected $fillable = [
         'category',
         'complexity',
-        'poster_url',
     ];
+
+    protected $appends = ['poster_url'];
 
     protected $with = ['vocabularies', 'discussion'];
 

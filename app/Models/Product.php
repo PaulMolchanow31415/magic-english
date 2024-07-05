@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model {
-    use Searchable;
+    use Searchable, HasPoster;
 
     protected $fillable = [
         'name',
-        'poster_url',
         'content',
         'price',
         'stripe_price_id',
     ];
+
+    protected $appends = ['poster_url'];
 
     public function users(): BelongsToMany {
         return $this->belongsToMany(User::class);

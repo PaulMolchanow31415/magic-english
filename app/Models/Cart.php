@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,14 +16,19 @@ class Cart extends Model {
     }
 
     public function products(): BelongsToMany {
-        return $this->belongsToMany(\App\Models\Product::class);
+        return $this->belongsToMany(Product::class);
     }
 
     public function order(): BelongsTo {
-        return $this->belongsTo(\App\Models\Order::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function clear(): void {
         $this->products()->detach();
     }
+
+    public function stripePriceIds(): Collection|array {
+        return $this->products()->select('stripe_price_id')->get()->pluck('stripe_price_id');
+    }
+
 }

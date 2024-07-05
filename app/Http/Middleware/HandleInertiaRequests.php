@@ -29,7 +29,7 @@ class HandleInertiaRequests extends Middleware {
      * @return array<string, mixed>
      */
     public function share(Request $request): array {
-        $user = auth()->user();
+        $user = user();
 
         return [
             'complexities'            => Complexity::cases(),

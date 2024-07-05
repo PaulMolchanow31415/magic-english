@@ -26,18 +26,20 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
         ->group(function () {
             Route::post('/add-vocabulary/{word}', 'addVocabulary')->name('add-vocabulary');
 
-            Route::delete('/remove-vocabulary/{id}', 'removeVocabulary')->name('remove-vocabulary');
+            Route::delete('/remove-vocabulary/{vocabulary}', 'removeVocabulary')->name(
+                'remove-vocabulary',
+            );
 
             Route::post('/complete-vocabularies', 'completeVocabularies')
                 ->name('complete-vocabularies');
 
-            Route::post('/add-dictionary/{id}', 'addDictionary')->name('add-dictionary');
+            Route::post('/add-dictionary/{dictionary}', 'addDictionary')->name('add-dictionary');
 
             Route::delete('/flush-vocabularies', 'flushVocabularies')->name('flush-vocabularies');
 
-            Route::post('/add-lesson/{id}', 'addLesson')->name('add-lesson');
+            Route::post('/add-lesson/{lesson}', 'addLesson')->name('add-lesson');
 
-            Route::post('/complete-lesson/{id}', 'completeLesson')->name('complete-lesson');
+            Route::post('/complete-lesson/{lesson}', 'completeLesson')->name('complete-lesson');
 
             Route::delete('/remove-lesson/{number}', 'removeLesson')->name('remove-lesson');
 
@@ -45,9 +47,9 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
 
             Route::get('/latest-added-lesson', 'latestAddedLesson')->name('latest-added-lesson');
 
-            Route::post('/add-course/{id}', 'addCourse')->name('add-course');
+            Route::post('/add-course/{course}', 'addCourse')->name('add-course');
 
-            Route::post('/complete-course/{id}', 'completeCourse')->name('complete-course');
+            Route::post('/complete-course/{course}', 'completeCourse')->name('complete-course');
 
             Route::prefix('/vocabularies')->name('vocabularies.')->group(function () {
                 Route::get('/dashboard', 'showVocabularyDashboard')->name('dashboard');
@@ -75,7 +77,7 @@ Route::middleware(config('auth.authenticated_permissions'))->group(function () {
         Route::prefix('/courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'courses')->name('courses');
 
-            Route::get('/{course}', 'show')->name('course.show');
+            Route::get('/{id}', 'show')->name('course.show');
         });
 
         Route::prefix('/self-education')->controller(LessonController::class)->group(function () {

@@ -14,11 +14,11 @@ class CheckRole {
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, string $role): Response {
-        if ($role === Role::ADMIN && auth()->user()->role !== Role::ADMIN) {
-            abort(Response::HTTP_FORBIDDEN);
+        if ($role === Role::ADMIN->name && !user()->hasRole(Role::ADMIN)) {
+            forbidden();
         }
-        if ($role === Role::USER && auth()->user()->role !== Role::USER) {
-            abort(Response::HTTP_FORBIDDEN);
+        if ($role === Role::USER->name && !user()->hasRole(Role::USER)) {
+            forbidden();
         }
 
         return $next($request);

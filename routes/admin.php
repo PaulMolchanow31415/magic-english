@@ -19,7 +19,7 @@ use App\Http\Controllers\UserAdministrationController;
 
 Route::middleware([
     ...config('auth.authenticated_permissions'),
-    'hasRole:'.Role::ADMIN,
+    'hasRole:'.Role::ADMIN->name,
 ])->name('admin.')->prefix("/admin")->group(function () {
     // fortify не позволяет дополнительно настраивать других пользователей, поэтому ->
     Route::resource('user', UserAdministrationController::class)

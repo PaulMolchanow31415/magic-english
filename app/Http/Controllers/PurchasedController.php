@@ -6,15 +6,9 @@ use App\Models\Product;
 
 class PurchasedController extends Controller {
 
-    protected function myProducts() {
-        return auth()->user()->products();
-    }
-
-    // plans
-
     public function lessons() {
         return inertia('Purchased/Lesson/Index', [
-            'lessons' => $this->myProducts()->select(['name', 'content', 'poster_url'])->get(),
+            'lessons' => user()->products()->select(['name', 'content', 'poster_url'])->get(),
         ]);
     }
 

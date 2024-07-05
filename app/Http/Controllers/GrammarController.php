@@ -17,16 +17,13 @@ class GrammarController extends Controller {
             'phonetics' => 'array|required',
         ]);
 
-        $grammar = Grammar::updateOrCreate(
-            ['id' => $request['id']],
-            [
-                'title'     => $request['title'],
-                'content'   => $request['content'],
-                'order'     => $request['order'],
-                'phonetics' => $request['phonetics'],
-                'course_id' => $request['course_id'],
-            ],
-        );
+        $grammar = Grammar::updateOrCreate(['id' => $request['id']], [
+            'title'     => $request['title'],
+            'content'   => $request['content'],
+            'order'     => $request['order'],
+            'phonetics' => $request['phonetics'],
+            'course_id' => $request['course_id'],
+        ]);
 
         $grammar->course()->associate($request['course_id']);
         $grammar->save();
@@ -40,9 +37,7 @@ class GrammarController extends Controller {
         ]);
 
         foreach ($request['items'] as $item) {
-            $grammar = Grammar::find($item['id']);
-            $grammar->order = $item['order'];
-            $grammar->save();
+            Grammar::whereId($item['id'])->update(['order' => $item['order']]);
         }
     }
 

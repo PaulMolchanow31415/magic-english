@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Complexity;
-use Inertia\Response;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
-use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
 use App\Service\DiscussionService;
+use App\Http\Requests\SearchRequest;
 
 class LessonController extends Controller {
     use FilteredLearnable;
 
-    public function index(): Response|ResponseFactory {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Lesson', [
-            'lessons' => Lesson::search(request('search'))
+            'lessons' => Lesson::search($request['search'])
                 ->orderBy('number', 'desc')
                 ->paginate(5),
 
-            'filters'          => request()->only(['search']),
+            'filters' => $request->only(['search']),
             'prevLessonNumber' => Lesson::latest('created_at')->first()?->number ?? 0,
         ]);
     }
@@ -41,8 +40,7 @@ class LessonController extends Controller {
         );
     }
 
-    public function destroy(int $id, DiscussionService $service) {
-        $lesson = Lesson::findOrFail($id);
+    public function destroy(Lesson $lesson, DiscussionService $service) {
         $service->deleteFrom($lesson);
         $lesson->delete();
     }
@@ -53,7 +51,7 @@ class LessonController extends Controller {
         return inertia('Skills/Lessons/Index', [
             'lessons' => Lesson::whereComplexity($complexity)->select('number')->get(),
 
-            'learnableLessonsCount' => auth()->user()->lessons()->count(),
+            'learnableLessonsCount' => user()->lessons()->count(),
 
             'filters' => ['complexity' => $complexity],
         ]);
@@ -69,7 +67,7 @@ class LessonController extends Controller {
             'lesson'      => $lesson,
             'nextPageUrl' => $defineUrl($number + 1),
             'prevPageUrl' => $defineUrl($number - 1),
-            'canComplete' => auth()->user()->lessons()
+            'canComplete' => user()->lessons()
                 ->wherePivot('is_completed', false)->find($lesson)?->exists(),
         ]);
     }

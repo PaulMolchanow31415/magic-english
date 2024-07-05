@@ -2,47 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller {
 
-    public function store(Request $request): void {
+    public function store(Request $request) {
         $request->validate([
             'discussion_id' => 'required|int',
             'reply_to_id'   => 'int|nullable',
             'message'       => 'required|string|min:1',
         ]);
 
-        $created = new Comment();
-        $created->message = $request['message'];
-        $created->creator()->associate(User::find(auth()->id()));
-        $created->discussion()->associate($request['discussion_id']);
+        $comment = new Comment();
+        $comment->message = $request['message'];
+        $comment->creator()->associate(user());
+        $comment->discussion()->associate($request['discussion_id']);
 
         if ($request->filled('reply_to_id')) {
-            $created->reply_to()->associate($request['reply_to_id']);
+            $comment->reply_to()->associate($request['reply_to_id']);
         }
 
-        $created->save();
+        $comment->save();
     }
 
-    public function report(Request $request): void {
+    public function report(Request $request) {
         $request->validate([
             'commentId'  => 'int|required',
             'isReported' => 'boolean|nullable',
         ]);
 
-        $reported = Comment::findOrFail($request['commentId']);
-        $reported->is_reported = $request['isReported'] ?? true;
-        $reported->save();
+        Comment::findOrFail($request['commentId'])
+            ->forceFill(['is_reported' => $request['isReported'] ?? true])
+            ->save();
     }
 
-    public function destroy(Comment $comment): void {
-        if ($comment->creator_id !== auth()->id()) {
-            abort(Response::HTTP_FORBIDDEN);
-        }
+    public function destroy(Comment $comment) {
+        Gate::authorize('delete-comment', user());
 
         $comment->delete();
     }

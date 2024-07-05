@@ -2,42 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
-use Inertia\ResponseFactory;
+use App\Http\Requests\SearchRequest;
 
 class SubscriberController extends Controller {
 
-    public function store(Request $request): void {
+    public function store(Request $request) {
         $request->validate(['email' => 'required|email|unique:subscribers']);
-        Subscriber::create(['email' => $request['email']]);
+        Subscriber::create(['email' => $request->email]);
     }
 
-    public function isSubscribed(): int {
-        // todo: extract to the method
+    public function isSubscribed() {
         $subscriber = Subscriber::firstOrCreate([
-            'email' => auth()->user()->email,
+            'email' => user()->email,
         ], ['is_enabled' => false]);
 
         return $subscriber->is_enabled;
     }
 
-    // todo rename toggleSubscribingStatus
-    public function changeSubscribeStatus(): void {
-        Subscriber::whereEmail(auth()->user()->email)->update([
-            'is_enabled' => request('status', false),
+    public function changeSubscribingStatus(Request $request) {
+        Subscriber::whereEmail(user()->email)->update([
+            'is_enabled' => $request['status'] ?? false,
         ]);
     }
 
-    public function index(Request $request): Response|ResponseFactory {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Subscriber', [
             'subscribers' => Subscriber::search($request['search'])->paginate(10),
             'filters'     => $request->only(['search']),
         ]);
     }
 
-    public function destroy(Subscriber $subscriber): void {
+    public function destroy(Subscriber $subscriber) {
         $subscriber->delete();
     }
 }

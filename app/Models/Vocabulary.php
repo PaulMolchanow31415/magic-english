@@ -9,15 +9,13 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Vocabulary extends Model {
-    use Searchable;
+    use Searchable, HasPoster;
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'en',
-        'translations',
-        'poster_url',
-    ];
+    protected $fillable = ['en', 'translations'];
+
+    protected $appends = ['poster_url'];
 
     protected $casts = [
         'translations' => AsCollection::class,

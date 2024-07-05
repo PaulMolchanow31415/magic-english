@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 
 class ProductController extends Controller {
     use PhotoUploadable;
 
-    public function index() {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Product', [
-            'products' => Product::search(request('search'))->paginate(5),
-            'filters'  => request()->only(['search']),
+            'products' => Product::search($request['search'])->paginate(5),
+            'filters'  => $request->only(['search']),
         ]);
     }
 
@@ -42,7 +43,7 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function deletePoster(Request $request): void {
+    public function deletePoster(Request $request) {
         $this->handleDeleteFile();
         Product::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }

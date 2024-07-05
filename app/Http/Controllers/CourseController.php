@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Complexity;
-use Inertia\Response;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use Inertia\ResponseFactory;
 use Illuminate\Validation\Rule;
 use App\Service\DiscussionService;
+use App\Http\Requests\SearchRequest;
 
 class CourseController extends Controller {
     use PhotoUploadable;
     use FilteredLearnable;
 
-    public function index(): Response|ResponseFactory {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Course', [
-            'courses' => Course::search(request('search'))->paginate(10),
-            'filters' => request()->only(['search']),
+            'courses' => Course::search($request['search'])->paginate(10),
+            'filters' => $request->only(['search']),
         ]);
     }
 
@@ -42,25 +41,23 @@ class CourseController extends Controller {
         );
     }
 
-    public function courses(): Response|ResponseFactory {
+    public function courses() {
         $complexity = ComplexityFilter::extract();
 
         return inertia('Skills/Course/Index', [
-            'courses' => Course::whereComplexity($complexity)
+            'courses'               => Course::whereComplexity($complexity)
                 ->select(['id', 'name', 'description', 'poster_url'])->get(),
-
-            'learnableCoursesCount' => auth()->user()->courses()->count(),
-
-            'filters' => ['complexity' => $complexity],
+            'learnableCoursesCount' => user()->courses()->count(),
+            'filters'               => ['complexity' => $complexity],
         ]);
     }
 
-    public function show(Course $course): Response|ResponseFactory {
-        $course = Course::whereId($course->id)->with('grammarRules')->firstOrFail();
+    public function show(int $id) {
+        $course = Course::whereId($id)->with('grammarRules')->firstOrFail();
 
         return inertia('Skills/Course/Show', [
             'course'      => $course,
-            'isCompleted' => auth()->user()->courses()
+            'isCompleted' => user()->courses()
                 ->withPivotValue('is_completed', true)
                 ->find($course)?->exists(),
         ]);

@@ -11,22 +11,21 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Course extends Model {
-    use Searchable, HasCustomProfilePhoto;
-
-    protected $appends = ['profile_photo_url'];
+    use Searchable, HasPoster;
 
     protected $fillable = [
         'name',
         'description',
-        'poster_url',
         'complexity',
     ];
 
-    protected $with = ['discussion'];
+    protected $appends = ['poster_url'];
 
     protected $casts = [
         'complexity' => Complexity::class,
     ];
+
+    protected $with = ['discussion'];
 
     protected $dispatchesEvents = [
         'created' => CourseCreated::class,

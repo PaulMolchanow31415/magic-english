@@ -3,6 +3,6 @@
 namespace App;
 
 enum Role: string {
-    const ADMIN = 'Администратор';
-    const USER  = 'Пользователь';
+    case ADMIN = 'Администратор';
+    case USER  = 'Пользователь';
 }

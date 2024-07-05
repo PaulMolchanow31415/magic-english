@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
 use App\Models\Vocabulary;
 use Illuminate\Http\Request;
-use Inertia\ResponseFactory;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\SearchRequest;
 
 class VocabularyController extends Controller {
     use PhotoUploadable;
 
-    public function index(): Response|ResponseFactory {
+    public function index(SearchRequest $request) {
         return inertia('Admin/Vocabulary', [
-            'dictionary' => Vocabulary::search(request('search'))
+            'dictionary' => Vocabulary::search($request['search'])
                 ->orderBy('en')
                 ->paginate(30),
-            'filters'    => request()->only(['search']),
+            'filters'    => $request->only(['search']),
         ]);
     }
 
-    public function list(string $search): JsonResponse {
+    public function list(string $search) {
         return response()->json(
             Vocabulary::search($search)->paginate(15),
         );
@@ -33,7 +30,7 @@ class VocabularyController extends Controller {
         //
     }
 
-    public function store(Request $request): RedirectResponse {
+    public function store(Request $request) {
         $request->validate([
             'id'                  => 'int|nullable',
             'en'                  => 'required|string',
@@ -45,14 +42,11 @@ class VocabularyController extends Controller {
         $oldPath = $word->poster_url;
         $updatedPath = $this->upload($oldPath);
 
-        Vocabulary::updateOrCreate(
-            ['id' => $request['id']],
-            [
-                'en'           => $request['en'],
-                'translations' => $request['translations'],
-                'poster_url'   => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
-            ],
-        );
+        Vocabulary::updateOrCreate(['id' => $request['id']], [
+            'en'           => $request['en'],
+            'translations' => $request['translations'],
+            'poster_url'   => $updatedPath ?? $request['photo_external_path'] ?? $oldPath,
+        ]);
 
         return to_route('admin.vocabulary.index');
     }
@@ -104,7 +98,7 @@ class VocabularyController extends Controller {
      *
      * @return void
      */
-    public function deleteTranslation(Request $request): void {
+    public function deleteTranslation(Request $request) {
         $request->validate([
             'vocabularyId'       => 'required|int',
             'removalTranslation' => 'required|string',
@@ -116,13 +110,12 @@ class VocabularyController extends Controller {
         $vocabulary->save();
     }
 
-    public function deletePoster(Request $request): void {
+    public function deletePoster(Request $request) {
         $this->handleDeleteFile();
         Vocabulary::wherePosterUrl($request['filename'])->update(['poster_url' => null]);
     }
 
-    public function destroy(int $id): void {
-        $vocabulary = Vocabulary::findOrFail($id);
+    public function destroy(Vocabulary $vocabulary) {
         $this->deleteFileIfExist($vocabulary->poster_url);
         $vocabulary->delete();
     }
